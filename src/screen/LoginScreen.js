@@ -4,9 +4,10 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 import * as Animatable from 'react-native-animatable'
 import { COLORS, SIZES, FONTS } from '../constant'
 import { AuthContext } from '../context/AuthContext'
+import Spinner from 'react-native-loading-spinner-overlay/lib'
 
 export default function LoginScreen({navigation}) {
-    const value = useContext(AuthContext);
+    const {isLoading, Login} = useContext(AuthContext);
     const [data,setData] = useState({
         email:'',
         password:'',
@@ -46,6 +47,7 @@ export default function LoginScreen({navigation}) {
     }
     return (
         <View style={styles.container}>
+            <Spinner visible={isLoading}/>
             <View style={styles.header}>
                 <Text style={styles.text_title}>
                     BOL Report
@@ -106,7 +108,7 @@ export default function LoginScreen({navigation}) {
                 </View>
                 <TouchableOpacity 
                     style={styles.button_signin}
-                    onPress={submitSignin}
+                    onPress={()=>Login(data.email,data.password)}
                 >
                     <Text style={styles.button_text}>ເຂົ້າລະບົບ</Text>
                 </TouchableOpacity>

@@ -1,8 +1,8 @@
 import { StyleSheet, Text, View, useWindowDimensions } from 'react-native'
 import React from 'react'
 import LottieView from 'lottie-react-native';
-import data_sharing from '../assets/images/data-sharing-service.json';
 import loading from '../assets/images/reveal-loading.json';
+import { COLORS } from '../constant';
 
 export default function SplashScreen() {
     const window = useWindowDimensions();
@@ -31,7 +31,6 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent:'center',
         alignItems:'center',
-
-        // backgroundColor:'white'
+        backgroundColor: COLORS.white
     }
 })

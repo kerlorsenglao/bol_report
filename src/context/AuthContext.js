@@ -1,5 +1,5 @@
 import { View, Text } from 'react-native'
-import React, { createContext, useState } from 'react'
+import React, { createContext, useEffect, useState } from 'react'
 import axios from 'axios'
 import { API_URL } from '../config'
 import AsyncStorage from '@react-native-async-storage/async-storage'
@@ -8,8 +8,9 @@ export const AuthContext = createContext()
 
 export const AuthProvider = ({children})=>{
     const [userInfo , setUserInfo ] = useState({});
+    const [token , setToken ] = useState(null);
     const [isLoading, setIsloading] = useState(false)
-
+    const [splashLoading , setSplashLoading] = useState(false)
 
     const Register = ()=>{
         setIsloading(true)
@@ -25,15 +26,72 @@ export const AuthProvider = ({children})=>{
             setIsloading(false)
         });
     }
-    const Login =()=>{
-
+    const Login =(email,password)=>{
+        setIsloading(true);
+        axios.post(`${API_URL}/checklogin`,
+        {username: email,password: password}
+        )
+        .then(res=>{
+            let userInfo = res.data.data
+            let token = res.data.token
+            setUserInfo(userInfo)
+            setToken(token)
+            AsyncStorage.setItem('userInfo',JSON.stringify(userInfo))
+            AsyncStorage.setItem('token',token)
+            setIsloading(false)
+        })
+        .catch(e =>{
+            console.log(e)
+            setIsloading(false)
+        })
     }
     const Logout =()=>{
+        setIsloading(true)
+
+        console.log(userInfo.user_id)
+
+        axios.post(`${API_URL}/logout`,
+        {user_id: userInfo.user_id},
+        {headers : {Authorization: `Bearer ${token}`}}
+        )
+        .then(res=>{
+            console.log(res.data)
+            AsyncStorage.removeItem('userInfo')
+            AsyncStorage.removeItem('token')
+            setUserInfo({})
+            setToken(null)
+            setIsloading(false)
+        })
+        .catch(e=>{
+            setIsloading(false)
+            console.log(e)
+        })
 
     }
+    const checkIsLogined = async ()=>{
+        try {
+            setSplashLoading(true)
+            let userInfo = await AsyncStorage.getItem('userInfo');
+            let token = await AsyncStorage.getItem('token');
+            userInfo = JSON.parse(userInfo);
+            if(userInfo){
+                setUserInfo(userInfo)
+                setToken(token)
+            }
+            setSplashLoading(false)
+        } catch (error) {
+            setSplashLoading(false)
+            console.log(`is logined error ${e}`)
+        }
+    }
+    
+    useEffect(()=>{
+        checkIsLogined()
+    },[])
+
     return (
         <AuthContext.Provider
-            value={{isLoading,userInfo,Register}}
+            value={{isLoading,userInfo,token,splashLoading,Register,Login,Logout}}
         >
             {children}
         </AuthContext.Provider>
