@@ -1,14 +1,16 @@
 import { View, Text } from 'react-native'
 import React, { createContext, useEffect, useState } from 'react'
 import axios from 'axios'
-import { API_URL } from '../config'
+import Config from 'react-native-config' // import for reading variable from .env file
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import Toast from 'react-native-toast-message'
 
-
+const API_URL = Config.API_URL;
 export const AuthContext = createContext()
 
+
 export const AuthProvider = ({children})=>{
+
     const [userInfo , setUserInfo ] = useState({});
     const [token , setToken ] = useState(null);
     const [isLoading, setIsloading] = useState(false)
