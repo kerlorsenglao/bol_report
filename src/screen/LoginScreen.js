@@ -5,6 +5,7 @@ import * as Animatable from 'react-native-animatable'
 import { COLORS, SIZES, FONTS } from '../constant'
 import { AuthContext } from '../context/AuthContext'
 import Spinner from 'react-native-loading-spinner-overlay/lib'
+import Toast from 'react-native-toast-message'
 
 export default function LoginScreen({navigation}) {
     const {isLoading, Login} = useContext(AuthContext);
@@ -41,12 +42,13 @@ export default function LoginScreen({navigation}) {
             secureTextInput: !data.secureTextInput
         })
     }
-    const submitSignin=()=>{
-        // alert('call api to login here');
-        navigation.navigate('Home');
-    }
+    // const submitSignin=()=>{
+    //     // alert('call api to login here');
+    //     navigation.navigate('Home');
+    // }
     return (
         <View style={styles.container}>
+            <Toast/>
             <Spinner visible={isLoading}/>
             <View style={styles.header}>
                 <Text style={styles.text_title}>

@@ -34,6 +34,9 @@ export default function Navigation() {
                             <StackNavigation.Screen 
                                 name="Home"
                                 component={HomeScreen}
+                                options={{
+                                    headerShown: false
+                                }}
                             />
                         ):
                         (

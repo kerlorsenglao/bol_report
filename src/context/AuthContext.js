@@ -3,6 +3,8 @@ import React, { createContext, useEffect, useState } from 'react'
 import axios from 'axios'
 import { API_URL } from '../config'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import Toast from 'react-native-toast-message'
+
 
 export const AuthContext = createContext()
 
@@ -27,17 +29,41 @@ export const AuthProvider = ({children})=>{
         });
     }
     const Login =(email,password)=>{
+        if(email.trim().length == 0){
+            Toast.show({
+                type: 'error',
+                position: 'top',
+                text1: 'ກະລຸນາປ້ອນອີເມວ',
+            });
+            return 
+        }
+        if(password.trim().length ==0){
+            Toast.show({
+                type: 'error',
+                text1: 'ກະລຸນາປ້ອນລະຫັດຜ່ານ',
+            });
+            return 
+        }
         setIsloading(true);
         axios.post(`${API_URL}/checklogin`,
         {username: email,password: password}
         )
         .then(res=>{
-            let userInfo = res.data.data
-            let token = res.data.token
-            setUserInfo(userInfo)
-            setToken(token)
-            AsyncStorage.setItem('userInfo',JSON.stringify(userInfo))
-            AsyncStorage.setItem('token',token)
+            if(res.data.code == 201){
+                let userInfo = res.data.data
+                let token = res.data.token
+                setUserInfo(userInfo)
+                setToken(token)
+                AsyncStorage.setItem('userInfo',JSON.stringify(userInfo))
+                AsyncStorage.setItem('token',token)
+            }else{// res.data.code == 401
+                let msg = res.data.msg
+                Toast.show({
+                    type: 'error',
+                    text1: 'ເຂົ້າລະບົບບໍ່ສຳເລັດ!',
+                    text2: msg
+                });
+            }
             setIsloading(false)
         })
         .catch(e =>{
@@ -47,9 +73,6 @@ export const AuthProvider = ({children})=>{
     }
     const Logout =()=>{
         setIsloading(true)
-
-        console.log(userInfo.user_id)
-
         axios.post(`${API_URL}/logout`,
         {user_id: userInfo.user_id},
         {headers : {Authorization: `Bearer ${token}`}}
@@ -84,11 +107,25 @@ export const AuthProvider = ({children})=>{
             console.log(`is logined error ${e}`)
         }
     }
-    
+    // const toastConfig = {
+    //     success: internalState=>(
+    //         <View style={{
+    //             backgroundColor: 'blue', width:'80%',height: 40
+    //         }}>
+    //             <Text>{internalState.text1}</Text>
+    //         </View>
+    //     ),
+    //     error: internalState =>{
+    //         <View style={{
+    //             backgroundColor: 'red', width:'80%',height: 40
+    //         }}>
+    //             <Text>{internalState.text1}</Text>
+    //         </View>
+    //     }
+    // }
     useEffect(()=>{
         checkIsLogined()
     },[])
-
     return (
         <AuthContext.Provider
             value={{isLoading,userInfo,token,splashLoading,Register,Login,Logout}}
