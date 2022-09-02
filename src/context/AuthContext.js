@@ -80,7 +80,6 @@ export const AuthProvider = ({children})=>{
         {headers : {Authorization: `Bearer ${token}`}}
         )
         .then(res=>{
-            console.log(res.data)
             AsyncStorage.removeItem('userInfo')
             AsyncStorage.removeItem('token')
             setUserInfo({})
