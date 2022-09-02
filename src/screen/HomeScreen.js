@@ -1,17 +1,22 @@
 import { StyleSheet, Text, View, useWindowDimensions, TouchableOpacity } from 'react-native'
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import data_sharing from '../assets/images/data-sharing-service.json';
 import LottieView from 'lottie-react-native';
-import { COLORS } from '../constant';
+import { COLORS, SIZES } from '../constant';
 import { AuthContext } from '../context/AuthContext';
 import Spinner from 'react-native-loading-spinner-overlay/lib';
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export default function HomeScreen() {
-    const { Logout , isLoading } = useContext(AuthContext);
+    const { Logout , isLoading, userInfo } = useContext(AuthContext);
     const window = useWindowDimensions()
+   
     return (
         <View style={styles.container}>
             <Spinner visible={isLoading}/>
+            <Text style={{color: COLORS.white, fontSize: SIZES.extraLarge}}>
+                Hi, <Text style={{fontWeight:'bold'}}>{userInfo.username}</Text>
+            </Text>
             <LottieView 
                 source={data_sharing} 
                 autoPlay
