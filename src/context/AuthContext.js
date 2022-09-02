@@ -31,7 +31,7 @@ export const AuthProvider = ({children})=>{
         });
     }
     const Login =(email,password)=>{
-        if(email.trim().length == 0){
+        if(email.trim().length ===0){
             Toast.show({
                 type: 'error',
                 position: 'top',
@@ -39,7 +39,7 @@ export const AuthProvider = ({children})=>{
             });
             return 
         }
-        if(password.trim().length ==0){
+        if(password.trim().length ===0){
             Toast.show({
                 type: 'error',
                 text1: 'ກະລຸນາປ້ອນລະຫັດຜ່ານ',
@@ -109,22 +109,6 @@ export const AuthProvider = ({children})=>{
             console.log(`is logined error ${e}`)
         }
     }
-    // const toastConfig = {
-    //     success: internalState=>(
-    //         <View style={{
-    //             backgroundColor: 'blue', width:'80%',height: 40
-    //         }}>
-    //             <Text>{internalState.text1}</Text>
-    //         </View>
-    //     ),
-    //     error: internalState =>{
-    //         <View style={{
-    //             backgroundColor: 'red', width:'80%',height: 40
-    //         }}>
-    //             <Text>{internalState.text1}</Text>
-    //         </View>
-    //     }
-    // }
     useEffect(()=>{
         checkIsLogined()
     },[])
