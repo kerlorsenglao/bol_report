@@ -8,7 +8,7 @@ import Spinner from 'react-native-loading-spinner-overlay/lib'
 import Toast from 'react-native-toast-message'
 
 export default function LoginScreen({navigation}) {
-    const {isLoading, Login} = useContext(AuthContext);
+    const {isLoading, Login, LoginTouch} = useContext(AuthContext);
     const [data,setData] = useState({
         email:'',
         password:'',
@@ -121,6 +121,20 @@ export default function LoginScreen({navigation}) {
                         <Text style={{color:COLORS.primary, }}> ລົງທະບຽນໃໝ່</Text>
                     </Text>
                 </TouchableOpacity>
+                <View
+                    style={styles.fingerScaner}
+                >
+                    <TouchableOpacity
+                        onPress={LoginTouch}
+                    >
+                        <Ionicons
+                            name='finger-print-outline'
+                            color={COLORS.green}
+                            size={50}
+                        />
+                    </TouchableOpacity>
+                    <Text style={{color: COLORS.gray}}>ສະແກນລາຍມື</Text>
+                </View>
             </Animatable.View>
         </View>
     )
@@ -198,5 +212,11 @@ const styles = StyleSheet.create({
         color: COLORS.gray,
         textAlign: 'center',
         marginVertical:8 
+    },
+    fingerScaner:{
+        padding: 5,
+        width:'100%',
+        alignItems:'center',
+        marginTop: 30
     }
 })

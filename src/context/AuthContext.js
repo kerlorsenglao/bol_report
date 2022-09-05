@@ -4,6 +4,8 @@ import axios from 'axios'
 import Config from 'react-native-config' // import for reading variable from .env file
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import Toast from 'react-native-toast-message'
+import TouchID from 'react-native-touch-id'
+import { COLORS } from '../constant'
 
 const API_URL = Config.API_URL;
 export const AuthContext = createContext()
@@ -15,6 +17,18 @@ export const AuthProvider = ({children})=>{
     const [token , setToken ] = useState(null);
     const [isLoading, setIsloading] = useState(false)
     const [splashLoading , setSplashLoading] = useState(false)
+
+    const optionalConfigObject = {
+        title: '', // Android
+        imageColor: COLORS.green, // Android #e00606
+        imageErrorColor: '#ff0000', // Android
+        sensorDescription: 'ຈ້ຳນິ້ວໃສ່ sensor', // Android
+        sensorErrorDescription: 'ກະລຸນລອງອິກຄັ້ງ', // Android
+        cancelText: 'ຍົກເລີກ', // Android
+        fallbackLabel: 'Show Passcode', // iOS (if empty, then label is hidden)
+        unifiedErrors: false, // use unified error messages (default false)
+        passcodeFallback: false, // iOS - allows the device to fall back to using the passcode, if faceid/touch is not available. this does not mean that if touchid/faceid fails the first few times it will revert to passcode, rather that if the former are not enrolled, then it will use the passcode.
+    };
 
     const Register = ()=>{
         setIsloading(true)
@@ -73,6 +87,23 @@ export const AuthProvider = ({children})=>{
             setIsloading(false)
         })
     }
+    const LoginTouch = ()=>{
+        TouchID.isSupported(optionalConfigObject).then((biometryType =>{
+            if (biometryType === 'FaceID') {
+                console.log('FaceID is supported.');
+            } else {
+                console.log('TouchID is supported.');
+                TouchID.authenticate('',optionalConfigObject)
+                .then((success)=>{
+                    console.log('Success =',success)
+                }).catch((err)=>{
+                    console.log(err)
+                })
+            }
+        })).catch(err =>{
+            console.log(err)
+        })
+    }
     const Logout =()=>{
         setIsloading(true)
         axios.post(`${API_URL}/logout`,
@@ -113,7 +144,7 @@ export const AuthProvider = ({children})=>{
     },[])
     return (
         <AuthContext.Provider
-            value={{isLoading,userInfo,token,splashLoading,Register,Login,Logout}}
+            value={{isLoading,userInfo,token,splashLoading,Register,Login,Logout,LoginTouch}}
         >
             {children}
         </AuthContext.Provider>
