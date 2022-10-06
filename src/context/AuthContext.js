@@ -8,12 +8,15 @@ import TouchID from 'react-native-touch-id'
 import { COLORS } from '../constant'
 
 const API_URL = Config.API_URL;
+const webService = { webServiceUser: "bol_it", webServicePassword: "123456" };
+
 export const AuthContext = createContext()
 
 
 export const AuthProvider = ({children})=>{
 
     const [userInfo , setUserInfo ] = useState({});
+    const [searchResult,setSearchResult] = useState({});
     const [token , setToken ] = useState(null);
     const [isLoading, setIsloading] = useState(false)
     const [splashLoading , setSplashLoading] = useState(false)
@@ -44,12 +47,13 @@ export const AuthProvider = ({children})=>{
             setIsloading(false)
         });
     }
-    const Login =(email,password)=>{
-        if(email.trim().length ===0){
+
+    const Login =(username,password)=>{
+        if(username.trim().length ===0){
             Toast.show({
                 type: 'error',
                 position: 'top',
-                text1: 'ກະລຸນາປ້ອນອີເມວ',
+                text1: 'ກະລຸນາປ້ອນລະຫັດຜູ້ໃຊ້',
             });
             return 
         }
@@ -61,18 +65,25 @@ export const AuthProvider = ({children})=>{
             return 
         }
         setIsloading(true);
-        axios.post(`${API_URL}/checklogin`,
-        {username: email,password: password}
+        axios.post(`${API_URL}/login`,
+            {
+                account: username,
+                password: password,
+                ...webService
+            }
         )
         .then(res=>{
-            if(res.data.code == 201){
-                let userInfo = res.data.data
-                let token = res.data.token
+            if(res.data.responseCode == '000'){
+                let userInfo = res.data.data[0]
+                let token = "token"
+                console.log(userInfo)
                 setUserInfo(userInfo)
                 setToken(token)
                 AsyncStorage.setItem('userInfo',JSON.stringify(userInfo))
                 AsyncStorage.setItem('token',token)
-            }else{// res.data.code == 401
+            }else{// error
+                console.log(res.data)
+
                 let msg = res.data.msg
                 Toast.show({
                     type: 'error',
@@ -104,23 +115,34 @@ export const AuthProvider = ({children})=>{
             console.log(err)
         })
     }
+
+    // setToken for test
+    const LoginForTest = ()=>{
+        setToken("token")
+    }
+
     const Logout =()=>{
-        setIsloading(true)
-        axios.post(`${API_URL}/logout`,
-        {user_id: userInfo.user_id},
-        {headers : {Authorization: `Bearer ${token}`}}
-        )
-        .then(res=>{
-            AsyncStorage.removeItem('userInfo')
-            AsyncStorage.removeItem('token')
-            setUserInfo({})
-            setToken(null)
-            setIsloading(false)
-        })
-        .catch(e=>{
-            setIsloading(false)
-            console.log(e)
-        })
+        // setIsloading(true)
+        // axios.post(`${API_URL}/logout`,
+        // {user_id: userInfo.user_id},
+        // {headers : {Authorization: `Bearer ${token}`}}
+        // )
+        // .then(res=>{
+        //     AsyncStorage.removeItem('userInfo')
+        //     AsyncStorage.removeItem('token')
+        //     setUserInfo({})
+        //     setToken(null)
+        //     setIsloading(false)
+        // })
+        // .catch(e=>{
+        //     setIsloading(false)
+        //     console.log(e)
+        // })
+
+        AsyncStorage.removeItem('userInfo')
+        AsyncStorage.removeItem('token')
+        setUserInfo({})
+        setToken(null)
 
     }
     const checkIsLogined = async ()=>{
@@ -142,11 +164,43 @@ export const AuthProvider = ({children})=>{
     useEffect(()=>{
         checkIsLogined()
     },[])
+
+    const Search = async (bank,CCY)=>{
+        setIsloading(true);
+        axios.post(`${API_URL}/getStatement`,{
+               webServicePassword:'123456',
+                webServiceUser:'bol_it',
+                bank_code: bank,
+                currency: CCY,
+            }
+        )
+        .then(res=>{
+            if(res.data.responseCode == '000'){
+                setSearchResult(res.data.data)
+            }else{// error
+                console.log(res.data)
+                let msg = res.data.msg
+                Toast.show({
+                    type: 'error',
+                    text1: 'ຄົ້ນຫາບໍ່ສຳເລັດ!',
+                    text2: msg
+                });
+            }
+            setIsloading(false)
+        })
+        .catch(e =>{
+            console.log(e)
+            setIsloading(false)
+        })
+    }
+
     return (
         <AuthContext.Provider
-            value={{isLoading,userInfo,token,splashLoading,Register,Login,Logout,LoginTouch}}
+            value={{isLoading,userInfo,token,splashLoading,searchResult,Register,Login,Logout,LoginTouch,Search,LoginForTest}}
         >
             {children}
         </AuthContext.Provider>
     )
+
+    
 }

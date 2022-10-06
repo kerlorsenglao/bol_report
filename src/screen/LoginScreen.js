@@ -1,5 +1,5 @@
 import React,{useContext, useState} from 'react'
-import { StyleSheet, Text, View, TextInput, Platform, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, TextInput, Platform, TouchableOpacity, ScrollView } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import * as Animatable from 'react-native-animatable'
 import { COLORS, SIZES, FONTS } from '../constant'
@@ -8,25 +8,25 @@ import Spinner from 'react-native-loading-spinner-overlay/lib'
 import Toast from 'react-native-toast-message'
 
 export default function LoginScreen({navigation}) {
-    const {isLoading, Login, LoginTouch} = useContext(AuthContext);
+    const {isLoading, Login, LoginTouch,LoginForTest} = useContext(AuthContext);
     const [data,setData] = useState({
-        email:'',
+        username:'',
         password:'',
         checkTextInput: false,
         secureTextInput: true
     })
 
-    const onChangeEmail=(text)=>{
+    const onChangeUsername=(text)=>{
         if(text.length != 0){
             setData({
                 ...data, 
-                email: text,
+                username: text,
                 checkTextInput: true
             })
         }else{
             setData({
                 ...data, 
-                email: text,
+                username: text,
                 checkTextInput: false
             })
         }
@@ -42,10 +42,7 @@ export default function LoginScreen({navigation}) {
             secureTextInput: !data.secureTextInput
         })
     }
-    // const submitSignin=()=>{
-    //     // alert('call api to login here');
-    //     navigation.navigate('Home');
-    // }
+
     return (
         <View style={styles.container}>
             <Toast/>
@@ -57,84 +54,96 @@ export default function LoginScreen({navigation}) {
                 <Text style={styles.text_header}>ເຂົ້າສູ່ລະບົບ</Text>
             </View>
 
+            
             <Animatable.View 
-                style={styles.footer}
-                animation='fadeInUpBig' 
-                duration={1000}
+                    style={styles.footer}
+                    animation='fadeInUpBig' 
+                    duration={1000}
             >
-                <Text style={styles.text_footer}>ອີເມວ</Text>
-                <View style={styles.action}>
-                    <Ionicons
-                        name='person-outline'
-                        size={20}
-                        color={COLORS.gray}
-                    />
-                    <TextInput
-                        placeholder='email'
-                        placeholderTextColor={COLORS.gray}
-                        autoCapitalize='none'
-                        style={styles.text_input}
-                        onChangeText={(text)=>onChangeEmail(text)}
-                    />
-                    {
-                        data.checkTextInput ?
+                {/* ສ່ວນປ້ອນ username */}
+                    <Text style={styles.text_footer}>ລະຫັດຜູ້ໃຊ້</Text>
+                    <View style={styles.action}>
                         <Ionicons
-                            name='md-checkmark-outline'
+                            name='person-outline'
                             size={20}
-                            color={COLORS.green}
+                            color={COLORS.gray}
                         />
-                        : null
-                    }
-                </View>
-                <Text style={[styles.text_footer,{marginTop: 20}]}>ລະຫັດຜ່ານ</Text>
-                <View style={styles.action}>
-                    <Ionicons
-                        name='md-lock-closed-outline'
-                        size={20}
-                        color={COLORS.gray}
-                    />
-                    <TextInput
-                        placeholder='password'
-                        placeholderTextColor={COLORS.gray}
-                        autoCapitalize='none'
-                        style={styles.text_input}
-                        secureTextEntry={data.secureTextInput}
-                        onChangeText={(text)=>onChangePassword(text)}
-                    />
-                    <Ionicons
-                        name={data.secureTextInput ?'md-eye-off-outline':'md-eye-outline'}
-                        size={20}
-                        color={COLORS.gray}
-                        onPress={onChangeSecureText}
-                    />
-                </View>
-                <TouchableOpacity 
-                    style={styles.button_signin}
-                    onPress={()=>Login(data.email,data.password)}
-                >
-                    <Text style={styles.button_text}>ເຂົ້າລະບົບ</Text>
-                </TouchableOpacity>
-                <TouchableOpacity 
-                    style={styles.button_forgot}
-                    onPress={()=> navigation.navigate('Register')}>
-                    <Text style={styles.text_forgot}>ຍັງບໍ່ມີບັນຊີ 
-                        <Text style={{color:COLORS.primary, }}> ລົງທະບຽນໃໝ່</Text>
-                    </Text>
-                </TouchableOpacity>
-                <View
-                    style={styles.fingerScaner}
-                >
-                    <TouchableOpacity
-                        onPress={LoginTouch}
-                    >
+                        <TextInput
+                            placeholder='username'
+                            placeholderTextColor={COLORS.gray}
+                            autoCapitalize='none'
+                            style={styles.text_input}
+                            onChangeText={(text)=>onChangeUsername(text)}
+                        />
+                        {
+                            data.checkTextInput ?
+                            <Ionicons
+                                name='md-checkmark-outline'
+                                size={20}
+                                color={COLORS.green}
+                            />
+                            : null
+                        }
+                    </View>
+
+                {/* ສ່ວນປ້ອນ passsword */}
+                    <Text style={[styles.text_footer,{marginTop: 20}]}>ລະຫັດຜ່ານ</Text>
+                    <View style={styles.action}>
                         <Ionicons
-                            name='finger-print-outline'
-                            color={COLORS.green}
-                            size={50}
+                            name='md-lock-closed-outline'
+                            size={20}
+                            color={COLORS.gray}
                         />
+                        <TextInput
+                            placeholder='password'
+                            placeholderTextColor={COLORS.gray}
+                            autoCapitalize='none'
+                            style={styles.text_input}
+                            secureTextEntry={data.secureTextInput}
+                            onChangeText={(text)=>onChangePassword(text)}
+                        />
+                        <Ionicons
+                            name={data.secureTextInput ?'md-eye-off-outline':'md-eye-outline'}
+                            size={20}
+                            color={COLORS.gray}
+                            onPress={onChangeSecureText}
+                        />
+                    </View>
+
+                {/* ສ່ວນປຸ່ມ Login */}
+                    <TouchableOpacity 
+                        style={styles.button_signin}
+                        onPress={()=>Login(data.username,data.password)}
+                    >
+                        <Text style={styles.button_text}>ເຂົ້າສູ່ລະບົບ</Text>
                     </TouchableOpacity>
-                    <Text style={{color: COLORS.gray}}>ສະແກນລາຍມື</Text>
-                </View>
+
+                {/* ສ່ວນປຸ່ມ ລົງທະບຽນໃໝ່ */}
+                    <TouchableOpacity 
+                        style={styles.button_forgot}
+                        onPress={()=> LoginForTest()}>
+                        <Text style={styles.text_forgot}>ຍັງບໍ່ມີບັນຊີ 
+                            <Text style={{color:COLORS.primary, }}> ລົງທະບຽນໃໝ່</Text>
+                        </Text>
+                    </TouchableOpacity>
+
+                
+                {/* ສ່ວນປຸ່ມ ສະແກນລາຍມື */}
+                    <View
+                        style={styles.fingerScaner}
+                    >
+                        <TouchableOpacity
+                            onPress={LoginTouch}
+                        >
+                            <Ionicons
+                                name='finger-print-outline'
+                                color={COLORS.green}
+                                size={50}
+                            />
+                        </TouchableOpacity>
+                        <Text style={{color: COLORS.gray}}>ສະແກນລາຍມື</Text>
+                    </View>
+                    
             </Animatable.View>
         </View>
     )
@@ -150,15 +159,17 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-end',
         alignItems:'center',
         paddingHorizontal: 20,
-        paddingBottom: 5
+        paddingBottom: 5,
+        
     },
     footer:{
-        flex: 4,
+        flex: 3,
         backgroundColor: COLORS.white,
+        // borderRadius: 30,
         borderTopLeftRadius: 20,
         borderTopRightRadius: 20,
         paddingHorizontal: 20,
-        paddingVertical: 30
+        paddingVertical: 30,
     },
     text_header:{
         color: COLORS.white,
@@ -168,16 +179,19 @@ const styles = StyleSheet.create({
     text_title:{
         fontSize: SIZES.extraLarge, 
         fontWeight: 'bold', 
-        marginBottom: 15
+        marginBottom: 15,
+        color: COLORS.white,
     },
     text_footer:{
         color: COLORS.primary,
         fontSize: SIZES.medium,
-        // fontWeight: 'bold'
+        fontWeight: 'bold',
+        marginHorizontal:10,
     },
     action:{
         flexDirection: 'row',
         marginTop: 10,
+        marginHorizontal:10,
         borderBottomWidth:1,
         borderBottomColor: COLORS.gray_ligth,
     },
@@ -192,20 +206,24 @@ const styles = StyleSheet.create({
     button_signin:{
         backgroundColor: COLORS.primary,
         borderRadius: 5,
-        marginTop: 20
+        marginTop: 20,
+        marginHorizontal:10,
+
     },
     button_text:{
         fontSize: SIZES.medium,
         color: COLORS.white,
         textAlign: 'center',
-        marginVertical:8 
+        marginVertical:10 ,
+        fontWeight: "bold"
     },
     button_forgot:{
         // backgroundColor: COLORS.white,
         borderWidth: 1,
         borderColor: COLORS.gray_ligth,
         borderRadius: 5,
-        marginTop: 8 
+        marginTop: 8,
+        marginHorizontal:10,
     },
     text_forgot:{
         fontSize: SIZES.medium,
