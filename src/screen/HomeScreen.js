@@ -7,7 +7,7 @@ import { AuthContext } from '../context/AuthContext';
 import Spinner from 'react-native-loading-spinner-overlay/lib';
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
-export default function HomeScreen() {
+export default function HomeScreen({navigation}) {
     const { Logout , isLoading, userInfo } = useContext(AuthContext);
     const window = useWindowDimensions()
    
@@ -15,7 +15,8 @@ export default function HomeScreen() {
         <View style={styles.container}>
             <Spinner visible={isLoading}/>
             <Text style={{color: COLORS.white, fontSize: SIZES.extraLarge}}>
-                Hi, <Text style={{fontWeight:'bold'}}>{userInfo.username}</Text>
+                {/* Hi, <Text style={{fontWeight:'bold'}}>{userInfo.account}</Text> */}
+                Hi, <Text style={{fontWeight:'bold'}}>AAA</Text>
             </Text>
             <LottieView 
                 source={data_sharing} 
@@ -37,6 +38,12 @@ export default function HomeScreen() {
             >
                 <Text style={styles.text}>Log out</Text>
             </TouchableOpacity>
+            <TouchableOpacity
+                style={styles.button}
+                onPress = {()=> navigation.navigate('Search')}
+            >
+                <Text style={styles.text}>Search</Text>
+            </TouchableOpacity>
         </View>
     )
 }
@@ -55,7 +62,8 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         width: '50%',
         alignItems:'center',
-        backgroundColor: COLORS.primary
+        backgroundColor: COLORS.primary,
+        marginTop:10
     },
     text:{
         color: COLORS.white,

@@ -4,9 +4,11 @@ import React, { useContext } from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
-import HomeScreen from '../screen/HomeScreen'
+import HomeScreen2 from '../screen/HomeScreen2'
 import RegisterScreen from '../screen/RegisterScreen'
 import LoginScreen from '../screen/LoginScreen'
+import SearchScreen from '../screen/SearchScreen'
+import ResultScreen from '../screen/ResultScreen'
 import SplashScreen from '../screen/SplashScreen'
 import { AuthContext } from '../context/AuthContext'
 
@@ -31,13 +33,34 @@ export default function Navigation() {
                     ):
                         token ?
                         (
+                            <>
+
+                            
+                            
                             <StackNavigation.Screen 
                                 name="Home"
-                                component={HomeScreen}
+                                component={HomeScreen2}
                                 options={{
                                     headerShown: false
                                 }}
                             />
+                            
+                            <StackNavigation.Screen 
+                                name="Search"
+                                component={SearchScreen}
+                                options={{
+                                    headerShown:false
+                                }}
+                            />
+                            
+                            <StackNavigation.Screen 
+                                name="Result"
+                                component={ResultScreen}
+                                options={{
+                                    headerShown:false
+                                }}
+                            />
+                            </>
                         ):
                         (
                             <>
