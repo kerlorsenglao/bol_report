@@ -1,4 +1,6 @@
+
 import { View, Text, TouchableOpacity, ScrollView } from 'react-native'
+
 import React, { useState,useEffect,useContext } from 'react'
 import { AuthContext } from '../../../context/AuthContext'
 import Spinner from 'react-native-loading-spinner-overlay'
@@ -18,10 +20,12 @@ const Daily = () => {
     const [resultData,setResultData] = useState([]);
 
     useEffect(()=>{
+
         getBSDReport1("BCEL","InReport","D",dateFormat(date))
         if( Object.keys(searchResult).length === 0 ){
         }
         setNewResultData()
+
     },[]);
 
 
@@ -78,10 +82,13 @@ const Daily = () => {
         </View>
 
         {/* search button */}
+
         <View style={{}}>
             <TouchableOpacity
                 onPress={()=>{
                     getBSDReport1(bank,"InReport","D",dateFormat(date))
+
+                    
                     setNewResultData()
 
                 }}
@@ -91,6 +98,7 @@ const Daily = () => {
                 </View>
             </TouchableOpacity>
         </View>
+
 
         {/* show report data */}
         <View style={{flex:1}}>
@@ -109,6 +117,7 @@ const Daily = () => {
                 }
             </ScrollView>
         </View>
+
     </View>
   )
 
@@ -125,11 +134,14 @@ const Daily = () => {
             }
         })
 
+
         // generate ResultData
+
         let new_resultData = []
         for(let i = 0; i < myUnit.length; i++){
             let unit = myUnit[i];
             let data = searchResult[unit];
+
             let rpUnit = data['unit']
             delete data['unit'];
             for (const [key, value] of Object.entries(data)) {
@@ -160,3 +172,4 @@ const ReportItem = ({item}) => {
         </View>
     )
 }
+
