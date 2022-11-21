@@ -7,9 +7,9 @@ const HomePageScreen = ({navigation})=>{
     return (
         <View style={{flex:1}}>
             <ImageBackground style={{flex:1}} source={require('../assets/images/bluebackground.jpg')} resizeMode="cover">
-                <View style={{flexDirection:'row',paddingTop:15,paddingBottom:5,paddingHorizontal:10}}>
-                    <View style={{flex:1,flexDirection:'column',alignItems:'center'}}>
-                        <Text style={{fontSize:24,fontWeight:'bold',color:"#000"}}>ລະບົບລາຍງານ</Text>
+                <View style={{flexDirection:'row',paddingTop:5,paddingBottom:2,paddingHorizontal:10,backgroundColor:'#009999'}}>
+                    <View style={{flex:1,flexDirection:'column',alignItems:'center',}}>
+                        <Text style={{fontSize:22,fontWeight:'bold',color:"#ffffff"}}>ລະບົບລາຍງານ</Text>
                         <Text style={{fontSize:14,}}>ທະນາຄານແຫ່ງ ສປປ ລາວ</Text>
                     </View>
                     
@@ -17,13 +17,12 @@ const HomePageScreen = ({navigation})=>{
                         <TouchableOpacity 
                             onPress={()=>{ navigation.openDrawer(); }}
                         >
-                            <Ionicons name='menu' size={40} color="#000" />
+                            <Ionicons name='menu' size={30} color="#000" />
                         </TouchableOpacity>
                     </View>
                 </View>
-                <View style={{flex:1,paddingHorizontal:10}}>
+                <View style={{flex:1,paddingHorizontal:2}}>
                     <ScrollView showsVerticalScrollIndicator={false}>
-                        
                         <SectionItem>
                             <View style={{flexDirection:'column',paddingHorizontal:20}}>
                                 <Text style={{fontSize:20,fontWeight:'bold',color:"#000"}}>ວັນພະຫັດ</Text>
