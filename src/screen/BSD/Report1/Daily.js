@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity } from 'react-native'
+import { View, Text, TouchableOpacity, ScrollView } from 'react-native'
 import React, { useState,useEffect,useContext } from 'react'
 import { AuthContext } from '../../../context/AuthContext'
 import Spinner from 'react-native-loading-spinner-overlay'
@@ -18,7 +18,10 @@ const Daily = () => {
     const [resultData,setResultData] = useState([]);
 
     useEffect(()=>{
-        getBSDReport1("BCEL","InReport","D","2022-11-16")
+        getBSDReport1("BCEL","InReport","D",dateFormat(date))
+        if( Object.keys(searchResult).length === 0 ){
+        }
+        setNewResultData()
     },[]);
 
 
@@ -75,11 +78,10 @@ const Daily = () => {
         </View>
 
         {/* search button */}
-        <View style={{flex:1}}>
+        <View style={{}}>
             <TouchableOpacity
                 onPress={()=>{
                     getBSDReport1(bank,"InReport","D",dateFormat(date))
-                    console.log(searchResult)
                     setNewResultData()
 
                 }}
@@ -89,6 +91,24 @@ const Daily = () => {
                 </View>
             </TouchableOpacity>
         </View>
+
+        {/* show report data */}
+        <View style={{flex:1}}>
+            <ScrollView>
+                {
+                    resultData.length > 0 ?
+                    resultData.map((item,index)=>{
+                        if(item.rpValue !== null){
+                            return <ReportItem key={index} item={item}></ReportItem>
+                        }else{
+                            return null;
+                        }
+                    })
+                    :
+                    null
+                }
+            </ScrollView>
+        </View>
     </View>
   )
 
@@ -97,6 +117,7 @@ const Daily = () => {
   }
 
   function setNewResultData(){
+        // get unit
         let myUnit = []
         units.map((u)=>{
             if(u in searchResult){
@@ -104,19 +125,35 @@ const Daily = () => {
             }
         })
 
+        // generate ResultData
         let new_resultData = []
-        myUnit.map((u)=>{
-
-            for (const key in searchResult[u]) {
-                new_resultData[key] = searchResult[u][key]
-                console.log(`${key}: ${searchResult[u][key]}`);
+        for(let i = 0; i < myUnit.length; i++){
+            let unit = myUnit[i];
+            let data = searchResult[unit];
+            let rpUnit = data['unit']
+            delete data['unit'];
+            for (const [key, value] of Object.entries(data)) {
+                new_resultData.push({rpKey:key,rpValue:value,rpUnit:rpUnit})
             }
-        })
+        }
+        setResultData(new_resultData);
 
-        console.log(new_resultData)
-
-        
+        console.log(resultData)
   }
 }
 
 export default Daily
+
+const ReportItem = ({item}) => {
+    return (
+        <View style={{padding:10}}>
+            <Text style={{fontWeight:'bold'}}>{item.rpKey}</Text>
+            
+            <View style={{flexDirection:'row',justifyContent:'flex-end'}}>
+                <Text style={{paddingHorizontal:10}}>{item.rpValue}</Text>
+                <Text>{item.rpUnit}</Text>
+            </View>
+            
+        </View>
+    )
+}

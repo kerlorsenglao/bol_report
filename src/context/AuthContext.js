@@ -194,7 +194,7 @@ export const AuthProvider = ({children})=>{
         })
     }
 
-    const getBSDReport1 = (bankCode,rpType,DateType,date) => {
+    const  getBSDReport1 = (bankCode,rpType,DateType,date) =>  {
         setIsloading(true);
         axios.post(`${API_URL}/BankSupervisionReport`,{
                 webServiceUser: "bol_it",
@@ -218,7 +218,13 @@ export const AuthProvider = ({children})=>{
                 });
             }
             setIsloading(false)
-            setSearchResult(res.data.data[0])
+
+            if(res.data.data === '' ){
+                setSearchResult({})
+            }else{
+                setSearchResult(res.data.data[0])
+            }
+            
         })
         .catch(e =>{
             console.log(e)
