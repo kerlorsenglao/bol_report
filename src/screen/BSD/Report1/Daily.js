@@ -146,10 +146,13 @@ export default Daily
 
 const ReportItem = ({item}) => {
     return (
-        <View style={{padding:10}}>
-            <Text style={{fontWeight:'bold'}}>{item.rpKey}</Text>
+        <View style={{padding:10,flexDirection:'row'}}>
+            <View style={{flex:3}}>
+                <Text style={{fontWeight:'bold'}}>{item.rpKey}</Text>
+            </View>
             
-            <View style={{flexDirection:'row',justifyContent:'flex-end'}}>
+            
+            <View style={{flex:1,flexDirection:'row',justifyContent:'flex-end'}}>
                 <Text style={{paddingHorizontal:10}}>{item.rpValue}</Text>
                 <Text>{item.rpUnit}</Text>
             </View>
