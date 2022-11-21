@@ -11,6 +11,7 @@ import SearchScreen from '../screen/SearchScreen'
 import ResultScreen from '../screen/ResultScreen'
 import SplashScreen from '../screen/SplashScreen'
 import { AuthContext } from '../context/AuthContext'
+import HomeScreen3 from '../screen/HomeScreen3'
 
 const StackNavigation = createNativeStackNavigator();
 
@@ -39,7 +40,7 @@ export default function Navigation() {
                             
                             <StackNavigation.Screen 
                                 name="Home"
-                                component={HomeScreen2}
+                                component={HomeScreen3}
                                 options={{
                                     headerShown: false
                                 }}

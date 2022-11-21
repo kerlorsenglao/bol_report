@@ -194,9 +194,48 @@ export const AuthProvider = ({children})=>{
         })
     }
 
+    const getBSDReport1 = (bankCode,rpType,DateType,date) => {
+        setIsloading(true);
+        axios.post(`${API_URL}/BankSupervisionReport`,{
+                webServiceUser: "bol_it",
+                webServicePassword: "123456",
+                bank_code: bankCode,
+                report_type: rpType,
+                date_type: DateType,
+                date: date
+            }
+        )
+        .then(res=>{
+            if(res.data.responseCode == '000'){
+                console.log("OK")
+            }else{// error
+                console.log('Not OK')
+                let msg = res.data.msg
+                Toast.show({
+                    type: 'error',
+                    text1: 'ຄົ້ນຫາບໍ່ສຳເລັດ!',
+                    text2: msg
+                });
+            }
+            setIsloading(false)
+            setSearchResult(res.data.data[0])
+        })
+        .catch(e =>{
+            console.log(e)
+            setIsloading(false)
+        })
+    }
+
     return (
         <AuthContext.Provider
-            value={{isLoading,userInfo,token,splashLoading,searchResult,Register,Login,Logout,LoginTouch,Search,LoginForTest}}
+            value={{
+                // 1. global variable
+                isLoading,userInfo,token,splashLoading,searchResult,
+                // 2. Login , Logout ... function
+                Register,Login,Logout,LoginTouch,Search,LoginForTest,
+                // 3. get report function
+                getBSDReport1
+            }}
         >
             {children}
         </AuthContext.Provider>

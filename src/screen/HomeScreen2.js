@@ -86,7 +86,7 @@ const HomeScreen2 = ({navigation}) => {
                     null
                 }
                 <View style={{flex:1,alignItems:'center'}}>
-                    <Text style={styles.text_title}>ລະບົບລາຍງານ kerchange1</Text>
+                    <Text style={styles.text_title}>ລະບົບລາຍງານ</Text>
                     <Text style={styles.text_small_title}>ທະນາຄານແຫ່ງ ສປປ ລາວ</Text>
                 </View>
             </View>
