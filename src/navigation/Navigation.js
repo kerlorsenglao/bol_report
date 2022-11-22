@@ -13,6 +13,12 @@ import SplashScreen from '../screen/SplashScreen'
 import { AuthContext } from '../context/AuthContext'
 import HomeScreen3 from '../screen/HomeScreen3'
 
+import HomeScreen from '../app/screens/HomeScreen'
+import OutHomeScreen from '../app/screens/OutHomeScreen'
+import StartScreen from '../app/screens/StartScreen'
+
+import { COLORS } from '../constant'
+
 const StackNavigation = createNativeStackNavigator();
 
 export default function Navigation() {
@@ -20,7 +26,15 @@ export default function Navigation() {
 
     return (
         <NavigationContainer>
-            <StackNavigation.Navigator>
+            <StackNavigation.Navigator
+                screenOptions={
+                    {
+                        contentStyle:{
+                            backgroundColor: COLORS.gray_ligth,
+                        }
+                    }
+                }
+            >
                 {
                     splashLoading ?
                     (
@@ -35,14 +49,43 @@ export default function Navigation() {
                         token ?
                         (
                             <>
-
-                            
-                            
+                            <StackNavigation.Screen 
+                                name="Start"
+                                component={StartScreen}
+                                options={{
+                                    headerShown: false,
+                                }}
+                            />
                             <StackNavigation.Screen 
                                 name="Home"
-                                component={HomeScreen3}
+                                component={HomeScreen}
                                 options={{
-                                    headerShown: false
+                                    // headerShown: false
+                                    title:'ລາຍງານພາຍໃນ',
+                                    headerTitleAlign:'center',
+                                    headerTitleStyle:{
+                                        color: COLORS.white,
+                                        fontWeight: 'bold'
+                                    },
+                                    headerStyle:{
+                                        backgroundColor: COLORS.primary
+                                    }
+                                }}
+                            />
+                             <StackNavigation.Screen 
+                                name="OutHome"
+                                component={OutHomeScreen}
+                                options={{
+                                    // headerShown: false
+                                    title:'ລາຍງານພາຍນອກ',
+                                    headerTitleAlign:'center',
+                                    headerTitleStyle:{
+                                        color: COLORS.white,
+                                        fontWeight: 'bold'
+                                    },
+                                    headerStyle:{
+                                        backgroundColor: COLORS.primary
+                                    }
                                 }}
                             />
                             

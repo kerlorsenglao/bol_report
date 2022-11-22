@@ -17,7 +17,7 @@ export const AuthProvider = ({children})=>{
 
     const [userInfo , setUserInfo ] = useState({});
     const [searchResult,setSearchResult] = useState({});
-    const [token , setToken ] = useState(null);
+    const [token , setToken ] = useState({});
     const [isLoading, setIsloading] = useState(false)
     const [splashLoading , setSplashLoading] = useState(false)
 
