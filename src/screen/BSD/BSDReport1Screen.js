@@ -4,6 +4,8 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import Daily from './Report1/Daily';
+import MonthLy from './Report1/MonthLy';
+import YearLy from './Report1/YearLy';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -25,23 +27,3 @@ const BSDReport1Screen = ({navigation}) => {
 }
 
 export default BSDReport1Screen
-
-const MonthLy = () => {
-  return (
-    <View style={{flex:1}}>
-        <ImageBackground style={{flex:1}} source={require('../../assets/images/bluebackground.jpg')} resizeMode="cover">
-            <Text>MonthLy</Text>
-        </ImageBackground>
-    </View>
-  )
-}
-
-const YearLy = () => {
-  return (
-    <View style={{flex:1}}>
-        <ImageBackground style={{flex:1}} source={require('../../assets/images/bluebackground.jpg')} resizeMode="cover">
-            <Text>YearLy</Text>
-        </ImageBackground>
-    </View>
-  )
-}

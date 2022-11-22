@@ -16,7 +16,10 @@ export default function HomeScreen({navigation}) {
             <Spinner visible={isLoading}/>
             <Text style={{color: COLORS.white, fontSize: SIZES.extraLarge}}>
                 {/* Hi, <Text style={{fontWeight:'bold'}}>{userInfo.account}</Text> */}
-                Hi, <Text style={{fontWeight:'bold'}}>AAAAAA6</Text>
+
+                Hi, <Text style={{fontWeight:'bold'}}>AAAAAAA9</Text>
+
+
             </Text>
             <LottieView 
                 source={data_sharing} 
