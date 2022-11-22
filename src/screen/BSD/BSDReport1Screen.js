@@ -1,8 +1,13 @@
+
+// ກົມຄຸ້ມຄອງທະນາຄານທຸລະກິດ: Comercial Bank Supervision Department
+
 import { View, Text,StyleSheet,ImageBackground,ScrollView,TouchableOpacity } from 'react-native'
 import React from 'react'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import { createMaterialTopTabNavigator, } from '@react-navigation/material-top-tabs';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
 import Daily from './Report1/Daily';
 import MonthLy from './Report1/MonthLy';
 import YearLy from './Report1/YearLy';
