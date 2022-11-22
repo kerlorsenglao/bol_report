@@ -19,6 +19,7 @@ export default function HomeScreen({navigation}) {
 
                 Hi, <Text style={{fontWeight:'bold'}}>AAAAAAA9</Text>
 
+
             </Text>
             <LottieView 
                 source={data_sharing} 
