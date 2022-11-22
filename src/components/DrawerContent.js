@@ -26,6 +26,14 @@ const DrawerContent = (props) => {
             {sub_id:1,sub_name:'test2.1',screen:'Menu1'},
             {sub_id:2,sub_name:'test2.2',screen:'Menu2'},
         ]},
+        {menu_id:2,menu_name:'ກົມບໍລິການທະນາຄານ',submenu:[
+            {sub_id:1,sub_name:'test2.1',screen:'Menu1'},
+            {sub_id:2,sub_name:'test2.2',screen:'Menu2'},
+        ]},
+        {menu_id:3,menu_name:'ກົມ,,,,',submenu:[
+            {sub_id:1,sub_name:'test2.1',screen:'Menu1'},
+            {sub_id:2,sub_name:'test2.2',screen:'Menu2'},
+        ]},
     ];
 
     const [sub,setSub] = useState(Array(menu.length).fill(false))
@@ -59,7 +67,6 @@ const DrawerContent = (props) => {
 
                 />
             </Drawer.Section>
-
             {
                     menu.length > 0 ?
                     menu.map((item,idex)=>{
@@ -98,7 +105,6 @@ const DrawerContent = (props) => {
                                             null
                                         }
                                     </Drawer.Section>
-
                     })
                     :
                     null

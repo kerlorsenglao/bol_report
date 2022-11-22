@@ -12,7 +12,6 @@ const HomePageScreen = ({navigation})=>{
                         <Text style={{fontSize:22,fontWeight:'bold',color:"#ffffff"}}>ລະບົບລາຍງານ</Text>
                         <Text style={{fontSize:14,}}>ທະນາຄານແຫ່ງ ສປປ ລາວ</Text>
                     </View>
-                    
                     <View style={{flexDirection:'row',alignItems:'center'}}>
                         <TouchableOpacity 
                             onPress={()=>{ navigation.openDrawer(); }}
@@ -21,7 +20,7 @@ const HomePageScreen = ({navigation})=>{
                         </TouchableOpacity>
                     </View>
                 </View>
-                <View style={{flex:1,paddingHorizontal:2}}>
+                <View style={{flex:1}}>
                     <ScrollView showsVerticalScrollIndicator={false}>
                         <SectionItem>
                             <View style={{flexDirection:'column',paddingHorizontal:20}}>
@@ -30,12 +29,10 @@ const HomePageScreen = ({navigation})=>{
                                 <Text style={{fontSize:20,color:"#000"}}>2022</Text>
                             </View>
                         </SectionItem>
-
-                        
                         <View style={{flexDirection:'row'}}>
-                            <View style={{flex:1}}>
+                            <View style={{flex:1,}}>
                                 <SectionItem>
-                                    <View style={{height:100,alignItems:'center',justifyContent:'center'}}>
+                                    <View style={{height:100,alignItems:'center',justifyContent:'center',}}>
                                         <Text>other 1.1</Text>
                                     </View>
                                 </SectionItem>

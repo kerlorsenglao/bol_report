@@ -8,6 +8,8 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import DrawerContent from '../components/DrawerContent'
 import HomePageScreen from './HomePageScreen'
 import BSDReport1Screen from './BSD/BSDReport1Screen'
+import BODReportScreen from './BOD/BODReportScreen'
+import MPDReportScreen from './MPD/MPDReportScreen'
 
 const Drawer = createDrawerNavigator();
 
@@ -24,8 +26,9 @@ const HomeScreen3 = () => {
             drawerContent={(props)=> <DrawerContent {...props}  />}
         >
           <Drawer.Screen name="HomePage" component={HomePageScreen} />
-          <Drawer.Screen name="BSDReport1" component={BSDReport1Screen}  />
-
+          <Drawer.Screen name="BSDReport1" component={BSDReport1Screen}/>
+          <Drawer.Screen name="BODReport" component={BODReportScreen}/>
+          <Drawer.Screen name="MPDReport" component={MPDReportScreen}/>
         </Drawer.Navigator>
       )
 }
