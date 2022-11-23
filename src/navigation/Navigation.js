@@ -16,6 +16,9 @@ import HomeScreen3 from '../screen/HomeScreen3'
 import InHomeScreen from '../app/screens/InHomeScreen'
 import OutHomeScreen from '../app/screens/OutHomeScreen'
 import StartScreen from '../app/screens/StartScreen'
+import BODReportScreen from '../app/screens/BOD/BODReportScreen'
+import BSDReportScreen from '../app/screens/BSD/BSDReportScreen'
+import MPDReportScreen from '../app/screens/MPD/MPDReportScreen'
 
 import { COLORS } from '../constant'
 
@@ -57,7 +60,7 @@ export default function Navigation() {
                                 }}
                             />
                             <StackNavigation.Screen 
-                                name="Home"
+                                name="InHome"
                                 component={InHomeScreen}
                                 options={{
                                     title:'ລາຍງານພາຍໃນ',
@@ -87,7 +90,51 @@ export default function Navigation() {
                                     }
                                 }}
                             />
-                            
+                            <StackNavigation.Screen 
+                                name="BOD"
+                                component={BODReportScreen}
+                                options={{
+                                    title:'ກົມບໍລິການທະນາຄານທຸລະກິດ',
+                                    headerTitleAlign:'center',
+                                    headerTitleStyle:{
+                                        color: COLORS.white,
+                                        fontWeight: 'bold'
+                                    },
+                                    headerStyle:{
+                                        backgroundColor: COLORS.primary
+                                    }
+                                }}
+                            />
+                            <StackNavigation.Screen 
+                                name="BSD"
+                                component={BSDReportScreen}
+                                options={{
+                                    title:'ກົມຄຸ້ມຄອງທະນາຄານທຸລະກິດ',
+                                    headerTitleAlign:'center',
+                                    headerTitleStyle:{
+                                        color: COLORS.white,
+                                        fontWeight: 'bold'
+                                    },
+                                    headerStyle:{
+                                        backgroundColor: COLORS.primary
+                                    }
+                                }}
+                            />
+                            <StackNavigation.Screen 
+                                name="MPD"
+                                component={MPDReportScreen}
+                                options={{
+                                    title:'ກົມນະໂຍບາຍເງີນຕາ',
+                                    headerTitleAlign:'center',
+                                    headerTitleStyle:{
+                                        color: COLORS.white,
+                                        fontWeight: 'bold'
+                                    },
+                                    headerStyle:{
+                                        backgroundColor: COLORS.primary
+                                    }
+                                }}
+                            />
                             <StackNavigation.Screen 
                                 name="Search"
                                 component={SearchScreen}

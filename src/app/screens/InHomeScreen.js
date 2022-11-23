@@ -7,7 +7,7 @@ import GraphComponent from '../components/GraphComponent'
 import DepartmentItem from '../components/DepartmentItem'
 import FooterComponent from '../components/FooterComponent'
 
-export default function HomeScreen() {
+export default function InHomeScreen({navigation}) {
   return (
     <ScrollView>
         <GraphComponent/> 
@@ -25,6 +25,7 @@ export default function HomeScreen() {
                 <Text style={{color: COLORS.black, fontSize: SIZES.medium, fontWeight: 'bold'}}>ລາຍງານຂອງບັນດາກົມ</Text>
             </View>
             <TouchableOpacity
+                onPress={()=>navigation.navigate('BSD')}
                 style={{
                     backgroundColor: COLORS.gray_ligth,
                     padding: 10,
@@ -47,6 +48,7 @@ export default function HomeScreen() {
                 <Text style={{color: '#000000', fontSize: SIZES.mediumf,}}>ກົມຄຸ້ມຄອງທະນາຄານທຸລະກິດ</Text>
             </TouchableOpacity>
             <TouchableOpacity
+                onPress={()=>navigation.navigate('MPD')}
                 style={{
                     backgroundColor: COLORS.gray_ligth,
                     padding: 10,
@@ -69,6 +71,7 @@ export default function HomeScreen() {
                 <Text style={{color: '#000000', fontSize: SIZES.medium}}>ກົມນະໂຍບາຍເງີນຕາ</Text>
             </TouchableOpacity>
             <TouchableOpacity
+                onPress={()=>navigation.navigate('BOD')}
                 style={{
                     backgroundColor: COLORS.gray_ligth,
                     padding: 10,
