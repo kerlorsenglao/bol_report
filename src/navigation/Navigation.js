@@ -98,7 +98,7 @@ export default function Navigation() {
                                     headerTitleAlign:'center',
                                     headerTitleStyle:{
                                         color: COLORS.white,
-                                        fontWeight: 'bold'
+                                        // fontWeight: 'bold'
                                     },
                                     headerStyle:{
                                         backgroundColor: COLORS.primary
@@ -113,7 +113,7 @@ export default function Navigation() {
                                     headerTitleAlign:'center',
                                     headerTitleStyle:{
                                         color: COLORS.white,
-                                        fontWeight: 'bold'
+                                        // fontWeight: 'bold'
                                     },
                                     headerStyle:{
                                         backgroundColor: COLORS.primary
@@ -128,7 +128,7 @@ export default function Navigation() {
                                     headerTitleAlign:'center',
                                     headerTitleStyle:{
                                         color: COLORS.white,
-                                        fontWeight: 'bold'
+                                        // fontWeight: 'bold'
                                     },
                                     headerStyle:{
                                         backgroundColor: COLORS.primary
