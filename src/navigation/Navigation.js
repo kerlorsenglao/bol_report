@@ -13,7 +13,7 @@ import SplashScreen from '../screen/SplashScreen'
 import { AuthContext } from '../context/AuthContext'
 import HomeScreen3 from '../screen/HomeScreen3'
 
-import HomeScreen from '../app/screens/HomeScreen'
+import InHomeScreen from '../app/screens/InHomeScreen'
 import OutHomeScreen from '../app/screens/OutHomeScreen'
 import StartScreen from '../app/screens/StartScreen'
 
@@ -58,9 +58,8 @@ export default function Navigation() {
                             />
                             <StackNavigation.Screen 
                                 name="Home"
-                                component={HomeScreen}
+                                component={InHomeScreen}
                                 options={{
-                                    // headerShown: false
                                     title:'ລາຍງານພາຍໃນ',
                                     headerTitleAlign:'center',
                                     headerTitleStyle:{
@@ -84,7 +83,7 @@ export default function Navigation() {
                                         fontWeight: 'bold'
                                     },
                                     headerStyle:{
-                                        backgroundColor: COLORS.primary
+                                        backgroundColor: '#669999'
                                     }
                                 }}
                             />
