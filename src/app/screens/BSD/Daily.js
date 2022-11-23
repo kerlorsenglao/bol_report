@@ -19,11 +19,11 @@ export default function Daily() {
     const [date, setDate] = useState()
     const [openDatePicker, setOpenDatePicker] = useState(false);
     const [bank,setBank] = useState('ALL_BANK')
-    const [data,setData] = useState();
+    const [data,setData] = useState({});
 
     const navigation = useNavigation();
     useEffect(()=>{
-        getBSDReport()
+        // getBSDReport()
     },[])
     
 const   getBSDReport = async () =>  {
@@ -110,6 +110,7 @@ const   getBSDReport = async () =>  {
                             alignItems:'center'
                         }}
                         dropdownIconColor={COLORS.primary}
+                        
                         >
                         <Picker.Item label="ALL_BANK" value='ALL_BANK'/>
                         <Picker.Item label="BCEL" value="BCEL" />
@@ -154,19 +155,420 @@ const   getBSDReport = async () =>  {
             {
                 data ?
                 (
-                <ScrollView>
+                <View style={{height: '81%'}}>
                     <View style={{
-                        flexDirection:'row',
-                        justifyContent:'space-between',
-                        marginHorizontal:5
+                            flexDirection:'row',
+                            justifyContent:'space-between',
+                            marginHorizontal:5,
+                            backgroundColor: COLORS.secondary,
+                            paddingVertical:10,
+                            borderTopLeftRadius: 5,
+                            borderTopRightRadius: 5,
                     }}>
-                        <Text style={{color: 'blue'}}>{data.total_asset.la_name}</Text>
-                        <Text style={{color: 'blue'}}>{data.total_asset.value}</Text>
-                        <Text style={{color: 'blue'}}>{data.total_asset.unit}</Text>
+                        <View style={{
+                            flex: 3,
+                            paddingLeft:5
+                        }}>
+                            <Text style={{color: COLORS.black, fontSize: SIZES.medium,}}>ລາຍການ</Text>
+                        </View>
+                        <View style={{
+                            flex:2,
+                            justifyContent: 'center',
+                            alignItems:'center'
+                        }}>
+                            <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>ຈຳນວນ</Text>
+                        </View>
+                        <View style={{
+                            flex:1,
+                            justifyContent: 'center',
+                            alignItems:'center'
+                        }}>
+                            <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>ຫົວໜ່ວຍ</Text>
+                        </View>
                     </View>
-                </ScrollView>
+                    <View style={{backgroundColor: COLORS.primary, height:1, marginHorizontal: 5}}/>
+                    <ScrollView>
+                        <View style={{
+                            flexDirection:'row',
+                            justifyContent:'space-between',
+                            marginHorizontal:5,
+                            // backgroundColor: COLORS.secondary,
+                            paddingVertical:10,
+                        }}>
+                            <View style={{
+                                flex: 3,
+                            }}>
+                                <Text style={{color: COLORS.black, fontSize: SIZES.medium,}}>ຊັບສີນທັງໝົດ</Text>
+                            </View>
+                            <View style={{
+                                flex:2,
+                                justifyContent: 'center',
+                                alignItems:'center'
+                            }}>
+                                <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>1.000</Text>
+                            </View>
+                            <View style={{
+                                flex:1,
+                                justifyContent: 'center',
+                                alignItems:'center'
+                            }}>
+                                <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>ຕື້</Text>
+                            </View>
+                        </View>
+                        <View style={{
+                            flexDirection:'row',
+                            justifyContent:'space-between',
+                            marginHorizontal:5,
+                            backgroundColor: '#ebebe0',
+                            paddingVertical:10,
+                        }}>
+                            <View style={{
+                                flex: 3,
+                            }}>
+                                <Text style={{color: COLORS.black, fontSize: SIZES.medium,}}>ໜີ້ສີນທັງໝົດ</Text>
+                            </View>
+                            <View style={{
+                                flex:2,
+                                justifyContent: 'center',
+                                alignItems:'center'
+                            }}>
+                                <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>1.000</Text>
+                            </View>
+                            <View style={{
+                                flex:1,
+                                justifyContent: 'center',
+                                alignItems:'center'
+                            }}>
+                                <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>ຕື້</Text>
+                            </View>
+                        </View>
+                        <View style={{
+                            flexDirection:'row',
+                            justifyContent:'space-between',
+                            marginHorizontal:5,
+                            // backgroundColor: '#e6fffa',
+                            paddingVertical:10,
+                        }}>
+                            <View style={{
+                                flex: 3,
+                            }}>
+                                <Text style={{color: COLORS.black, fontSize: SIZES.medium,}}>ທືນທັງໝົດ</Text>
+                            </View>
+                            <View style={{
+                                flex:2,
+                                justifyContent: 'center',
+                                alignItems:'center'
+                            }}>
+                                <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>1.000</Text>
+                            </View>
+                            <View style={{
+                                flex:1,
+                                justifyContent: 'center',
+                                alignItems:'center'
+                            }}>
+                                <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>ຕື້</Text>
+                            </View>
+                        </View>
+                        <View style={{
+                            flexDirection:'row',
+                            justifyContent:'space-between',
+                            marginHorizontal:5,
+                            backgroundColor: '#ebebe0',
+                            paddingVertical:10,
+                        }}>
+                            <View style={{
+                                flex: 3,
+                            }}>
+                                <Text style={{color: COLORS.black, fontSize: SIZES.medium,}}>ກຳໄລ/ຂາດທືນສະສົມ</Text>
+                            </View>
+                            <View style={{
+                                flex:2,
+                                justifyContent: 'center',
+                                alignItems:'center'
+                            }}>
+                                <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>10,700</Text>
+                            </View>
+                            <View style={{
+                                flex:1,
+                                justifyContent: 'center',
+                                alignItems:'center'
+                            }}>
+                                <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>ຕື້</Text>
+                            </View>
+                        </View>
+                        <View style={{
+                            flexDirection:'row',
+                            justifyContent:'space-between',
+                            marginHorizontal:5,
+                            paddingVertical:10,
+                        }}>
+                            <View style={{
+                                flex: 3,
+                            }}>
+                                <Text style={{color: COLORS.black, fontSize: SIZES.medium,}}>ກຳໄລ/ຂາດທືນໃນປີ</Text>
+                            </View>
+                            <View style={{
+                                flex:2,
+                                justifyContent: 'center',
+                                alignItems:'center'
+                            }}>
+                                <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>8,5</Text>
+                            </View>
+                            <View style={{
+                                flex:1,
+                                justifyContent: 'center',
+                                alignItems:'center'
+                            }}>
+                                <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>ຕື້</Text>
+                            </View>
+                        </View>
+                        <View style={{
+                            flexDirection:'row',
+                            justifyContent:'space-between',
+                            marginHorizontal:5,
+                            backgroundColor: '#ebebe0',
+                            paddingVertical:10,
+                        }}>
+                            <View style={{
+                                flex: 3,
+                            }}>
+                                <Text style={{color: COLORS.black, fontSize: SIZES.medium,}}>ເງີນສົດ</Text>
+                            </View>
+                            <View style={{
+                                flex:2,
+                                justifyContent: 'center',
+                                alignItems:'center'
+                            }}>
+                                <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>7.000</Text>
+                            </View>
+                            <View style={{
+                                flex:1,
+                                justifyContent: 'center',
+                                alignItems:'center'
+                            }}>
+                                <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>ຕື້</Text>
+                            </View>
+                        </View>
+                        <View style={{
+                            flexDirection:'row',
+                            justifyContent:'space-between',
+                            marginHorizontal:5,
+                            paddingVertical:10,
+                        }}>
+                            <View style={{
+                                flex: 3,
+                            }}>
+                                <Text style={{color: COLORS.black, fontSize: SIZES.medium,}}>ເງີນຝາກຢູ່ທະນາຄານ ແລະ ສະຖາບັນການເງີນອື່ນໆ</Text>
+                            </View>
+                            <View style={{
+                                flex:2,
+                                justifyContent: 'center',
+                                alignItems:'center'
+                            }}>
+                                <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>800.000</Text>
+                            </View>
+                            <View style={{
+                                flex:1,
+                                justifyContent: 'center',
+                                alignItems:'center'
+                            }}>
+                                <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>ຕື້</Text>
+                            </View>
+                        </View>
+                        <View style={{
+                            flexDirection:'row',
+                            justifyContent:'space-between',
+                            marginHorizontal:5,
+                            backgroundColor: '#ebebe0',
+                            paddingVertical:10,
+                        }}>
+                            <View style={{
+                                flex: 3,
+                            }}>
+                                <Text style={{color: COLORS.black, fontSize: SIZES.medium,}}>ເງີນປ່ອຍກູ້ທັງໝົດ</Text>
+                            </View>
+                            <View style={{
+                                flex:2,
+                                justifyContent: 'center',
+                                alignItems:'center'
+                            }}>
+                                <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>7.800.000</Text>
+                            </View>
+                            <View style={{
+                                flex:1,
+                                justifyContent: 'center',
+                                alignItems:'center'
+                            }}>
+                                <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>ຕື້</Text>
+                            </View>
+                        </View>
+                        <View style={{
+                            flexDirection:'row',
+                            justifyContent:'space-between',
+                            marginHorizontal:5,
+                            paddingVertical:10,
+                        }}>
+                            <View style={{
+                                flex: 3,
+                            }}>
+                                <Text style={{color: COLORS.black, fontSize: SIZES.medium,}}>ໜີ້ຕ້ອງຮັບທວງຍາກ(ໃນຜັງ)</Text>
+                            </View>
+                            <View style={{
+                                flex:2,
+                                justifyContent: 'center',
+                                alignItems:'center'
+                            }}>
+                                <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>810.000</Text>
+                            </View>
+                            <View style={{
+                                flex:1,
+                                justifyContent: 'center',
+                                alignItems:'center'
+                            }}>
+                                <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>ຕື້</Text>
+                            </View>
+                        </View>
+                        <View style={{
+                            flexDirection:'row',
+                            justifyContent:'space-between',
+                            marginHorizontal:5,
+                            backgroundColor: '#ebebe0',
+                            paddingVertical:10,
+                        }}>
+                            <View style={{
+                                flex: 3,
+                            }}>
+                                <Text style={{color: COLORS.black, fontSize: SIZES.medium,}}>ເງີນຝາກຂອງລູກຄ້າ</Text>
+                            </View>
+                            <View style={{
+                                flex:2,
+                                justifyContent: 'center',
+                                alignItems:'center'
+                            }}>
+                                <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>700.000</Text>
+                            </View>
+                            <View style={{
+                                flex:1,
+                                justifyContent: 'center',
+                                alignItems:'center'
+                            }}>
+                                <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>ຕື້</Text>
+                            </View>
+                        </View>
+                        <View style={{
+                            flexDirection:'row',
+                            justifyContent:'space-between',
+                            marginHorizontal:5,
+                            paddingVertical:10,
+                        }}>
+                            <View style={{
+                                flex: 3,
+                            }}>
+                                <Text style={{color: COLORS.black, fontSize: SIZES.medium,}}>ເງີນຝາກຂອງທະນາຄານ ແລະ ສະຖາບັນການເງີນອື່ນໆ</Text>
+                            </View>
+                            <View style={{
+                                flex:2,
+                                justifyContent: 'center',
+                                alignItems:'center'
+                            }}>
+                                <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>810.000</Text>
+                            </View>
+                            <View style={{
+                                flex:1,
+                                justifyContent: 'center',
+                                alignItems:'center'
+                            }}>
+                                <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>ຕື້</Text>
+                            </View>
+                        </View>
+                        <View style={{
+                            flexDirection:'row',
+                            justifyContent:'space-between',
+                            marginHorizontal:5,
+                            backgroundColor: '#ebebe0',
+                            paddingVertical:10,
+                        }}>
+                            <View style={{
+                                flex: 3,
+                            }}>
+                                <Text style={{color: COLORS.black, fontSize: SIZES.medium,}}>ອັດຕາສ່ວນໜີ້ NPLs(ນ້ອຍກວ່າ 3%)</Text>
+                            </View>
+                            <View style={{
+                                flex:2,
+                                justifyContent: 'center',
+                                alignItems:'center'
+                            }}>
+                                <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>7,2</Text>
+                            </View>
+                            <View style={{
+                                flex:1,
+                                justifyContent: 'center',
+                                alignItems:'center'
+                            }}>
+                                <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>%</Text>
+                            </View>
+                        </View>
+                        <View style={{
+                            flexDirection:'row',
+                            justifyContent:'space-between',
+                            marginHorizontal:5,
+                            paddingVertical:10,
+                        }}>
+                            <View style={{
+                                flex: 3,
+                            }}>
+                                <Text style={{color: COLORS.black, fontSize: SIZES.medium,}}>ອັດຕາສ່ວນເງີນສົດຄ້າງຄັງ(ໃຫຍ່ກວ່າ 2%)</Text>
+                            </View>
+                            <View style={{
+                                flex:2,
+                                justifyContent: 'center',
+                                alignItems:'center'
+                            }}>
+                                <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>8</Text>
+                            </View>
+                            <View style={{
+                                flex:1,
+                                justifyContent: 'center',
+                                alignItems:'center'
+                            }}>
+                                <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>%</Text>
+                            </View>
+                        </View>
+                        <View style={{
+                            flexDirection:'row',
+                            justifyContent:'space-between',
+                            marginHorizontal:5,
+                            backgroundColor: '#ebebe0',
+                            paddingVertical:10,
+                        }}>
+                            <View style={{
+                                flex: 3,
+                            }}>
+                                <Text style={{color: COLORS.black, fontSize: SIZES.medium,}}>ອັດຕາສ່ວນ ເງີນສົດ + ເງີນຝາກຢູ່ທ/ຄອື່ນ / ໜີ້ສີນທັງໝົດ(20-25%)</Text>
+                            </View>
+                            <View style={{
+                                flex:2,
+                                justifyContent: 'center',
+                                alignItems:'center'
+                            }}>
+                                <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>7,2</Text>
+                            </View>
+                            <View style={{
+                                flex:1,
+                                justifyContent: 'center',
+                                alignItems:'center'
+                            }}>
+                                <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>%</Text>
+                            </View>
+                        </View>
+                    </ScrollView>
+                </View>
                 )
-                : (<Text style={{color: 'blue'}}>No data here</Text>)
+                : (
+                    <View style={{flex: 1, justifyContent:'center',alignItems:'center'}}>
+                        <Text style={{color: COLORS.gray, fontSize: SIZES.large}}>ບໍ່ມີຂໍ້ມູນ</Text>
+                    </View>
+                )
             }
             <BackInHomeComponent navigation={navigation}/>
         </View>
