@@ -26,7 +26,7 @@ export default function StartScreen({navigation}) {
         }}
       >
         <TouchableOpacity
-            onPress={()=>navigation.navigate('Home')}
+            onPress={()=>navigation.navigate('InHome')}
             style={{
                 backgroundColor: COLORS.primary,
                 height: 100,width:130,

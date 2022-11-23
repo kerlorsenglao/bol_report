@@ -22,9 +22,10 @@ export default function GraphComponent() {
         >
             <Text
                 style={{
-                    color: COLORS.gray,
+                    color: COLORS.black,
                     fontSize: SIZES.medium,
-                    fontWeight: 'bold'
+                    fontWeight: 'bold',
+                    marginBottom:2
                 }}
             >ເສັ້ນສະແດງອັດຕາແລກປ່ຽນ</Text>
         </View>

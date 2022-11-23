@@ -13,9 +13,12 @@ import SplashScreen from '../screen/SplashScreen'
 import { AuthContext } from '../context/AuthContext'
 import HomeScreen3 from '../screen/HomeScreen3'
 
-import HomeScreen from '../app/screens/HomeScreen'
+import InHomeScreen from '../app/screens/InHomeScreen'
 import OutHomeScreen from '../app/screens/OutHomeScreen'
 import StartScreen from '../app/screens/StartScreen'
+import BODReportScreen from '../app/screens/BOD/BODReportScreen'
+import BSDReportScreen from '../app/screens/BSD/BSDReportScreen'
+import MPDReportScreen from '../app/screens/MPD/MPDReportScreen'
 
 import { COLORS } from '../constant'
 
@@ -57,10 +60,9 @@ export default function Navigation() {
                                 }}
                             />
                             <StackNavigation.Screen 
-                                name="Home"
-                                component={HomeScreen}
+                                name="InHome"
+                                component={InHomeScreen}
                                 options={{
-                                    // headerShown: false
                                     title:'ລາຍງານພາຍໃນ',
                                     headerTitleAlign:'center',
                                     headerTitleStyle:{
@@ -84,11 +86,55 @@ export default function Navigation() {
                                         fontWeight: 'bold'
                                     },
                                     headerStyle:{
+                                        backgroundColor: '#669999'
+                                    }
+                                }}
+                            />
+                            <StackNavigation.Screen 
+                                name="BOD"
+                                component={BODReportScreen}
+                                options={{
+                                    title:'ກົມບໍລິການທະນາຄານທຸລະກິດ',
+                                    headerTitleAlign:'center',
+                                    headerTitleStyle:{
+                                        color: COLORS.white,
+                                        fontWeight: 'bold'
+                                    },
+                                    headerStyle:{
                                         backgroundColor: COLORS.primary
                                     }
                                 }}
                             />
-                            
+                            <StackNavigation.Screen 
+                                name="BSD"
+                                component={BSDReportScreen}
+                                options={{
+                                    title:'ກົມຄຸ້ມຄອງທະນາຄານທຸລະກິດ',
+                                    headerTitleAlign:'center',
+                                    headerTitleStyle:{
+                                        color: COLORS.white,
+                                        fontWeight: 'bold'
+                                    },
+                                    headerStyle:{
+                                        backgroundColor: COLORS.primary
+                                    }
+                                }}
+                            />
+                            <StackNavigation.Screen 
+                                name="MPD"
+                                component={MPDReportScreen}
+                                options={{
+                                    title:'ກົມນະໂຍບາຍເງີນຕາ',
+                                    headerTitleAlign:'center',
+                                    headerTitleStyle:{
+                                        color: COLORS.white,
+                                        fontWeight: 'bold'
+                                    },
+                                    headerStyle:{
+                                        backgroundColor: COLORS.primary
+                                    }
+                                }}
+                            />
                             <StackNavigation.Screen 
                                 name="Search"
                                 component={SearchScreen}
