@@ -21,7 +21,7 @@ export default function StartScreen({navigation}) {
       <View
         style={{
             flexDirection:'row',
-            justifyContent:'space-around',
+            justifyContent:'space-evenly',
             marginTop: 20
         }}
       >
@@ -43,7 +43,8 @@ export default function StartScreen({navigation}) {
                 elevation: 14,
             }}
         >
-            <Text style={{color: COLORS.white, fontSize:SIZES.medium, fontWeight:'bold'}}>ລາຍງານພາຍໃນ</Text>
+            <Text style={{color: COLORS.white, fontSize:SIZES.medium, fontWeight:'bold'}}>ລາຍງານ</Text>
+            <Text style={{color: COLORS.white, fontSize:SIZES.medium, fontWeight:'bold'}}>ພາຍໃນ</Text>
         </TouchableOpacity>
         <TouchableOpacity
             onPress={()=>navigation.navigate('OutHome')}
@@ -63,7 +64,8 @@ export default function StartScreen({navigation}) {
                 elevation: 14,
             }}
         >
-            <Text style={{color: COLORS.white, fontSize: SIZES.medium, fontWeight: 'bold'}}>ລາຍງານພາຍນອກ</Text>   
+            <Text style={{color: COLORS.white, fontSize: SIZES.medium, fontWeight: 'bold'}}>ລາຍງານ</Text> 
+            <Text style={{color: COLORS.white, fontSize: SIZES.medium, fontWeight: 'bold'}}>ພາຍນອກ</Text>  
         </TouchableOpacity>
       </View>
     </View>
