@@ -17,8 +17,8 @@ export default function InHomeScreen({navigation}) {
                 backgroundColor: COLORS.secondary,
                 marginHorizontal:5,
                 height: 600,
-                borderTopRightRadius: 10,
-                borderTopLeftRadius: 10
+                borderTopRightRadius: 20,
+                borderTopLeftRadius: 20
             }}
         >
             <View style={{ justifyContent:'center',alignItems:'center',marginTop:10,marginBottom:5}}>
