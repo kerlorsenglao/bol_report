@@ -16,31 +16,34 @@ import { ScrollView } from 'react-native-gesture-handler';
 const  API_URL = Config.API_URL;
 export default function Daily() {
     const [isLoading,setIsLoading] = useState(false)
-    const [date, setDate] = useState()
-    const [openDatePicker, setOpenDatePicker] = useState(false);
-    const [bank,setBank] = useState('ALL_BANK')
     const [data,setData] = useState();
+    const [date, setDate] = useState();
+    const [openDatePicker, setOpenDatePicker] = useState(false);
+    const [bank,setBank] = useState('ALL_BANK');
+    const report_type = 'InReport';
+    const date_type = 'D';
 
     const navigation = useNavigation();
     useEffect(()=>{
-        getBSDReport()
+        // console.log(dateFormat(getDateBefore(new Date())))
+        getBSDReport(bank,report_type,date_type, date ? dateFormat(date) : dateFormat(getDateBefore(new Date())));
     },[])
     
-const   getBSDReport = async () =>  {
+    const   getBSDReport = async (bank,report_type,date_type,date) =>  {
         setIsLoading(true);
         await axios.post(`${API_URL}/BankSupervisionReport`,{
                 webServiceUser: "bol_it",
                 webServicePassword: "123456",
-                bank_code: "BCEL",
-                report_type: "InReport",
-                date_type: "D",
-                date: '2022-11-16'
+                bank_code: bank,
+                report_type: report_type,
+                date_type: date_type,
+                date: date
             }
         )
         .then(res=>{
             console.log(res.data)
             if(res.data.responseCode == '000'){
-                // setData(res.data)
+                setData(res.data.data[0])
                 if(res.data.data !=""){
                     setData(res.data.data[0])
                 }
@@ -60,6 +63,9 @@ const   getBSDReport = async () =>  {
             console.log(e)
             setIsLoading(false)
         })
+    }
+    const SearchBSDReport = () =>{
+        getBSDReport(bank,report_type,date_type,date ? dateFormat(date) : dateFormat(getDateBefore(new Date())))
     }
     return (
         <View style={{flex: 1}}>
@@ -122,6 +128,7 @@ const   getBSDReport = async () =>  {
                     </Picker>
                 </View>
                 <TouchableOpacity
+                    onPress={()=>SearchBSDReport()}
                     style={{
                         flex:1,
                         width: 60,
@@ -402,7 +409,7 @@ const   getBSDReport = async () =>  {
                                 <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>{data.bank_and_microbank_deposits.unit}</Text>
                             </View>
                         </View>
-                        <View style={{
+                        {/* <View style={{
                             flexDirection:'row',
                             justifyContent:'space-between',
                             marginHorizontal:5,
@@ -427,8 +434,8 @@ const   getBSDReport = async () =>  {
                             }}>
                                 <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>{data.npls.unit}</Text>
                             </View>
-                        </View>
-                        <View style={{
+                        </View> */}
+                        {/* <View style={{
                             flexDirection:'row',
                             justifyContent:'space-between',
                             marginHorizontal:5,
@@ -454,8 +461,8 @@ const   getBSDReport = async () =>  {
                             }}>
                                 <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>{data.vip_credit_and_total_credit.unit}</Text>
                             </View>
-                        </View>
-                        <View style={{
+                        </View> */}
+                        {/* <View style={{
                             flexDirection:'row',
                             justifyContent:'space-between',
                             marginHorizontal:5,
@@ -480,8 +487,8 @@ const   getBSDReport = async () =>  {
                             }}>
                                 <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>{data.msme.unit}</Text>
                             </View>
-                        </View>
-                        <View style={{
+                        </View> */}
+                        {/* <View style={{
                             flexDirection:'row',
                             justifyContent:'space-between',
                             marginHorizontal:5,
@@ -507,8 +514,8 @@ const   getBSDReport = async () =>  {
                             }}>
                                 <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>{data.roa.unit}</Text>
                             </View>
-                        </View>
-                        <View style={{
+                        </View> */}
+                        {/* <View style={{
                             flexDirection:'row',
                             justifyContent:'space-between',
                             marginHorizontal:5,
@@ -533,8 +540,8 @@ const   getBSDReport = async () =>  {
                             }}>
                                 <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>{data.roe.unit}</Text>
                             </View>
-                        </View>
-                        <View style={{
+                        </View> */}
+                        {/* <View style={{
                             flexDirection:'row',
                             justifyContent:'space-between',
                             marginHorizontal:5,
@@ -560,7 +567,7 @@ const   getBSDReport = async () =>  {
                             }}>
                                 <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>{data.fund_adequacy_ratio.unit}</Text>
                             </View>
-                        </View>
+                        </View> */}
                         <View style={{
                             flexDirection:'row',
                             justifyContent:'space-between',
