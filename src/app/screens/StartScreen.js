@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity,Image } from 'react-native'
 import React from 'react'
 import { COLORS, SHADOWS, SIZES } from '../../constant'
 
@@ -12,6 +12,10 @@ export default function StartScreen({navigation}) {
         }}
     >
       <View style={{ alignItems: 'center'}}>
+        <Image 
+            source={require('../../assets/images/logo_bank.png')} 
+            style={{height:150,resizeMode:'contain'}}
+        />
         <Text style={{
             color: COLORS.primary, 
             fontSize: 25, 
