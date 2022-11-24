@@ -19,11 +19,11 @@ export default function Daily() {
     const [date, setDate] = useState()
     const [openDatePicker, setOpenDatePicker] = useState(false);
     const [bank,setBank] = useState('ALL_BANK')
-    const [data,setData] = useState({});
+    const [data,setData] = useState();
 
     const navigation = useNavigation();
     useEffect(()=>{
-        // getBSDReport()
+        getBSDReport()
     },[])
     
 const   getBSDReport = async () =>  {
@@ -198,21 +198,21 @@ const   getBSDReport = async () =>  {
                             <View style={{
                                 flex: 3,
                             }}>
-                                <Text style={{color: COLORS.black, fontSize: SIZES.medium,}}>ຊັບສີນທັງໝົດ</Text>
+                                <Text style={{color: COLORS.black, fontSize: SIZES.medium,}}>{data.total_asset.la_name}</Text>
                             </View>
                             <View style={{
                                 flex:2,
                                 justifyContent: 'center',
                                 alignItems:'center'
                             }}>
-                                <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>1.000</Text>
+                                <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>{data.total_asset.value}</Text>
                             </View>
                             <View style={{
                                 flex:1,
                                 justifyContent: 'center',
                                 alignItems:'center'
                             }}>
-                                <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>ຕື້</Text>
+                                <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>{data.total_asset.unit}</Text>
                             </View>
                         </View>
                         <View style={{
@@ -225,21 +225,21 @@ const   getBSDReport = async () =>  {
                             <View style={{
                                 flex: 3,
                             }}>
-                                <Text style={{color: COLORS.black, fontSize: SIZES.medium,}}>ໜີ້ສີນທັງໝົດ</Text>
+                                <Text style={{color: COLORS.black, fontSize: SIZES.medium,}}>{data.total_debt.la_name}</Text>
                             </View>
                             <View style={{
                                 flex:2,
                                 justifyContent: 'center',
                                 alignItems:'center'
                             }}>
-                                <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>1.000</Text>
+                                <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>{data.total_debt.value}</Text>
                             </View>
                             <View style={{
                                 flex:1,
                                 justifyContent: 'center',
                                 alignItems:'center'
                             }}>
-                                <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>ຕື້</Text>
+                                <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>{data.total_debt.unit}</Text>
                             </View>
                         </View>
                         <View style={{
@@ -252,21 +252,21 @@ const   getBSDReport = async () =>  {
                             <View style={{
                                 flex: 3,
                             }}>
-                                <Text style={{color: COLORS.black, fontSize: SIZES.medium,}}>ທືນທັງໝົດ</Text>
+                                <Text style={{color: COLORS.black, fontSize: SIZES.medium,}}>{data.total_funds.la_name}</Text>
                             </View>
                             <View style={{
                                 flex:2,
                                 justifyContent: 'center',
                                 alignItems:'center'
                             }}>
-                                <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>1.000</Text>
+                                <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>{data.total_funds.value}</Text>
                             </View>
                             <View style={{
                                 flex:1,
                                 justifyContent: 'center',
                                 alignItems:'center'
                             }}>
-                                <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>ຕື້</Text>
+                                <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>{data.total_funds.unit}</Text>
                             </View>
                         </View>
                         <View style={{
@@ -279,21 +279,21 @@ const   getBSDReport = async () =>  {
                             <View style={{
                                 flex: 3,
                             }}>
-                                <Text style={{color: COLORS.black, fontSize: SIZES.medium,}}>ກຳໄລ/ຂາດທືນສະສົມ</Text>
+                                <Text style={{color: COLORS.black, fontSize: SIZES.medium,}}>{data.total_profit_lose.la_name}</Text>
                             </View>
                             <View style={{
                                 flex:2,
                                 justifyContent: 'center',
                                 alignItems:'center'
                             }}>
-                                <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>10,700</Text>
+                                <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>{data.total_profit_lose.value}</Text>
                             </View>
                             <View style={{
                                 flex:1,
                                 justifyContent: 'center',
                                 alignItems:'center'
                             }}>
-                                <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>ຕື້</Text>
+                                <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>{data.total_profit_lose.unit}</Text>
                             </View>
                         </View>
                         <View style={{
@@ -305,74 +305,21 @@ const   getBSDReport = async () =>  {
                             <View style={{
                                 flex: 3,
                             }}>
-                                <Text style={{color: COLORS.black, fontSize: SIZES.medium,}}>ກຳໄລ/ຂາດທືນໃນປີ</Text>
+                                <Text style={{color: COLORS.black, fontSize: SIZES.medium,}}>{data.total_lending.la_name}</Text>
                             </View>
                             <View style={{
                                 flex:2,
                                 justifyContent: 'center',
                                 alignItems:'center'
                             }}>
-                                <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>8,5</Text>
+                                <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>{data.total_lending.value}</Text>
                             </View>
                             <View style={{
                                 flex:1,
                                 justifyContent: 'center',
                                 alignItems:'center'
                             }}>
-                                <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>ຕື້</Text>
-                            </View>
-                        </View>
-                        <View style={{
-                            flexDirection:'row',
-                            justifyContent:'space-between',
-                            marginHorizontal:5,
-                            backgroundColor: '#ebebe0',
-                            paddingVertical:10,
-                        }}>
-                            <View style={{
-                                flex: 3,
-                            }}>
-                                <Text style={{color: COLORS.black, fontSize: SIZES.medium,}}>ເງີນສົດ</Text>
-                            </View>
-                            <View style={{
-                                flex:2,
-                                justifyContent: 'center',
-                                alignItems:'center'
-                            }}>
-                                <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>7.000</Text>
-                            </View>
-                            <View style={{
-                                flex:1,
-                                justifyContent: 'center',
-                                alignItems:'center'
-                            }}>
-                                <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>ຕື້</Text>
-                            </View>
-                        </View>
-                        <View style={{
-                            flexDirection:'row',
-                            justifyContent:'space-between',
-                            marginHorizontal:5,
-                            paddingVertical:10,
-                        }}>
-                            <View style={{
-                                flex: 3,
-                            }}>
-                                <Text style={{color: COLORS.black, fontSize: SIZES.medium,}}>ເງີນຝາກຢູ່ທະນາຄານ ແລະ ສະຖາບັນການເງີນອື່ນໆ</Text>
-                            </View>
-                            <View style={{
-                                flex:2,
-                                justifyContent: 'center',
-                                alignItems:'center'
-                            }}>
-                                <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>800.000</Text>
-                            </View>
-                            <View style={{
-                                flex:1,
-                                justifyContent: 'center',
-                                alignItems:'center'
-                            }}>
-                                <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>ຕື້</Text>
+                                <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>{data.total_lending.unit}</Text>
                             </View>
                         </View>
                         <View style={{
@@ -385,21 +332,21 @@ const   getBSDReport = async () =>  {
                             <View style={{
                                 flex: 3,
                             }}>
-                                <Text style={{color: COLORS.black, fontSize: SIZES.medium,}}>ເງີນປ່ອຍກູ້ທັງໝົດ</Text>
+                                <Text style={{color: COLORS.black, fontSize: SIZES.medium,}}>{data.difficult_claim_debt.la_name}</Text>
                             </View>
                             <View style={{
                                 flex:2,
                                 justifyContent: 'center',
                                 alignItems:'center'
                             }}>
-                                <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>7.800.000</Text>
+                                <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>{data.difficult_claim_debt.value}</Text>
                             </View>
                             <View style={{
                                 flex:1,
                                 justifyContent: 'center',
                                 alignItems:'center'
                             }}>
-                                <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>ຕື້</Text>
+                                <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>{data.difficult_claim_debt.unit}</Text>
                             </View>
                         </View>
                         <View style={{
@@ -411,74 +358,21 @@ const   getBSDReport = async () =>  {
                             <View style={{
                                 flex: 3,
                             }}>
-                                <Text style={{color: COLORS.black, fontSize: SIZES.medium,}}>ໜີ້ຕ້ອງຮັບທວງຍາກ(ໃນຜັງ)</Text>
+                                <Text style={{color: COLORS.black, fontSize: SIZES.medium,}}>{data.customer_deposits.la_name}</Text>
                             </View>
                             <View style={{
                                 flex:2,
                                 justifyContent: 'center',
                                 alignItems:'center'
                             }}>
-                                <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>810.000</Text>
+                                <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>{data.customer_deposits.value}</Text>
                             </View>
                             <View style={{
                                 flex:1,
                                 justifyContent: 'center',
                                 alignItems:'center'
                             }}>
-                                <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>ຕື້</Text>
-                            </View>
-                        </View>
-                        <View style={{
-                            flexDirection:'row',
-                            justifyContent:'space-between',
-                            marginHorizontal:5,
-                            backgroundColor: '#ebebe0',
-                            paddingVertical:10,
-                        }}>
-                            <View style={{
-                                flex: 3,
-                            }}>
-                                <Text style={{color: COLORS.black, fontSize: SIZES.medium,}}>ເງີນຝາກຂອງລູກຄ້າ</Text>
-                            </View>
-                            <View style={{
-                                flex:2,
-                                justifyContent: 'center',
-                                alignItems:'center'
-                            }}>
-                                <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>700.000</Text>
-                            </View>
-                            <View style={{
-                                flex:1,
-                                justifyContent: 'center',
-                                alignItems:'center'
-                            }}>
-                                <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>ຕື້</Text>
-                            </View>
-                        </View>
-                        <View style={{
-                            flexDirection:'row',
-                            justifyContent:'space-between',
-                            marginHorizontal:5,
-                            paddingVertical:10,
-                        }}>
-                            <View style={{
-                                flex: 3,
-                            }}>
-                                <Text style={{color: COLORS.black, fontSize: SIZES.medium,}}>ເງີນຝາກຂອງທະນາຄານ ແລະ ສະຖາບັນການເງີນອື່ນໆ</Text>
-                            </View>
-                            <View style={{
-                                flex:2,
-                                justifyContent: 'center',
-                                alignItems:'center'
-                            }}>
-                                <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>810.000</Text>
-                            </View>
-                            <View style={{
-                                flex:1,
-                                justifyContent: 'center',
-                                alignItems:'center'
-                            }}>
-                                <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>ຕື້</Text>
+                                <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>{data.customer_deposits.unit}</Text>
                             </View>
                         </View>
                         <View style={{
@@ -491,21 +385,21 @@ const   getBSDReport = async () =>  {
                             <View style={{
                                 flex: 3,
                             }}>
-                                <Text style={{color: COLORS.black, fontSize: SIZES.medium,}}>ອັດຕາສ່ວນໜີ້ NPLs(ນ້ອຍກວ່າ 3%)</Text>
+                                <Text style={{color: COLORS.black, fontSize: SIZES.medium,}}>{data.bank_and_microbank_deposits.la_name}</Text>
                             </View>
                             <View style={{
                                 flex:2,
                                 justifyContent: 'center',
                                 alignItems:'center'
                             }}>
-                                <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>7,2</Text>
+                                <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>{data.bank_and_microbank_deposits.value}</Text>
                             </View>
                             <View style={{
                                 flex:1,
                                 justifyContent: 'center',
                                 alignItems:'center'
                             }}>
-                                <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>%</Text>
+                                <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>{data.bank_and_microbank_deposits.unit}</Text>
                             </View>
                         </View>
                         <View style={{
@@ -517,21 +411,21 @@ const   getBSDReport = async () =>  {
                             <View style={{
                                 flex: 3,
                             }}>
-                                <Text style={{color: COLORS.black, fontSize: SIZES.medium,}}>ອັດຕາສ່ວນເງີນສົດຄ້າງຄັງ(ໃຫຍ່ກວ່າ 2%)</Text>
+                                <Text style={{color: COLORS.black, fontSize: SIZES.medium,}}>{data.npls.la_name}</Text>
                             </View>
                             <View style={{
                                 flex:2,
                                 justifyContent: 'center',
                                 alignItems:'center'
                             }}>
-                                <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>8</Text>
+                                <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>{data.npls.value ? data.npls.value : 0}</Text>
                             </View>
                             <View style={{
                                 flex:1,
                                 justifyContent: 'center',
                                 alignItems:'center'
                             }}>
-                                <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>%</Text>
+                                <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>{data.npls.unit}</Text>
                             </View>
                         </View>
                         <View style={{
@@ -544,21 +438,208 @@ const   getBSDReport = async () =>  {
                             <View style={{
                                 flex: 3,
                             }}>
-                                <Text style={{color: COLORS.black, fontSize: SIZES.medium,}}>ອັດຕາສ່ວນ ເງີນສົດ + ເງີນຝາກຢູ່ທ/ຄອື່ນ / ໜີ້ສີນທັງໝົດ(20-25%)</Text>
+                                <Text style={{color: COLORS.black, fontSize: SIZES.medium,}}>{data.vip_credit_and_total_credit.la_name}</Text>
                             </View>
                             <View style={{
                                 flex:2,
                                 justifyContent: 'center',
                                 alignItems:'center'
                             }}>
-                                <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>7,2</Text>
+                                <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>{data.vip_credit_and_total_credit.value ? data.vip_credit_and_total_credit.value : 0}</Text>
                             </View>
                             <View style={{
                                 flex:1,
                                 justifyContent: 'center',
                                 alignItems:'center'
                             }}>
-                                <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>%</Text>
+                                <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>{data.vip_credit_and_total_credit.unit}</Text>
+                            </View>
+                        </View>
+                        <View style={{
+                            flexDirection:'row',
+                            justifyContent:'space-between',
+                            marginHorizontal:5,
+                            paddingVertical:10,
+                        }}>
+                            <View style={{
+                                flex: 3,
+                            }}>
+                                <Text style={{color: COLORS.black, fontSize: SIZES.medium,}}>{data.msme.la_name}</Text>
+                            </View>
+                            <View style={{
+                                flex:2,
+                                justifyContent: 'center',
+                                alignItems:'center'
+                            }}>
+                                <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>{data.msme.value ? data.msme.value : 0}</Text>
+                            </View>
+                            <View style={{
+                                flex:1,
+                                justifyContent: 'center',
+                                alignItems:'center'
+                            }}>
+                                <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>{data.msme.unit}</Text>
+                            </View>
+                        </View>
+                        <View style={{
+                            flexDirection:'row',
+                            justifyContent:'space-between',
+                            marginHorizontal:5,
+                            backgroundColor: '#ebebe0',
+                            paddingVertical:10,
+                        }}>
+                            <View style={{
+                                flex: 3,
+                            }}>
+                                <Text style={{color: COLORS.black, fontSize: SIZES.medium,}}>{data.roa.la_name}</Text>
+                            </View>
+                            <View style={{
+                                flex:2,
+                                justifyContent: 'center',
+                                alignItems:'center'
+                            }}>
+                                <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>{data.roa.value?data.roa.value:0}</Text>
+                            </View>
+                            <View style={{
+                                flex:1,
+                                justifyContent: 'center',
+                                alignItems:'center'
+                            }}>
+                                <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>{data.roa.unit}</Text>
+                            </View>
+                        </View>
+                        <View style={{
+                            flexDirection:'row',
+                            justifyContent:'space-between',
+                            marginHorizontal:5,
+                            paddingVertical:10,
+                        }}>
+                            <View style={{
+                                flex: 3,
+                            }}>
+                                <Text style={{color: COLORS.black, fontSize: SIZES.medium,}}>{data.roe.la_name}</Text>
+                            </View>
+                            <View style={{
+                                flex:2,
+                                justifyContent: 'center',
+                                alignItems:'center'
+                            }}>
+                                <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>{data.roe.value ? data.roe.value: 0}</Text>
+                            </View>
+                            <View style={{
+                                flex:1,
+                                justifyContent: 'center',
+                                alignItems:'center'
+                            }}>
+                                <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>{data.roe.unit}</Text>
+                            </View>
+                        </View>
+                        <View style={{
+                            flexDirection:'row',
+                            justifyContent:'space-between',
+                            marginHorizontal:5,
+                            backgroundColor: '#ebebe0',
+                            paddingVertical:10,
+                        }}>
+                            <View style={{
+                                flex: 3,
+                            }}>
+                                <Text style={{color: COLORS.black, fontSize: SIZES.medium,}}>{data.fund_adequacy_ratio.la_name}</Text>
+                            </View>
+                            <View style={{
+                                flex:2,
+                                justifyContent: 'center',
+                                alignItems:'center'
+                            }}>
+                                <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>{data.fund_adequacy_ratio.value ? data.fund_adequacy_ratio.value:0}</Text>
+                            </View>
+                            <View style={{
+                                flex:1,
+                                justifyContent: 'center',
+                                alignItems:'center'
+                            }}>
+                                <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>{data.fund_adequacy_ratio.unit}</Text>
+                            </View>
+                        </View>
+                        <View style={{
+                            flexDirection:'row',
+                            justifyContent:'space-between',
+                            marginHorizontal:5,
+                            // backgroundColor: '#ebebe0',
+                            paddingVertical:10,
+                        }}>
+                            <View style={{
+                                flex: 3,
+                            }}>
+                                <Text style={{color: COLORS.black, fontSize: SIZES.medium,}}>{data.debt_ratio.la_name}</Text>
+                            </View>
+                            <View style={{
+                                flex:2,
+                                justifyContent: 'center',
+                                alignItems:'center'
+                            }}>
+                                <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>{data.debt_ratio.value ? data.debt_ratio.value:0}</Text>
+                            </View>
+                            <View style={{
+                                flex:1,
+                                justifyContent: 'center',
+                                alignItems:'center'
+                            }}>
+                                <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>{data.debt_ratio.unit}</Text>
+                            </View>
+                        </View>
+                        <View style={{
+                            flexDirection:'row',
+                            justifyContent:'space-between',
+                            marginHorizontal:5,
+                            backgroundColor: '#ebebe0',
+                            paddingVertical:10,
+                        }}>
+                            <View style={{
+                                flex: 3,
+                            }}>
+                                <Text style={{color: COLORS.black, fontSize: SIZES.medium,}}>{data.outstanding_cash_ratio.la_name}</Text>
+                            </View>
+                            <View style={{
+                                flex:2,
+                                justifyContent: 'center',
+                                alignItems:'center'
+                            }}>
+                                <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>{data.outstanding_cash_ratio.value ? data.outstanding_cash_ratio.value:0}</Text>
+                            </View>
+                            <View style={{
+                                flex:1,
+                                justifyContent: 'center',
+                                alignItems:'center'
+                            }}>
+                                <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>{data.outstanding_cash_ratio.unit}</Text>
+                            </View>
+                        </View>
+                        <View style={{
+                            flexDirection:'row',
+                            justifyContent:'space-between',
+                            marginHorizontal:5,
+                            // backgroundColor: '#ebebe0',
+                            paddingVertical:10,
+                        }}>
+                            <View style={{
+                                flex: 3,
+                            }}>
+                                <Text style={{color: COLORS.black, fontSize: SIZES.medium,}}>{data.cash_deposit_debt_other_bank.la_name}</Text>
+                            </View>
+                            <View style={{
+                                flex:2,
+                                justifyContent: 'center',
+                                alignItems:'center'
+                            }}>
+                                <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>{data.cash_deposit_debt_other_bank.value ? data.cash_deposit_debt_other_bank.value:0}</Text>
+                            </View>
+                            <View style={{
+                                flex:1,
+                                justifyContent: 'center',
+                                alignItems:'center'
+                            }}>
+                                <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>{data.cash_deposit_debt_other_bank.unit}</Text>
                             </View>
                         </View>
                     </ScrollView>
