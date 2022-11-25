@@ -36,7 +36,7 @@ export default function Daily() {
                 webServicePassword: "123456",
                 bank_code: bank,
                 report_type: report_type,
-                date_type: date_type,
+                date_type: date_type, //= T1, T2, T3,T4
                 date: date
             }
         )

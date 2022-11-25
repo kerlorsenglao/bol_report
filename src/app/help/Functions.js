@@ -13,6 +13,10 @@ function dateShow(date){
     return date.getDate()+'/'+(date.getMonth()+1)+'/'+date.getFullYear()
 }
 
+function getYear(date){
+    return date.getFullYear()
+}
+
 // toum function 
 function getKey(data){
     delete data['ID'];
@@ -30,4 +34,4 @@ function getKey(data){
     return allKey;
 }
 
-export {dateFormat,getDateBefore, dateShow, getKey}
+export {dateFormat,getDateBefore, dateShow, getKey, getYear}
