@@ -1,25 +1,70 @@
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import React, { useState } from 'react'
+import axios from "axios";
 import { COLORS, SIZES } from '../../../../constant'
 import { ScrollView } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
 // import Ionicons  from 'react-native-vector-icons/Ionicons';
+import Spinner from 'react-native-loading-spinner-overlay'
 import {Picker} from '@react-native-picker/picker';
 import DatePicker from 'react-native-date-picker'
+import Config from "react-native-config";
 
 import BackInHomeComponent from '../../../components/BackInHomeComponent';
 import { dateShow, getYear } from '../../../help/Functions';
 
 
-
+const  API_URL = Config.API_URL;
 export default function BOPQuaterly() {
     const navigation = useNavigation()
     const [data, setData] = useState();
+    const [isLoading,setIsLoading] = useState(false);
     const [t, setT] = useState();
     const [y, setY] = useState()
     const [openDatePicker,setOpenDatePicker]= useState(false)
+    const report_type = 'InReport'
+
+    const getBOPReport= async()=>{
+        setIsLoading(true)
+        await axios.post(`${API_URL}/MonataryPolicyBOPQuaterlyReport`,{
+            webServiceUser: "bol_it",
+            webServicePassword: "123456",
+            report_type: report_type,
+            date_type: t, //= T1, T2, T3,T4
+            date: y
+        }
+    )
+    .then(res=>{
+        if(res.data.responseCode == '000'){
+            console.log(res.data.data[0])
+            if(res.data.data !=""){
+                setData(res.data.data[0])
+            }else{
+                setData()
+            }
+        }else{// error
+            let msg = res.data.msg
+            Toast.show({
+                type: 'error',
+                text1: 'ຄົ້ນຫາບໍ່ສຳເລັດ!',
+                text2: msg
+            });
+        }
+        setIsLoading(false)
+    })
+    .catch(e =>{
+        console.log(e)
+        setIsLoading(false)
+    })
+
+
+
+        console.log('ໄຕມາດ=',t)
+        console.log('year=',y)
+    }
   return (
     <View style={{flex:1}}>
+         <Spinner visible={isLoading} color='gray'/>  
         <View 
             style={{alignItems:'center',marginTop:1}}
         >
@@ -51,10 +96,10 @@ export default function BOPQuaterly() {
                         
                         >
                         <Picker.Item label="ເລືອກໄຕມາດ" value=''/>
-                        <Picker.Item label="ໄຕມາດ 1" value="1" />
-                        <Picker.Item label="ໄຕມາດ 2" value="2" />
-                        <Picker.Item label="ໄຕມາດ 3" value="3" />
-                        <Picker.Item label="ໄຕມາດ 4" value="4" />
+                        <Picker.Item label="ໄຕມາດ 1" value="T1" />
+                        <Picker.Item label="ໄຕມາດ 2" value="T2" />
+                        <Picker.Item label="ໄຕມາດ 3" value="T3" />
+                        <Picker.Item label="ໄຕມາດ 4" value="T4" />
                     </Picker>
                 </View>
                 <TouchableOpacity 
@@ -71,6 +116,7 @@ export default function BOPQuaterly() {
                     <Text style={{color: y ?COLORS.primary:COLORS.gray, fontSize: SIZES.medium,}}>{y ? getYear(y) :'ເລືອກປີ'}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity 
+                    onPress={()=>getBOPReport()}
                     style={{
                         flex: 1,
                         marginHorizontal: 2,
