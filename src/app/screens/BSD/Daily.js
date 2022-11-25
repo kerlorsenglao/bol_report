@@ -41,15 +41,13 @@ export default function Daily() {
             }
         )
         .then(res=>{
-            console.log(res.data)
             if(res.data.responseCode == '000'){
-                setData(res.data.data[0])
                 if(res.data.data !=""){
                     setData(res.data.data[0])
+                }else{
+                    setData()
                 }
-                // console.log(res.data.data[0])
             }else{// error
-                console.log('Not OK')
                 let msg = res.data.msg
                 Toast.show({
                     type: 'error',
