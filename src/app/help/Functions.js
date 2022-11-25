@@ -30,4 +30,10 @@ function getKey(data){
     return allKey;
 }
 
-export {dateFormat,getDateBefore, dateShow, getKey}
+// toum function get Month and Year
+function getMonthYear(str){
+    let arr = str.split(" ")
+    return {month: Number(arr[1]),year: Number(arr[0]) }
+}
+
+export {dateFormat,getDateBefore, dateShow, getKey,getMonthYear}
