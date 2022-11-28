@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View,TouchableOpacity,Modal,Pressable } from 'react-native'
+import { StyleSheet, Text, View,TouchableOpacity } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import Spinner from 'react-native-loading-spinner-overlay'
@@ -13,22 +13,20 @@ import { COLORS, SIZES } from '../../../constant';
 import { ScrollView } from 'react-native-gesture-handler';
 import ShowItem from '../../components/ShowItem';
 
-import DatePicker from 'react-native-modern-datepicker';
+import DatePicker from 'react-native-date-picker'
 
 const  API_URL = Config.API_URL;
 
 export default function Monthly() {
     const navigation = useNavigation();
-
     // state
     const [isLoading,setIsLoading] = useState(false)
     const [bank,setBank] = useState('ALL_BANK')
     const [data,setData] = useState({});
     const [keys,setKeys] = useState([]);
 
-    const [show, setShow] = useState(false);
-    const [date, setDate] = useState({month:new Date().getMonth() + 1 , year:new Date().getFullYear()});   
-
+    const [date, setDate] = useState(new Date());
+    const [openDatePicker, setOpenDatePicker] = useState(false);
 
     useEffect(()=>{
         // get data
@@ -45,7 +43,7 @@ export default function Monthly() {
                 bank_code: bnk,
                 report_type: "InReport",
                 date_type: "M",
-                date: date.year+'-'+date.month+'-16'
+                date: date.getFullYear()+'-'+(date.getMonth()+1)
             }
         )
         .then(res=>{
@@ -82,48 +80,9 @@ export default function Monthly() {
             <View style={{
                 flexDirection:'row',
                 justifyContent:'space-evenly',
-                padding:5
+                padding:5,
             }}>
                 {/* ເລືອກເດືອນ */}
-                {/* <View style={{
-                    flex:2,
-                    borderBottomColor: COLORS.primary,
-                    borderBottomWidth: 1,
-                    borderRadius:5,
-                    marginHorizontal:2,
-                    // backgroundColor:'blue',
-                    }}>
-                    <Picker
-                        mode='dropdown'
-                        selectedValue={month}
-                        onValueChange={(itemValue, itemIndex) =>{
-                            setMonth(itemValue)
-                        }
-                        }
-                        style={{
-                            color: COLORS.primary,
-                            height: 45,
-                            alignItems:'center',
-                            textAlign:'center'
-                        }}
-                        dropdownIconColor={COLORS.primary}
-                        
-                        >
-                        <Picker.Item label="JAN" value={1} />
-                        <Picker.Item label="FEB" value={2} />
-                        <Picker.Item label="MAR" value={3} />
-                        <Picker.Item label="APR" value={4} />
-                        <Picker.Item label="MAY" value={5} />
-                        <Picker.Item label="JUN" value={6} />
-                        <Picker.Item label="JUL" value={7} />
-                        <Picker.Item label="AUG" value={8} />
-                        <Picker.Item label="SEP" value={9} />
-                        <Picker.Item label="OCT" value={10} />
-                        <Picker.Item label="NOV" value={11} />
-                        <Picker.Item label="DEC" value={12} />
-                    </Picker>
-                </View> */}
-                {/* select month V2 */}
                 <TouchableOpacity
                     style={{
                     flex: 2,
@@ -137,30 +96,28 @@ export default function Monthly() {
                         alignItems:'center'
                     }}
                     onPress={()=>{
-                        setShow(true)
+                        setOpenDatePicker(true)
                     }}
                 >
-                    <Text style={{color: COLORS.primary, fontSize: SIZES.medium}}>{date.month+"/"+date.year}</Text>
+                    <Text style={{color: COLORS.primary, fontSize: SIZES.medium}}>{(date.getMonth()+1)+"/"+date.getFullYear()}</Text>
                 </TouchableOpacity>
-                <Modal
-                    animationType="fade"
-                    transparent={true}
-                    visible={show}
-                    onRequestClose={() => {
-                        setShow(false);
+                <DatePicker
+                    title='ເລືອກເດືອນ ແລະ ປີ'
+                    modal
+                    confirmText='ຕົກລົງ'
+                    cancelText='ຍົກເລີກ'
+                    mode='date'
+                    textColor='#00b3b3'
+                    open={openDatePicker}
+                    date={date}
+                    onConfirm={(date) => {
+                        setOpenDatePicker(false)
+                        setDate(date)
                     }}
-                >
-                    <View style={{flex:1,justifyContent:'center',alignItems:'center',backgroundColor:COLORS.primary}}>
-                        <DatePicker
-                            mode="monthYear"
-                            selectorStartingYear={2000}
-                            onMonthYearChange={selectedDate => {
-                                setDate(getMonthYear(selectedDate))
-                                setShow(false)
-                            }}
-                        />
-                    </View>
-                </Modal>
+                    onCancel={() => {
+                        setOpenDatePicker(false)
+                    }}
+                />
 
                 {/* ເລືອກທະນາຄານ */}
                 <View style={{
@@ -202,7 +159,7 @@ export default function Monthly() {
                         justifyContent:'center',
                         alignItems:'center',
                         marginHorizontal:2,
-                        borderRadius:5
+                        borderRadius:5,
                     }}
 
                     onPress={()=>{
@@ -260,47 +217,3 @@ export default function Monthly() {
         </View>
     )
 }
-
-const styles = StyleSheet.create({
-    centeredView: {
-      flex: 1,
-      justifyContent: "center",
-      alignItems: "center",
-      marginTop: 22
-    },
-    modalView: {
-      margin: 20,
-      backgroundColor: "white",
-      borderRadius: 20,
-      padding: 35,
-      alignItems: "center",
-      shadowColor: "#000",
-      shadowOffset: {
-        width: 0,
-        height: 2
-      },
-      shadowOpacity: 0.25,
-      shadowRadius: 4,
-      elevation: 5
-    },
-    button: {
-      borderRadius: 20,
-      padding: 10,
-      elevation: 2
-    },
-    buttonOpen: {
-      backgroundColor: "#F194FF",
-    },
-    buttonClose: {
-      backgroundColor: "#2196F3",
-    },
-    textStyle: {
-      color: "white",
-      fontWeight: "bold",
-      textAlign: "center"
-    },
-    modalText: {
-      marginBottom: 15,
-      textAlign: "center"
-    }
-  });
