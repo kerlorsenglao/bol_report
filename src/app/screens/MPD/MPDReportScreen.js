@@ -38,7 +38,7 @@ export default function MPDReportScreen({navigation}) {
                 elevation: 14,
             }}
             >
-            <Text style={{color: '#000000', fontSize: SIZES.mediumf,}}>1. ສະຖິຕິດຸນການຊຳລະກັບຕ່າງປະເທດ</Text>
+            <Text style={{color: '#000000', fontSize: SIZES.medium,}}>1. ສະຖິຕິດຸນການຊຳລະກັບຕ່າງປະເທດ</Text>
         </TouchableOpacity>
         <TouchableOpacity
             // onPress={()=>navigation.navigate('BSD')}
@@ -61,7 +61,7 @@ export default function MPDReportScreen({navigation}) {
                 elevation: 14,
             }}
             >
-            <Text style={{color: '#000000', fontSize: SIZES.mediumf,}}>2. ສະຖິຕິການນຳເຂົ້າ-ສົ່ງອອກສິນຄ້າແຍກຂະແໜງການ</Text>
+            <Text style={{color: '#000000', fontSize: SIZES.medium,}}>2. ສະຖິຕິການນຳເຂົ້າ-ສົ່ງອອກສິນຄ້າແຍກຂະແໜງການ</Text>
         </TouchableOpacity>
         <TouchableOpacity
             // onPress={()=>navigation.navigate('BSD')}
@@ -84,7 +84,7 @@ export default function MPDReportScreen({navigation}) {
                 elevation: 14,
             }}
             >
-            <Text style={{color: '#000000', fontSize: SIZES.mediumf,}}>3. ສະຖິຕິການນຳເຂົ້າ-ສົ່ງອອກສິນຄ້າແຍກປະເທດ</Text>
+            <Text style={{color: '#000000', fontSize: SIZES.medium,}}>3. ສະຖິຕິການນຳເຂົ້າ-ສົ່ງອອກສິນຄ້າແຍກປະເທດ</Text>
         </TouchableOpacity>
         <TouchableOpacity
             // onPress={()=>navigation.navigate('BSD')}
@@ -107,7 +107,7 @@ export default function MPDReportScreen({navigation}) {
                 elevation: 14,
             }}
             >
-            <Text style={{color: '#000000', fontSize: SIZES.mediumf,}}>4. ການລົງທຶກໂດຍກົງຈາກຕ່າງປະເທດແຍກເປັນຂະແໜງການ</Text>
+            <Text style={{color: '#000000', fontSize: SIZES.medium,}}>4. ການລົງທຶກໂດຍກົງຈາກຕ່າງປະເທດແຍກຂະແໜງການ</Text>
         </TouchableOpacity>
         <TouchableOpacity
             // onPress={()=>navigation.navigate('BSD')}
@@ -130,7 +130,7 @@ export default function MPDReportScreen({navigation}) {
                 elevation: 14,
             }}
             >
-            <Text style={{color: '#000000', fontSize: SIZES.mediumf,}}>5. ການລົງທຶກໂດຍກົງຈາກຕ່າງປະເທດແຍກເປັນປະເທດ</Text>
+            <Text style={{color: '#000000', fontSize: SIZES.medium,}}>5. ການລົງທຶກໂດຍກົງຈາກຕ່າງປະເທດແຍກເປັນປະເທດ</Text>
         </TouchableOpacity>
         <TouchableOpacity
             // onPress={()=>navigation.navigate('BSD')}
@@ -153,7 +153,7 @@ export default function MPDReportScreen({navigation}) {
                 elevation: 14,
             }}
             >
-            <Text style={{color: '#000000', fontSize: SIZES.mediumf,}}>6. ສະຖິຕິການລົງທຶນລະຫວ່າງປະເທດ</Text>
+            <Text style={{color: '#000000', fontSize: SIZES.medium,}}>6. ສະຖິຕິການລົງທຶນລະຫວ່າງປະເທດ</Text>
         </TouchableOpacity>
         <TouchableOpacity
             // onPress={()=>navigation.navigate('BSD')}
@@ -176,7 +176,7 @@ export default function MPDReportScreen({navigation}) {
                 elevation: 14,
             }}
             >
-            <Text style={{color: '#000000', fontSize: SIZES.mediumf,}}>7. ສະຖິຕິໜີ້ສິນຕໍ່ຕ່າງປະເທດ</Text>
+            <Text style={{color: '#000000', fontSize: SIZES.medium,}}>7. ສະຖິຕິໜີ້ສິນຕໍ່ຕ່າງປະເທດ</Text>
         </TouchableOpacity>
         <TouchableOpacity
             // onPress={()=>navigation.navigate('BSD')}
@@ -199,7 +199,7 @@ export default function MPDReportScreen({navigation}) {
                 elevation: 14,
             }}
             >
-            <Text style={{color: '#000000', fontSize: SIZES.mediumf,}}>8. ສະຖິຕິໜີ້ສິນຕໍ່ຕ່າງປະເທດຂອງລັດຖະບານ</Text>
+            <Text style={{color: '#000000', fontSize: SIZES.medium,}}>8. ສະຖິຕິໜີ້ສິນຕໍ່ຕ່າງປະເທດຂອງລັດຖະບານ</Text>
         </TouchableOpacity>
         <TouchableOpacity
             // onPress={()=>navigation.navigate('BSD')}
@@ -222,7 +222,7 @@ export default function MPDReportScreen({navigation}) {
                 elevation: 14,
             }}
             >
-            <Text style={{color: '#000000', fontSize: SIZES.mediumf,}}>9. ສະຖິຕິກະແສເງີນໂອນເຂົ້າ-ອອກປະເທດ</Text>
+            <Text style={{color: '#000000', fontSize: SIZES.medium,}}>9. ສະຖິຕິກະແສເງີນໂອນເຂົ້າ-ອອກປະເທດ</Text>
         </TouchableOpacity>
         <TouchableOpacity
             // onPress={()=>navigation.navigate('BSD')}
@@ -245,7 +245,7 @@ export default function MPDReportScreen({navigation}) {
                 elevation: 14,
             }}
             >
-            <Text style={{color: '#000000', fontSize: SIZES.mediumf,}}>10. ສະຖິຕິເງີນຕາ</Text>
+            <Text style={{color: '#000000', fontSize: SIZES.medium,}}>10. ສະຖິຕິເງີນຕາ</Text>
         </TouchableOpacity>
         <TouchableOpacity
             // onPress={()=>navigation.navigate('BSD')}
@@ -268,7 +268,7 @@ export default function MPDReportScreen({navigation}) {
                 elevation: 14,
             }}
             >
-            <Text style={{color: '#000000', fontSize: SIZES.mediumf,}}>11. form ທ້າຍສຸດ</Text>
+            <Text style={{color: '#000000', fontSize: SIZES.medium,}}>11. form ທ້າຍສຸດ</Text>
         </TouchableOpacity>
       </ScrollView>
       <BackInHomeComponent navigation={navigation}/>

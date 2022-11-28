@@ -13,6 +13,10 @@ function dateShow(date){
     return date.getDate()+'/'+(date.getMonth()+1)+'/'+date.getFullYear()
 }
 
+function getYear(date){
+    return date.getFullYear()
+}
+
 // toum function 
 function getKey(data){
     delete data['ID'];
@@ -29,11 +33,5 @@ function getKey(data){
     }
     return allKey;
 }
+export {dateFormat,getDateBefore, dateShow, getKey, getYear}
 
-// toum function get Month and Year
-function getMonthYear(str){
-    let arr = str.split(" ")
-    return {month: Number(arr[1]),year: Number(arr[0]) }
-}
-
-export {dateFormat,getDateBefore, dateShow, getKey,getMonthYear}
