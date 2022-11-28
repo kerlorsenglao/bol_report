@@ -11,34 +11,35 @@ import DatePicker from 'react-native-date-picker'
 import Config from "react-native-config";
 
 import BackInHomeComponent from '../../../components/BackInHomeComponent';
-import { dateShow, getYear } from '../../../help/Functions';
+import { dateShow, getYear,convertJSToAR } from '../../../help/Functions';
 
 
 const  API_URL = Config.API_URL;
 export default function BOPQuaterly() {
     const navigation = useNavigation()
-    const [data, setData] = useState();
-    const [isLoading,setIsLoading] = useState(false);
-    const [t, setT] = useState();
+    const [data, setData] = useState()
+    const [isLoading,setIsLoading] = useState(false)
+    const [t, setT] = useState()
     const [y, setY] = useState()
     const [openDatePicker,setOpenDatePicker]= useState(false)
     const report_type = 'InReport'
 
     const getBOPReport= async()=>{
         setIsLoading(true)
-        await axios.post(`${API_URL}/MonataryPolicyBOPQuaterlyReport`,{
+        await axios.post(`${API_URL}/MonetaryPolicyBOPQuaterlyReport`,{
             webServiceUser: "bol_it",
             webServicePassword: "123456",
             report_type: report_type,
-            date_type: t, //= T1, T2, T3,T4
-            date: y
+            date_type: !t || t=='' ? 'Y' : t, //= T1, T2, T3,T4
+            date: getYear(y)
         }
     )
     .then(res=>{
         if(res.data.responseCode == '000'){
-            console.log(res.data.data[0])
             if(res.data.data !=""){
-                setData(res.data.data[0])
+                const Data = convertJSToAR(res.data.data);
+                console.log('=====>',typeof(Data))
+                setData(res.data.data)
             }else{
                 setData()
             }
@@ -56,11 +57,6 @@ export default function BOPQuaterly() {
         console.log(e)
         setIsLoading(false)
     })
-
-
-
-        console.log('ໄຕມາດ=',t)
-        console.log('year=',y)
     }
   return (
     <View style={{flex:1}}>
