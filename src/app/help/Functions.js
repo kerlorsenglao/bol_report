@@ -33,7 +33,9 @@ function getKey(data){
     }
     return allKey;
 }
+export {dateFormat,getDateBefore, dateShow, getKey, getYear}
 
+<<<<<<< HEAD
 // kerlor Convert JSON to Array
 function convertJSToAR(data){
     let newData = []
@@ -43,3 +45,5 @@ function convertJSToAR(data){
     return newData
 }
 export {dateFormat,getDateBefore, dateShow, getKey, getYear, convertJSToAR}
+=======
+>>>>>>> bfdbea4ac7d16c958ef3fb80ef8a812315cb02c1
