@@ -4,34 +4,38 @@ import { useNavigation } from '@react-navigation/native'
 import Spinner from 'react-native-loading-spinner-overlay'
 import axios from "axios";
 import Config from "react-native-config";
-import DatePicker from 'react-native-date-picker'
+
 import {Picker} from '@react-native-picker/picker';
 
-import { dateFormat, getKey} from '../../help/Functions'
+import { getKey, getMonthYear, dateFormat } from '../../help/Functions'
 import BackInHomeComponent from '../../components/BackInHomeComponent'
 import { COLORS, SIZES } from '../../../constant';
 import { ScrollView } from 'react-native-gesture-handler';
 import ShowItem from '../../components/ShowItem';
 
+import DatePicker from 'react-native-date-picker'
 
 const  API_URL = Config.API_URL;
 
 export default function Monthly() {
     const navigation = useNavigation();
-
     // state
     const [isLoading,setIsLoading] = useState(false)
-    const [month,setMonth] = useState(new Date().getMonth() + 1 )
     const [bank,setBank] = useState('ALL_BANK')
     const [data,setData] = useState({});
     const [keys,setKeys] = useState([]);
 
+    const [date, setDate] = useState(new Date());
+    const [openDatePicker, setOpenDatePicker] = useState(false);
+
     useEffect(()=>{
-        getBSDReport(bank,month)
+        // get data
+        getBSDReport(bank,date)
     },[])
 
+
     // function for MonthLy
-    const getBSDReport = async (bnk,month)=>{
+    const getBSDReport = async (bnk,date)=>{
         setIsLoading(true);
         await axios.post(`${API_URL}/BankSupervisionReport`,{
                 webServiceUser: "bol_it",
@@ -39,7 +43,7 @@ export default function Monthly() {
                 bank_code: bnk,
                 report_type: "InReport",
                 date_type: "M",
-                date: '2022-'+month+'-16'
+                date: date.getFullYear()+'-'+(date.getMonth()+1)
             }
         )
         .then(res=>{
@@ -76,47 +80,44 @@ export default function Monthly() {
             <View style={{
                 flexDirection:'row',
                 justifyContent:'space-evenly',
-                padding:5
+                padding:5,
             }}>
                 {/* ເລືອກເດືອນ */}
-                <View style={{
-                    flex:2,
-                    borderBottomColor: COLORS.primary,
-                    borderBottomWidth: 1,
-                    borderRadius:5,
-                    marginHorizontal:2,
-                    // backgroundColor:'blue',
-                    }}>
-                    <Picker
-                        mode='dropdown'
-                        selectedValue={month}
-                        onValueChange={(itemValue, itemIndex) =>{
-                            setMonth(itemValue)
-                        }
-                        }
-                        style={{
-                            color: COLORS.primary,
-                            height: 45,
-                            alignItems:'center',
-                            textAlign:'center'
-                        }}
-                        dropdownIconColor={COLORS.primary}
-                        
-                        >
-                        <Picker.Item label="JAN" value={1} />
-                        <Picker.Item label="FEB" value={2} />
-                        <Picker.Item label="MAR" value={3} />
-                        <Picker.Item label="APR" value={4} />
-                        <Picker.Item label="MAY" value={5} />
-                        <Picker.Item label="JUN" value={6} />
-                        <Picker.Item label="JUL" value={7} />
-                        <Picker.Item label="AUG" value={8} />
-                        <Picker.Item label="SEP" value={9} />
-                        <Picker.Item label="OCT" value={10} />
-                        <Picker.Item label="NOV" value={11} />
-                        <Picker.Item label="DEC" value={12} />
-                    </Picker>
-                </View>
+                <TouchableOpacity
+                    style={{
+                    flex: 2,
+                        borderBottomColor: COLORS.primary,
+                        borderBottomWidth: 1,
+                        width:120,
+                        marginHorizontal:2,
+                        paddingTop:10,
+                        paddingBottom: 3,
+                        justifyContent:'center',
+                        alignItems:'center'
+                    }}
+                    onPress={()=>{
+                        setOpenDatePicker(true)
+                    }}
+                >
+                    <Text style={{color: COLORS.primary, fontSize: SIZES.medium}}>{(date.getMonth()+1)+"/"+date.getFullYear()}</Text>
+                </TouchableOpacity>
+                <DatePicker
+                    title='ເລືອກເດືອນ ແລະ ປີ'
+                    modal
+                    confirmText='ຕົກລົງ'
+                    cancelText='ຍົກເລີກ'
+                    mode='date'
+                    textColor='#00b3b3'
+                    open={openDatePicker}
+                    date={date}
+                    onConfirm={(date) => {
+                        setOpenDatePicker(false)
+                        setDate(date)
+                    }}
+                    onCancel={() => {
+                        setOpenDatePicker(false)
+                    }}
+                />
 
                 {/* ເລືອກທະນາຄານ */}
                 <View style={{
@@ -158,11 +159,11 @@ export default function Monthly() {
                         justifyContent:'center',
                         alignItems:'center',
                         marginHorizontal:2,
-                        borderRadius:5
+                        borderRadius:5,
                     }}
 
                     onPress={()=>{
-                        getBSDReport(bank,month);
+                        getBSDReport(bank,date);
                     }}
                 >
                     <Text>ຄົ້ນຫາ</Text>
@@ -192,6 +193,8 @@ export default function Monthly() {
                     
                     {/* ສ່ວນສະແດງຂໍ້ມູນ */}
                     <ScrollView>
+                        
+                        
                         {
                             keys.map((mykey,index)=>{
                                 return <ShowItem key={index} index={index} item={data[mykey]} />
@@ -214,5 +217,3 @@ export default function Monthly() {
         </View>
     )
 }
-
-const styles = StyleSheet.create({})

@@ -6,6 +6,7 @@ import Daily from './Daily';
 import Monthly from './Monthly';
 import Yearly from './Yearly';
 import { COLORS, SIZES } from '../../../constant';
+import Quaterly from './Quaterly';
 
 const TopTab = createMaterialTopTabNavigator();
 
@@ -18,27 +19,35 @@ export default function BSDReportScreen({navigation}) {
         tabBarInactiveTintColor: 'gray',
         tabBarLabelStyle:{fontSize: SIZES.medium},
         swipeEnabled: false,// ຕ້ອງຕິດ tab ເທົ່ານັ້ນຈຶ່ງສາມາດປ່ຽນ screen
+        // tabBarScrollEnabled:true
       }}
     >
       <TopTab.Screen 
         name='Daily' 
         component={Daily}
         options={{
-          title:'ປະຈຳວັນ'
+          title:'ວັນ'
         }}
       />
       <TopTab.Screen 
         name='Monthly' 
         component={Monthly}
         options={{
-          title:'ປະຈຳເດືອນ'
+          title:'ເດືອນ'
+        }}
+        />
+      <TopTab.Screen 
+        name='Quaterly' 
+        component={Quaterly}
+        options={{
+          title:'ໄຕມາດ'
         }}
         />
       <TopTab.Screen 
         name='Yearly' 
         component={Yearly}
         options={{
-          title:'ປະຈຳປີ'
+          title:'ປີ'
         }}
         />
     </TopTab.Navigator>
