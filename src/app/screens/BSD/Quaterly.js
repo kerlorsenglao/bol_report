@@ -82,7 +82,7 @@ const Quaterly = () => {
             
             <View style={{
                     flexDirection:'row',
-                    flexWrap:'wrap',
+                    // flexWrap:'wrap',
                     justifyContent:'space-around',
                     padding:5,
                     marginBottom:20
@@ -90,7 +90,7 @@ const Quaterly = () => {
                     {/* ເລືອກໄຕມາດ */}
                     <View style={{
                         // flex:2,
-                        width:180,
+                        width:'48%',
                         borderBottomColor: COLORS.primary,
                         borderBottomWidth: 1,
                         borderRadius:5,
@@ -125,7 +125,8 @@ const Quaterly = () => {
                             // flex: 2,
                             borderBottomColor: COLORS.primary,
                             borderBottomWidth: 1,
-                            width:100,
+                            // width:100,
+                            width:'48%',
                             marginHorizontal:2,
                             paddingTop:10,
                             paddingBottom: 3,
@@ -159,7 +160,8 @@ const Quaterly = () => {
                     {/* ເລືອກທະນາຄານ */}
                     <View style={{
                         // flex:3,
-                        width:180,
+                        // width:180,
+                        width:'25%',
                         borderBottomColor: COLORS.primary,
                         borderBottomWidth: 1,
                         borderRadius:5,
@@ -192,7 +194,8 @@ const Quaterly = () => {
                     <TouchableOpacity
                         style={{
                             // flex:1,
-                            width: 100,
+                            // width: 100,
+                            width:"15%",
                             backgroundColor:COLORS.primary,
                             justifyContent:'center',
                             alignItems:'center',

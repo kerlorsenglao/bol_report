@@ -24,39 +24,59 @@ export default function BOPQuaterly() {
     const [openDatePicker,setOpenDatePicker]= useState(false)
     const report_type = 'InReport'
 
-    const getBOPReport= async()=>{
-        setIsLoading(true)
-        await axios.post(`${API_URL}/MonetaryPolicyBOPQuaterlyReport`,{
-            webServiceUser: "bol_it",
-            webServicePassword: "123456",
-            report_type: report_type,
-            date_type: !t || t=='' ? 'Y' : t, //= T1, T2, T3,T4
-            date: getYear(y)
-        }
-    )
-    .then(res=>{
-        if(res.data.responseCode == '000'){
-            if(res.data.data !=""){
-                const Data = convertJSToAR(res.data.data);
-                console.log('=====>',typeof(Data))
-                setData(res.data.data)
-            }else{
-                setData()
+    // const getBOPReport= async()=>{
+    //     setIsLoading(true)
+    //     await axios.post(`${API_URL}/MonetaryPolicyBOPQuaterlyReport`,{
+    //         webServiceUser: "bol_it",
+    //         webServicePassword: "123456",
+    //         report_type: report_type,
+    //         date_type: !t || t=='' ? 'Y' : t, //= T1, T2, T3,T4
+    //         date: getYear(y)
+    //     }
+    // )
+    // .then(res=>{
+    //     if(res.data.responseCode == '000'){
+    //         if(res.data.data !=""){
+
+    //             console.log('=====>',res.data)
+    //             // setData(res.data.data)
+    //         }else{
+    //             setData()
+    //         }
+    //     }else{// error
+    //         let msg = res.data.msg
+    //         Toast.show({
+    //             type: 'error',
+    //             text1: 'ຄົ້ນຫາບໍ່ສຳເລັດ!',
+    //             text2: msg
+    //         });
+    //     }
+    //     setIsLoading(false)
+    // })
+    // .catch(e =>{
+    //     console.log(e)
+    //     setIsLoading(false)
+    // })
+    // }
+    const getBOPReport = async () => {
+        const response = await fetch(
+            `${API_URL}/MonetaryPolicyBOPQuaterlyReport`,{
+                
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    webServiceUser: 'bol_it',
+                    webServicePassword: '123456',
+                    report_type: report_type,
+                    date_type: !t || t=='' ? 'Y' : t, //= T1, T2, T3,T4
+                    date: getYear(y)
+                }),
             }
-        }else{// error
-            let msg = res.data.msg
-            Toast.show({
-                type: 'error',
-                text1: 'ຄົ້ນຫາບໍ່ສຳເລັດ!',
-                text2: msg
-            });
-        }
-        setIsLoading(false)
-    })
-    .catch(e =>{
-        console.log(e)
-        setIsLoading(false)
-    })
+        ).then((response) => response.json());
+        
     }
   return (
     <View style={{flex:1}}>
@@ -131,28 +151,60 @@ export default function BOPQuaterly() {
             
         </View>
         <DatePicker
-                title='ເລືອກປີ'
-                modal
-                confirmText='ຕົກລົງ'
-                cancelText='ຍົກເລີກ'
-                mode='date'
-                textColor='#00b3b3'
-                open={openDatePicker}
-                date={y ? y : new Date()}
-                onConfirm={(date) => {
-                    setOpenDatePicker(false)
-                    setY(date)
-                }}
-                onCancel={() => {
-                    setOpenDatePicker(false)
-                }}
-            />
+            title='ເລືອກປີ'
+            modal
+            confirmText='ຕົກລົງ'
+            cancelText='ຍົກເລີກ'
+            mode='date'
+            textColor='#00b3b3'
+            open={openDatePicker}
+            date={y ? y : new Date()}
+            onConfirm={(date) => {
+                setOpenDatePicker(false)
+                setY(date)
+            }}
+            onCancel={() => {
+                setOpenDatePicker(false)
+            }}
+        />
+        
         {
             data ? 
             (
-                <ScrollView>
-
-                </ScrollView>
+                <View style={{height: '80%',}}>
+                    <View style={{
+                            flexDirection:'row',
+                            justifyContent:'space-between',
+                            marginHorizontal:5,
+                            backgroundColor: COLORS.secondary,
+                            paddingVertical:10,
+                            borderTopLeftRadius: 5,
+                            borderTopRightRadius: 5,
+                    }}>
+                        <View style={{
+                            flex: 3,
+                            paddingLeft:5
+                        }}>
+                            <Text style={{color: COLORS.black, fontSize: SIZES.medium,}}>ລາຍການ</Text>
+                        </View>
+                        <View style={{
+                            flex:2,
+                            justifyContent: 'center',
+                            alignItems:'center'
+                        }}>
+                            <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>ຈຳນວນ</Text>
+                        </View>
+                        <View style={{
+                            flex:1,
+                            justifyContent: 'center',
+                            alignItems:'center'
+                        }}>
+                            <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>ຫົວໜ່ວຍ</Text>
+                        </View>
+                    </View>
+                    <View style={{backgroundColor: COLORS.primary, height:1, marginHorizontal: 5}}/>
+                </View>
+                
             )
             :
             (

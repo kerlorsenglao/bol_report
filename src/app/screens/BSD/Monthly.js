@@ -30,7 +30,7 @@ export default function Monthly() {
 
     useEffect(()=>{
         // get data
-        getBSDReport(bank,date)
+        // getBSDReport(bank,date)
     },[])
 
 

@@ -14,7 +14,7 @@ const ShowItem = ({item,index}) => {
             <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>{item.value}</Text>
         </View>
         <View style={{flex:1,justifyContent: 'center',alignItems:'center'}}>
-            <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>{item.unit}</Text>
+            <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>{item.unit} {item.currency}</Text>
         </View>
     </View>
   )
