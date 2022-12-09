@@ -12,8 +12,9 @@ export default function ListView({heigth, header, content}) {
                     flexDirection: "row",
                     // justifyContent: "space-evenly",
                     alignItems: "center",
-                    backgroundColor: "#37C2D0",
+                    backgroundColor: COLORS.primary,//"#37C2D0",
                     height: 60,
+                    paddingHorizontal: 2,
                     // width:width
                 }}
             >
@@ -24,16 +25,16 @@ export default function ListView({heigth, header, content}) {
                                 key={index}
                                 style={{
                                     width: width > height 
-                                    ? header.length == 2 ?  width/2 : header.length ==3 ? index ==0? width/2: width/4 : 
-                                    index==0 ?  width/3 : header.length > 3 ? width/5+15 : width/3
-                                    : index==0 ? width/2 : header.length > 2 ? width/3 : width/2,
-                                    backgroundColor: 'blue',
-                                    margin:1
+                                        ? header.length == 2 ?  width/2-1 : header.length ==3 ? index ==0 ? width/2-1: width/4-1 : 
+                                        index==0 ?  width/3-1 : header.length > 3 ? width/5+15-1 : width/3-1: index==0 ? width/2-1 : header.length > 2 ? width/3-1 : width/2-1,
+                                    paddingHorizontal: 2,
+                                    paddingLeft: index ==0 ? 5 : 0,
                                 }}
                                 >
-                                <Text>
-                                    {item}-{header.length}
-                                </Text>
+                                <Text style={{
+                                    fontWeight:'bold', 
+                                    alignSelf: index==0 ? null :'center',
+                                    }}>{item}</Text>
                             </TouchableOpacity>
                         )
                     })
@@ -41,10 +42,55 @@ export default function ListView({heigth, header, content}) {
             </View>
         )
     }
+    const tableContent =(data)=>{
+        return (
+            <View >
+            {
+                data.map((item,index)=>{
+                    return (
+                        <View key ={index}
+                            style={{
+                                flexDirection: "row",
+                                alignItems: "center",
+                                backgroundColor: index%2 ? COLORS.secondary: COLORS.gray_ligth,
+                                height: 50,
+                            }}>
+                                {
+                                    item.map((val,jndex)=>{
+                                        return(
+                                            <TouchableOpacity 
+                                                key={jndex}
+                                                style={{
+                                                    width: width > height 
+                                                        ? header.length == 2 ?  width/2-1 : header.length ==3 ? jndex ==0 ? width/2-1: width/4-1 : 
+                                                        jndex==0 ?  width/3-1 : header.length > 3 ? width/5+15-1 : width/3-1: jndex==0 ? width/2-1 : header.length > 2 ? width/3-1 : width/2-1,
+                                                    paddingHorizontal: 2,
+                                                    paddingLeft: jndex ==0 ? 8 : 0,
+                                                }}
+                                                >
+                                                <Text 
+                                                    style={{
+                                                        alignSelf: jndex==0 ? null :'center',
+                                                        fontWeight: jndex ==0 ? 'bold' : null,
+                                                        color: COLORS.black
+                                                        }}>{val}</Text>
+                                            </TouchableOpacity>
+                                        )
+                                    })
+                                }
+                        </View>
+                    )
+                })
+            }
+        </View>
+        )
+    }
   return (
-    <View style={{}}>
+    <View style={{flex: 1}}>
         <ScrollView horizontal>
             <ScrollView>
+                {tableHeader(header)}
+                {tableContent(content)}
                 {/* <View style={{backgroundColor:COLORS.primary, flexDirection:'row'}}>
                     {
                         header.map((item,index)=>{
@@ -62,8 +108,8 @@ export default function ListView({heigth, header, content}) {
                         })
                     }
                 </View> */}
-                {tableHeader(header)}
-                {
+               
+                {/* {
                     content.map((item,index)=>{
 
                         return (
@@ -84,7 +130,7 @@ export default function ListView({heigth, header, content}) {
                             </View>
                         )
                     })
-                }
+                } */}
 
             </ScrollView>
         </ScrollView>
