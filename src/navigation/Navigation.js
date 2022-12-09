@@ -22,6 +22,7 @@ import MPDReportScreen from '../app/screens/MPD/MPDReportScreen'
 import BOPQuaterly from '../app/screens/MPD/Report1/BOPQuaterly'
 
 import { COLORS } from '../constant'
+import ToumTestScreen from '../app/screens/ToumTestScreen'
 
 const StackNavigation = createNativeStackNavigator();
 
@@ -53,6 +54,13 @@ export default function Navigation() {
                         token ?
                         (
                             <>
+                            <StackNavigation.Screen 
+                                name="toumtest"
+                                component={ToumTestScreen}
+                                options={{
+                                    headerShown: false,
+                                }}
+                            />
                             <StackNavigation.Screen 
                                 name="Start"
                                 component={StartScreen}
