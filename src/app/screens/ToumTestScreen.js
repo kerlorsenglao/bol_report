@@ -2,6 +2,7 @@ import { View, Text } from 'react-native'
 import React,{useState} from 'react'
 
 import SelectPickerComponent from '../components/SelectPickerComponent';
+import DatePickerComponent from '../components/DatePickerComponent';
 
 const ToumTestScreen = () => {
 
@@ -11,6 +12,13 @@ const ToumTestScreen = () => {
     const [year,setYear] = useState("2022")
     const years = ["2022","2021","2020","2019"]
 
+    // date picker from-date
+    const [fdate,setFdate] = useState(new Date())
+    const [fopen,setFopen] = useState(false)
+
+    // date picker to-date
+    const [tdate,setTdate] = useState(new Date())
+    const [topen,setTopen] = useState(false)
 
   return (
     <View>
@@ -20,6 +28,18 @@ const ToumTestScreen = () => {
 
         <SelectPickerComponent data={year} setData={setYear} datas={years} />
         <Text style={{fontWeight:"bold"}}>{year}</Text>
+
+        <DatePickerComponent
+            fdate={fdate}
+            setFdate={setFdate}
+            fopen={fopen}
+            setFopen={setFopen}
+
+            tdate={tdate}
+            setTdate={setTdate}
+            topen={topen}
+            setTopen={setTopen}
+        />
 
     </View>
   )
