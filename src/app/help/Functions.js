@@ -16,6 +16,12 @@ function dateShow(date){
 function getYear(date){
     return date.getFullYear()
 }
+function getMonth(date){
+    return date.getMonth() + 1
+}
+function getMonthYear(date){
+    return date.getMonth()+1 +'/'+ date.getFullYear()
+}
 
 // toum function 
 function getKey(data){
@@ -33,5 +39,20 @@ function getKey(data){
     }
     return allKey;
 }
-export {dateFormat,getDateBefore, dateShow, getKey, getYear}
+
+// kerlor Convert JSON to Array
+function convertJSToAR(data){
+    let newData = []
+    // let hahaArray = Object.entries(data);
+    // let i =0;
+    // hahaArray.forEach(ha => ha[1].forEach(ha2 => newData.push( ha[0], ha2)));
+    
+    for(const [key,value] of Object.entries(data)){
+        let name = key;
+        newData.push({name:key,value:value})
+    }
+
+    return newData //((Object.entries(data))[0])[2]
+}
+export {dateFormat,getDateBefore, dateShow, getKey,getMonth, getYear, getMonthYear,convertJSToAR}
 

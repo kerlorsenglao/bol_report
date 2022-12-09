@@ -17,7 +17,8 @@ const  API_URL = Config.API_URL;
 export default function Daily() {
     const [isLoading,setIsLoading] = useState(false)
     const [data,setData] = useState();
-    const [date, setDate] = useState();
+    const [fromDate, setFromDate] = useState();
+    const [toDate, setToDate] = useState();
     const [openDatePicker, setOpenDatePicker] = useState(false);
     const [bank,setBank] = useState('ALL_BANK');
     const report_type = 'InReport';
@@ -26,10 +27,9 @@ export default function Daily() {
     const navigation = useNavigation();
     useEffect(()=>{
         // console.log(dateFormat(getDateBefore(new Date())))
-        getBSDReport(bank,report_type,date_type, date ? dateFormat(date) : dateFormat(getDateBefore(new Date())));
+        getBSDReport(bank,report_type,date_type, fromDate,toDate);//? dateFormat(date) : dateFormat(getDateBefore(new Date()))
     },[])
-    
-    const   getBSDReport = async (bank,report_type,date_type,date) =>  {
+    const getBSDReport = async (bank,report_type,date_type,toDate,fromDate) =>  {
         setIsLoading(true);
         await axios.post(`${API_URL}/BankSupervisionReport`,{
                 webServiceUser: "bol_it",
@@ -37,11 +37,13 @@ export default function Daily() {
                 bank_code: bank,
                 report_type: report_type,
                 date_type: date_type, //= T1, T2, T3,T4
-                date: date
+                fromDate: '2022-12-06',
+                toDate: '2022-12-07',
             }
         )
         .then(res=>{
             if(res.data.responseCode == '000'){
+                console.log(res.data.data[0].Header)
                 if(res.data.data !=""){
                     setData(res.data.data[0])
                 }else{
@@ -63,7 +65,7 @@ export default function Daily() {
         })
     }
     const SearchBSDReport = () =>{
-        getBSDReport(bank,report_type,date_type,date ? dateFormat(date) : dateFormat(getDateBefore(new Date())))
+        getBSDReport(bank,report_type,date_type,toDate,fromDate)
     }
     return (
         <View style={{flex: 1}}>
@@ -90,7 +92,7 @@ export default function Daily() {
                 >
                     <Text style={{color: COLORS.primary, fontSize: SIZES.medium}}>
                         {
-                            date ? dateShow(date) : dateShow(getDateBefore(new Date()))
+                            toDate ? dateShow(toDate) : dateShow(getDateBefore(new Date()))
                         }
                     </Text>
                 </TouchableOpacity>
@@ -148,10 +150,10 @@ export default function Daily() {
                 mode='date'
                 textColor='#00b3b3'
                 open={openDatePicker}
-                date={date? date : new Date()}
+                date={toDate? toDate : new Date()}
                 onConfirm={(date) => {
                     setOpenDatePicker(false)
-                    setDate(date)
+                    setToDate(date)
                 }}
                 onCancel={() => {
                     setOpenDatePicker(false)

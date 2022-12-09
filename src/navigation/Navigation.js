@@ -20,6 +20,8 @@ import BODReportScreen from '../app/screens/BOD/BODReportScreen'
 import BSDReportScreen from '../app/screens/BSD/BSDReportScreen'
 import MPDReportScreen from '../app/screens/MPD/MPDReportScreen'
 import BOPQuaterly from '../app/screens/MPD/Report1/BOPQuaterly'
+import Monestatistic from '../app/screens/MPD/Report10/Monestatistic'
+import Testing from '../app/screens/Testing'
 
 import { COLORS } from '../constant'
 
@@ -53,6 +55,13 @@ export default function Navigation() {
                         token ?
                         (
                             <>
+                            <StackNavigation.Screen 
+                                name="Testing"
+                                component={Testing}
+                                options={{
+                                    headerShown: false,
+                                }}
+                            />
                             <StackNavigation.Screen 
                                 name="Start"
                                 component={StartScreen}
@@ -151,6 +160,22 @@ export default function Navigation() {
                                     }
                                 }}
                             />
+                            <StackNavigation.Screen 
+                                name="Monestatistic"
+                                component={Monestatistic}
+                                options={{
+                                    title:'ກົມນະໂຍບາຍເງີນຕາ',
+                                    headerTitleAlign:'center',
+                                    headerTitleStyle:{
+                                        color: COLORS.white,
+                                        // fontWeight: 'bold'
+                                    },
+                                    headerStyle:{
+                                        backgroundColor: COLORS.primary
+                                    }
+                                }}
+                            />
+                            
                             <StackNavigation.Screen 
                                 name="Search"
                                 component={SearchScreen}

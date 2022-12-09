@@ -225,7 +225,7 @@ export default function MPDReportScreen({navigation}) {
             <Text style={{color: '#000000', fontSize: SIZES.medium,}}>9. ສະຖິຕິກະແສເງີນໂອນເຂົ້າ-ອອກປະເທດ</Text>
         </TouchableOpacity>
         <TouchableOpacity
-            // onPress={()=>navigation.navigate('BSD')}
+            onPress={()=>navigation.navigate('Monestatistic')}
             style={{
                 backgroundColor: COLORS.gray_ligth,
                 padding: 10,
