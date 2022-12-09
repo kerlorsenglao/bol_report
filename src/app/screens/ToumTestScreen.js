@@ -3,6 +3,7 @@ import React,{useState} from 'react'
 
 import SelectPickerComponent from '../components/SelectPickerComponent';
 import DatePickerComponent from '../components/DatePickerComponent';
+import SearchButtonComponent from '../components/SearchButtonComponent';
 
 const ToumTestScreen = () => {
 
@@ -20,6 +21,11 @@ const ToumTestScreen = () => {
     const [tdate,setTdate] = useState(new Date())
     const [topen,setTopen] = useState(false)
 
+    // function for search
+    const search = () => {
+      console.log('search')
+    }
+
   return (
     <View>
 
@@ -29,17 +35,31 @@ const ToumTestScreen = () => {
         <SelectPickerComponent data={year} setData={setYear} datas={years} />
         <Text style={{fontWeight:"bold"}}>{year}</Text>
 
-        <DatePickerComponent
-            fdate={fdate}
-            setFdate={setFdate}
-            fopen={fopen}
-            setFopen={setFopen}
 
-            tdate={tdate}
-            setTdate={setTdate}
-            topen={topen}
-            setTopen={setTopen}
-        />
+        <View style={{flexDirection:'row'}}>
+            <View style={{flex:1}}>
+                <DatePickerComponent
+                    fdate={fdate}
+                    setFdate={setFdate}
+                    fopen={fopen}
+                    setFopen={setFopen}
+
+                    tdate={tdate}
+                    setTdate={setTdate}
+                    topen={topen}
+                    setTopen={setTopen}
+                />
+            </View>
+
+            <View style={{}}>
+                <SearchButtonComponent searchFunction={search} />
+            </View>
+            
+            
+
+        </View>
+        
+
 
     </View>
   )
