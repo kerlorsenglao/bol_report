@@ -81,6 +81,7 @@ const Quaterly = () => {
     return (
         <View style={{flex:1}}>
             <Spinner visible={isLoading} color='gray'/>   
+
             {/* ສ່ວນ Search new */}
 
             {
@@ -94,6 +95,7 @@ const Quaterly = () => {
                                 borderBottomWidth: 1,
                                 borderRadius:5,
                                 marginHorizontal:20,
+// >>>>>>> 8e1e1eda83e1bd1538b9f8ae9e70b1a3baecc4a7
                         }}>
                             <Picker
                                     mode='dropdown'
@@ -252,6 +254,7 @@ const Quaterly = () => {
                             onPress={()=>{
                                 setOpenDatePicker(true)
                             }}
+
                     >
                         <Text style={{color: COLORS.primary, fontSize: SIZES.medium}}>{date.getFullYear()}</Text>
                     </TouchableOpacity>
@@ -275,6 +278,7 @@ const Quaterly = () => {
 
                     {/* ເລືອກທະນາຄານ */}
                     <View style={{
+
                             flex:2,
                             borderBottomColor: COLORS.primary,
                             borderBottomWidth: 1,
@@ -301,10 +305,12 @@ const Quaterly = () => {
                                 <Picker.Item label="LDB" value="LDB" />
                                 <Picker.Item label="JDB" value="JDB" />
                             </Picker>
+
                     </View>
 
                     {/* ປຸ່ມຄົ້ນຫາ */}
                     <TouchableOpacity
+
                             style={{
                                 flex:1,
                                 backgroundColor:COLORS.primary,
