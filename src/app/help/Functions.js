@@ -19,6 +19,9 @@ function getYear(date){
 function getMonth(date){
     return date.getMonth() + 1
 }
+function getMonthYear(date){
+    return date.getMonth()+1 +'/'+ date.getFullYear()
+}
 
 // toum function 
 function getKey(data){
@@ -51,5 +54,5 @@ function convertJSToAR(data){
 
     return newData //((Object.entries(data))[0])[2]
 }
-export {dateFormat,getDateBefore, dateShow, getKey,getMonth, getYear, convertJSToAR}
+export {dateFormat,getDateBefore, dateShow, getKey,getMonth, getYear, getMonthYear,convertJSToAR}
 
