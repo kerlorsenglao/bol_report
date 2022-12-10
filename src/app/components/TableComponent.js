@@ -46,7 +46,7 @@ export default function TableComponent({header, content}) {
     }
     const tableContent =(data)=>{
         return (
-            <View >
+            <View style={{marginBottom: 10}}>
             {
                 data.map((item,index)=>{
                     return (
