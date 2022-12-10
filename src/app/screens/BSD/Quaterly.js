@@ -53,7 +53,6 @@ const Quaterly = () => {
             }
         )
         .then(res=>{
-            // console.log(res.data)
             if(res.data.responseCode == '000'){
                 if(res.data.data !=""){
                     let newKey = getKey(res.data.data[0])

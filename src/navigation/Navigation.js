@@ -24,6 +24,7 @@ import Monestatistic from '../app/screens/MPD/Report10/Monestatistic'
 import Testing from '../app/screens/Testing'
 
 import { COLORS } from '../constant'
+import ToumTestScreen from '../app/screens/ToumTestScreen'
 
 const StackNavigation = createNativeStackNavigator();
 
@@ -56,8 +57,8 @@ export default function Navigation() {
                         (
                             <>
                             <StackNavigation.Screen 
-                                name="Testing"
-                                component={Testing}
+                                name="toumtest"
+                                component={ToumTestScreen}
                                 options={{
                                     headerShown: false,
                                 }}
