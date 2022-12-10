@@ -56,13 +56,20 @@ export default function Navigation() {
                         token ?
                         (
                             <>
-                            <StackNavigation.Screen 
+                            {/* <StackNavigation.Screen 
+                                name="Testing"
+                                component={Testing}
+                                options={{
+                                    headerShown: false,
+                                }}
+                            /> */}
+                            {/* <StackNavigation.Screen 
                                 name="toumtest"
                                 component={ToumTestScreen}
                                 options={{
                                     headerShown: false,
                                 }}
-                            />
+                            /> */}
                             <StackNavigation.Screen 
                                 name="Start"
                                 component={StartScreen}

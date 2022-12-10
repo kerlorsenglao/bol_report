@@ -1,9 +1,9 @@
-import { StyleSheet, Text, View, ScrollView, FlatList, useWindowDimensions } from 'react-native'
+import { StyleSheet, Text, View, ScrollView, useWindowDimensions } from 'react-native'
 import React from 'react'
 import { COLORS, SIZES } from '../../constant'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 
-export default function ListView({heigth, header, content}) {
+export default function ListView({header, content}) {
     const {width,height} = useWindowDimensions()
     const tableHeader =(data)=>{
         return (
@@ -56,32 +56,9 @@ export default function ListView({heigth, header, content}) {
                                 height: 50,
                             }}>
                                 {
-                                    // item.map((val,jndex)=>{
-                                    //     return(
-                                    //         <TouchableOpacity 
-                                    //             key={jndex}
-                                    //             style={{
-                                    //                 width: width > height 
-                                    //                     ? header.length == 2 ?  width/2-1 : header.length ==3 ? jndex ==0 ? width/2-1: width/4-1 : 
-                                    //                     jndex==0 ?  width/3-1 : header.length > 3 ? width/5+15-1 : width/3-1: jndex==0 ? width/2-1 : header.length > 2 ? width/3-1 : width/2-1,
-                                    //                 paddingHorizontal: 2,
-                                    //                 paddingLeft: jndex ==0 ? 8 : 0,
-                                    //             }}
-                                    //             >
-                                    //             <Text 
-                                    //                 style={{
-                                    //                     alignSelf: jndex==0 ? null :'center',
-                                    //                     fontWeight: jndex ==0 ? 'bold' : null,
-                                    //                     color: COLORS.black
-                                    //                     }}>{val}</Text>
-                                    //         </TouchableOpacity>
-                                    //     )
-                                    // })
                                     header.map((val,jndex)=>{
                                         let H = 'H_'
                                         let S = 'S_'
-                                        // console.log(H.includes(item[val]))
-                                        // console.log(item[val].toString().includes(H))
                                         return (
                                             <TouchableOpacity 
                                                 key={jndex}

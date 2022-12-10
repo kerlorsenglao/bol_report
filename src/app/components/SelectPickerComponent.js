@@ -6,7 +6,12 @@ import {Picker} from '@react-native-picker/picker';
 
 const SelectPickerComponent = ({data,setData,datas}) => {
   return (
-    <View>
+    <View style={{
+        flex: 1,
+        borderBottomColor: COLORS.primary, 
+        borderBottomWidth: 1,
+        marginHorizontal:5
+        }}>
         <Picker
             mode='dropdown'
             selectedValue={data}
@@ -17,7 +22,8 @@ const SelectPickerComponent = ({data,setData,datas}) => {
                 color: COLORS.primary,
                 height: 45,
                 alignItems:'center',
-                textAlign:'center'
+                textAlign:'center',
+                // borderBottomColor: COLORS.primary,
             }}
             dropdownIconColor={COLORS.primary}
                         
