@@ -4,7 +4,7 @@ import React,{useState} from 'react'
 import DatePicker from 'react-native-date-picker'
 import { COLORS, SIZES } from '../../constant'
 
-const DatePickerComponent = ({fdate,setFdate,fopen,setFopen,tdate,setTdate,topen,setTopen}) => {
+const DatePickerComponent = ({fdate,setFdate,fopen,setFopen,tdate,setTdate,topen,setTopen,tstatus,setTstatus}) => {
 
   return (
     <View>
@@ -52,7 +52,10 @@ const DatePickerComponent = ({fdate,setFdate,fopen,setFopen,tdate,setTdate,topen
                     }}
                 >
                     <Text style={{color: COLORS.primary, fontSize: SIZES.medium}}>
-                        {tdate.getDate()+'/'+(tdate.getMonth()+1)+'/'+tdate.getFullYear()}
+                        {
+                            tstatus? tdate.getDate()+'/'+(tdate.getMonth()+1)+'/'+tdate.getFullYear()
+                            : 'dd/mm/YYYY'
+                        }
                     </Text>
                 </TouchableOpacity>
             </View>
@@ -71,6 +74,7 @@ const DatePickerComponent = ({fdate,setFdate,fopen,setFopen,tdate,setTdate,topen
                 onConfirm={(date) => {
                     setFopen(false)
                     setFdate(date)
+                    
                 }}
                 onCancel={() => {
                     setFopen(false)
@@ -90,9 +94,11 @@ const DatePickerComponent = ({fdate,setFdate,fopen,setFopen,tdate,setTdate,topen
                 onConfirm={(date) => {
                     setTopen(false)
                     setTdate(date)
+                    setTstatus(true)
                 }}
                 onCancel={() => {
                     setTopen(false)
+                    setTstatus(false)
                 }}
         />
     </View>
