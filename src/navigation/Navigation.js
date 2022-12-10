@@ -57,6 +57,13 @@ export default function Navigation() {
                         (
                             <>
                             <StackNavigation.Screen 
+                                name="Testing"
+                                component={Testing}
+                                options={{
+                                    headerShown: false,
+                                }}
+                            />
+                            <StackNavigation.Screen 
                                 name="toumtest"
                                 component={ToumTestScreen}
                                 options={{
