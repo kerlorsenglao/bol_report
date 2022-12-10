@@ -3,7 +3,7 @@ import React from 'react'
 import { COLORS, SIZES } from '../../constant'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 
-export default function ListView({heigth, header, content}) {
+export default function ListView({header, content}) {
     const {width,height} = useWindowDimensions()
     const tableHeader =(data)=>{
         return (

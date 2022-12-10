@@ -1,198 +1,107 @@
-import { StyleSheet, Text, View, useWindowDimensions, FlatList, TouchableOpacity, ScrollView } from 'react-native'
-import React, {useState} from 'react'
-import { COLORS } from '../../constant'
+import { StyleSheet, Text, View, ScrollView, useWindowDimensions } from 'react-native'
+import React from 'react'
+import { COLORS, SIZES } from '../../constant'
+import { TouchableOpacity } from 'react-native-gesture-handler'
 
-export default function TableComponent({Header,Content}) {
-    const {width,height}= useWindowDimensions()
-    const [ pets, setPets ] = useState([
-        {
-          Name: "Charlie",
-          Gender: "Male",
-          Breed: "Dog",
-          Weight: 12,
-          Age: 3
-        },
-        {
-          Name: "Max",
-          Gender: "Male",
-          Breed: "Dog",
-          Weight: 23,
-          Age: 7
-        },
-        {
-          Name: "Lucy",
-          Gender: "Female",
-          Breed: "Cat",
-          Weight: 5,
-          Age: 4
-        },
-        {
-          Name: "Oscar",
-          Gender: "Male",
-          Breed: "Turtle",
-          Weight: 13,
-          Age: 23
-        },
-        {
-          Name: "Daisy",
-          Gender: "Female",
-          Breed: "Bird",
-          Weight: 1.7,
-          Age: 3
-        },
-        {
-          Name: "Ruby",
-          Gender: "Female",
-          Breed: "Dog",
-          Weight: 6,
-          Age: 3
-        },
-        {
-          Name: "Milo",
-          Gender: "Male",
-          Breed: "Dog",
-          Weight: 11,
-          Age: 7
-        },
-        {
-          Name: "Toby",
-          Gender: "Male",
-          Breed: "Dog",
-          Weight: 34,
-          Age: 19
-        },
-        {
-          Name: "Lola",
-          Gender: "Female",
-          Breed: "Cat",
-          Weight: 4,
-          Age: 3
-        },
-        {
-          Name: "Jack",
-          Gender: "Male",
-          Breed: "Turtle",
-          Weight: 13,
-          Age: 23
-        },
-        {
-          Name: "Bailey",
-          Gender: "Female",
-          Breed: "Bird",
-          Weight: 2,
-          Age: 4
-        },
-        {
-          Name: "Bella",
-          Gender: "Female",
-          Breed: "Dog",
-          Weight: 6,
-          Age: 10
-        }
-      ])
-    const [ columns, setColumns ] = useState([
-        "Name",
-        "Gender",
-        "Breed",
-        "Weight",
-        "Age"
-      ])
-      const [ direction, setDirection ] = useState(null)
-      const [ selectedColumn, setSelectedColumn ] = useState(null)
-
-      const sortTable = (column) => {
-        const newDirection = direction === "desc" ? "asc" : "desc" 
-        const sortedData = _.orderBy(pets, [column],[newDirection])
-        setSelectedColumn(column)
-        setDirection(newDirection)
-        setPets(sortedData)
-      }
-
-      const tableHeader = () => (
-        <View style={styles.tableHeader}>
-          {
-            columns.map((column, index) => {
-              {
-                return (
-                  <TouchableOpacity 
-                    key={index}
-                    style={styles.columnHeader} 
-                    onPress={()=> sortTable(column)}>
-                    <Text style={styles.columnHeaderTxt}>{column + " "} 
-                      { selectedColumn === column && <MaterialCommunityIcons 
-                          name={direction === "desc" ? "arrow-down-drop-circle" : "arrow-up-drop-circle"} 
-                        />
-                      }
-                    </Text>
-                  </TouchableOpacity>
-                )
-              }
-            })
-          }
-        </View>
-      )
-
-    return (
-      <View style={{flex: 1}}>
-        <ScrollView horizontal={false} style={{width: '100%'}}>
-           <FlatList 
-                data={pets}
-                style={{width:"100%"}}
-                keyExtractor={(item, index) => index+""}
-                ListHeaderComponent={tableHeader}
-                stickyHeaderIndices={[0]}
-                renderItem={({item, index})=> {
-                    return (
-                    <View style={{...styles.tableRow, backgroundColor: index % 2 == 1 ? "#F0FBFC" : "white"}}>
-                        <Text style={{...styles.columnRowTxt, fontWeight:"bold"}}>{item.Name}</Text>
-                        <Text style={styles.columnRowTxt}>{item.Gender}</Text>
-                        <Text style={styles.columnRowTxt}>{item.Breed}</Text>
-                        <Text style={styles.columnRowTxt}>{item.Weight}</Text>
-                        <Text style={styles.columnRowTxt}>{item.Age}</Text>
-                    </View>
-                    )
+export default function TableComponent({header, content}) {
+    const {width,height} = useWindowDimensions()
+    const tableHeader =(data)=>{
+        return (
+            <View 
+                style={{
+                    flexDirection: "row",
+                    // justifyContent: "space-evenly",
+                    alignItems: "center",
+                    backgroundColor: COLORS.primary,//"#37C2D0",
+                    height: 50,
+                    paddingHorizontal: 2,
+                    marginTop:5,
+                    borderTopLeftRadius:5,
+                    borderTopRightRadius:5
                 }}
-            />
+            >
+                {
+                    data.map((item,index)=>{
+                        return (
+                            <TouchableOpacity 
+                                key={index}
+                                style={{
+                                    width: width > height 
+                                        ? header.length == 2 ?  width/2-1 : header.length ==3 ? index ==0 ? width/2-1: width/4-1 : 
+                                        index==0 ?  width/3-1 : header.length > 3 ? width/5+15-1 : width/3-1: index==0 ? width/2-1 : header.length > 2 ? width/3-1 : width/2-1,
+                                    paddingHorizontal: 2,
+                                    paddingLeft: index ==0 ? 5 : 0,
+                                }}
+                                >
+                                <Text style={{
+                                    fontWeight:'bold', 
+                                    alignSelf: index==0 ? null :'center',
+                                    }}>{item}</Text>
+                            </TouchableOpacity>
+                        )
+                    })
+                }
+            </View>
+        )
+    }
+    const tableContent =(data)=>{
+        return (
+            <View >
+            {
+                data.map((item,index)=>{
+                    return (
+                        <View key ={index}
+                            style={{
+                                flexDirection: "row",
+                                alignItems: "center",
+                                backgroundColor: index%2 ? COLORS.secondary: COLORS.gray_ligth,
+                                // height: 50,
+                                paddingVertical:10
+                            }}>
+                                {
+                                    header.map((val,jndex)=>{
+                                        let H = 'H_'
+                                        let S = 'S_'
+                                        return (
+                                            <TouchableOpacity 
+                                                key={jndex}
+                                                style={{
+                                                    width: width > height 
+                                                        ? header.length == 2 ?  width/2-1 : header.length ==3 ? jndex ==0 ? width/2-1: width/4-1 : 
+                                                        jndex==0 ?  width/3-1 : header.length > 3 ? width/5+15-1 : width/3-1: jndex==0 ? width/2-1 : header.length > 2 ? width/3-1 : width/2-1,
+                                                    paddingHorizontal: 2,
+                                                    paddingLeft: jndex ==0 ? 8 : 0,
+                                                }}
+                                                >
+                                                <Text 
+                                                    style={{
+                                                        alignSelf: jndex==0 ? null :'center',
+                                                        fontSize: item[val].toString().includes(H)?SIZES.medium: 14,
+                                                        fontWeight: item[val].toString().includes(H) || item[val].toString().includes(S)  ? 'bold' : null,
+                                                        color: item[val].toString().includes(S) ? '#595959' : COLORS.black,
+                                                        
+                                                        }}>{item[val].toString().includes(H) || item[val].toString().includes(S)? item[val].slice(2) : item[val]}</Text>
+                                            </TouchableOpacity>
+                                        )
+                                    })
+                                }
+                        </View>
+                    )
+                })
+            }
+        </View>
+        )
+    }
+  return (
+    <View style={{flex: 1}}>
+        <ScrollView horizontal>
+            <ScrollView>
+                {tableHeader(header)}
+                {tableContent(content)}
+            </ScrollView>
         </ScrollView>
-      </View>
-        
-    )
+    </View>
+  )
 }
 
-const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: '#fff',
-      alignItems: 'center',
-      justifyContent: 'center',
-      paddingTop:80
-    },
-    tableHeader: {
-      flexDirection: "row",
-      justifyContent: "space-evenly",
-      alignItems: "center",
-      backgroundColor: "#37C2D0",
-    //   borderTopEndRadius: 10,
-    //   borderTopStartRadius: 10,
-      height: 50
-    },
-    tableRow: {
-      flexDirection: "row",
-      height: 40,
-      alignItems:"center",
-    },
-    columnHeader: {
-      width: "20%",
-      justifyContent: "center",
-      alignItems:"center"
-    },
-    columnHeaderTxt: {
-      color: "white",
-      fontWeight: "bold",
-    },
-    columnRowTxt: {
-      color: 'black',
-      width:"20%",
-      textAlign:"center",
-    }
-  });
+const styles = StyleSheet.create({})
