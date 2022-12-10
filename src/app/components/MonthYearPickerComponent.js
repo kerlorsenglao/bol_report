@@ -4,7 +4,7 @@ import React,{useState} from 'react'
 import MonthPicker from 'react-native-month-year-picker';
 import { COLORS, SIZES } from '../../constant'
 
-const MonthYearPickerComponent = ({my1,setMY1,show1,setShow1,my2,setMY2,show2,setShow2}) => {
+const MonthYearPickerComponent = ({my1,setMY1,show1,setShow1,my2,setMY2,show2,setShow2,my2status,setMY2status}) => {
 
     const onMonthChange1=(event,newDate)=>{
         setShow1(false)
@@ -13,7 +13,14 @@ const MonthYearPickerComponent = ({my1,setMY1,show1,setShow1,my2,setMY2,show2,se
 
     const onMonthChange2=(event,newDate)=>{
         setShow2(false)
-        setMY2(newDate || my2)
+        if(newDate){
+            setMY2(newDate)
+            setMY2status(true)
+        }else{
+            setMY2(my2)
+            setMY2status(false)
+        }
+        
     }
 
   return (
@@ -62,7 +69,10 @@ const MonthYearPickerComponent = ({my1,setMY1,show1,setShow1,my2,setMY2,show2,se
                     }}
                 >
                     <Text style={{color: COLORS.primary, fontSize: SIZES.medium}}>
-                        {(my2.getMonth()+1)+'/'+my2.getFullYear()}
+                        {
+                            my2status ? (my2.getMonth()+1)+'/'+my2.getFullYear()
+                            : 'mm/YYYY'
+                        }
                     </Text>
                 </TouchableOpacity>
             </View>
@@ -74,7 +84,6 @@ const MonthYearPickerComponent = ({my1,setMY1,show1,setShow1,my2,setMY2,show2,se
             &&         
             <MonthPicker
                 onChange={onMonthChange1}
-                onCancel={()=>console.log('cancel')}
                 value={my1}
                 okButton='ຕົກລົງ'
                 cancelButton='ຍົກເລີກ'

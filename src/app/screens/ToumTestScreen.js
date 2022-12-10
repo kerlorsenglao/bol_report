@@ -5,6 +5,7 @@ import SelectPickerComponent from '../components/SelectPickerComponent';
 import DatePickerComponent from '../components/DatePickerComponent';
 import SearchButtonComponent from '../components/SearchButtonComponent';
 import MonthYearPickerComponent from '../components/MonthYearPickerComponent';
+import YearPickerComponent from '../components/YearPickerComponent';
 
 const ToumTestScreen = () => {
 
@@ -22,6 +23,7 @@ const ToumTestScreen = () => {
     // 2. DatePickerComponent (to-date)
     const [tdate,setTdate] = useState(new Date())
     const [topen,setTopen] = useState(false)
+    const [tstatus,setTstatus] = useState(false)  // ສະຖານະວ່າຖືກເລືອກບໍ່
 
     // 3. SearchButtonComponent (function for search)
     const search = (bank,fdate,tdate) => {
@@ -37,6 +39,13 @@ const ToumTestScreen = () => {
     // 4. MonthYearPickerComponent (month-year2)
     const [my2,setMY2] = useState(new Date());
     const [show2,setShow2] = useState(false)
+    const [my2status,setMY2status] = useState(false)  // ສະຖານະວ່າຖືກເລືອກບໍ່
+
+    // 5. YearPickerComponent 
+    const [year1,setYear1] = useState(new Date().getFullYear())
+    const [year2,setYear2] = useState(new Date().getFullYear())
+    const [y2Status,setY2Status] = useState(false)    // ສະຖານະວ່າຖືກເລືອກບໍ່
+
 
   return (
     <View>
@@ -61,6 +70,8 @@ const ToumTestScreen = () => {
                     setTdate={setTdate}
                     topen={topen}
                     setTopen={setTopen}
+                    tstatus={tstatus}
+                    setTstatus={setTstatus}
                 />
             </View>
 
@@ -84,8 +95,21 @@ const ToumTestScreen = () => {
             setMY2={setMY2}
             show2={show2}
             setShow2={setShow2}
-        
+            my2status={my2status}
+            setMY2status={setMY2status}
         />
+
+        {/* only Year picker */}
+        <YearPickerComponent 
+            year1={year1}
+            setYear1={setYear1}
+
+            year2={year2}
+            setYear2={setYear2}
+            y2Status={y2Status}
+            setY2Status={setY2Status}
+        />
+
 
     </View>
   )
