@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, ScrollView, FlatList, useWindowDimensions } from 'react-native'
 import React from 'react'
-import { COLORS } from '../../constant'
+import { COLORS, SIZES } from '../../constant'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 
 export default function ListView({heigth, header, content}) {
@@ -56,8 +56,33 @@ export default function ListView({heigth, header, content}) {
                                 height: 50,
                             }}>
                                 {
-                                    item.map((val,jndex)=>{
-                                        return(
+                                    // item.map((val,jndex)=>{
+                                    //     return(
+                                    //         <TouchableOpacity 
+                                    //             key={jndex}
+                                    //             style={{
+                                    //                 width: width > height 
+                                    //                     ? header.length == 2 ?  width/2-1 : header.length ==3 ? jndex ==0 ? width/2-1: width/4-1 : 
+                                    //                     jndex==0 ?  width/3-1 : header.length > 3 ? width/5+15-1 : width/3-1: jndex==0 ? width/2-1 : header.length > 2 ? width/3-1 : width/2-1,
+                                    //                 paddingHorizontal: 2,
+                                    //                 paddingLeft: jndex ==0 ? 8 : 0,
+                                    //             }}
+                                    //             >
+                                    //             <Text 
+                                    //                 style={{
+                                    //                     alignSelf: jndex==0 ? null :'center',
+                                    //                     fontWeight: jndex ==0 ? 'bold' : null,
+                                    //                     color: COLORS.black
+                                    //                     }}>{val}</Text>
+                                    //         </TouchableOpacity>
+                                    //     )
+                                    // })
+                                    header.map((val,jndex)=>{
+                                        let H = 'H_'
+                                        let S = 'S_'
+                                        // console.log(H.includes(item[val]))
+                                        // console.log(item[val].toString().includes(H))
+                                        return (
                                             <TouchableOpacity 
                                                 key={jndex}
                                                 style={{
@@ -71,9 +96,11 @@ export default function ListView({heigth, header, content}) {
                                                 <Text 
                                                     style={{
                                                         alignSelf: jndex==0 ? null :'center',
-                                                        fontWeight: jndex ==0 ? 'bold' : null,
-                                                        color: COLORS.black
-                                                        }}>{val}</Text>
+                                                        fontSize: item[val].toString().includes(H)?SIZES.medium: 14,
+                                                        fontWeight: item[val].toString().includes(H) || item[val].toString().includes(S)  ? 'bold' : null,
+                                                        color: item[val].toString().includes(S) ? '#595959' : COLORS.black,
+                                                        
+                                                        }}>{item[val].toString().includes(H) || item[val].toString().includes(S)? item[val].slice(2) : item[val]}</Text>
                                             </TouchableOpacity>
                                         )
                                     })
