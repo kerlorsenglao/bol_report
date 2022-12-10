@@ -28,10 +28,11 @@ export default function Daily() {
     const banks = ["ALL_BANK","BCEL","LDB","JDB"]
     const report_type = 'InReport';
     const date_type = 'D';
+    const date_type_default = 'DEFAULT_D'
 
     const navigation = useNavigation();
     useEffect(()=>{
-        getBSDReport(bank,report_type,date_type, fromDate,toDate);//? dateFormat(date) : dateFormat(getDateBefore(new Date()))
+        getBSDReport(bank,report_type,date_type_default, fromDate,toDate);//? dateFormat(date) : dateFormat(getDateBefore(new Date()))
     },[])
     const getBSDReport = async (bank,report_type,date_type,toDate,fromDate) =>  {
         setIsLoading(true);
@@ -41,12 +42,13 @@ export default function Daily() {
                 bank_code: bank,
                 report_type: report_type,
                 date_type: date_type, //= T1, T2, T3,T4
-                fromDate: '2022-12-09',
-                toDate: '2022-12-09',
+                fromDate: fromDate,
+                toDate: toDate,//'2022-12-09'
             }
         )
         .then(res=>{
             if(res.data.responseCode == '000'){
+                console.log(res.data)
                 if(res.data.data !=""){
                     setHeaderData(res.data.data[0].Header)
                     setContentData(res.data.data[1].Sub)
