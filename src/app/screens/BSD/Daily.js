@@ -18,12 +18,15 @@ import TableComponent from '../../components/TableComponent';
 const  API_URL = Config.API_URL;
 export default function Daily() {
     const [isLoading,setIsLoading] = useState(false)
+    const [data,setData] = useState();
     const [headerData,setHeaderData] = useState(null);
     const [contentData, setContentData ]= useState(null);
     const [fromDate, setFromDate] = useState(new Date());
+    const [defaultDate,setDefaultDate] = useState(null);
     const [fromOpen,setFromOpent] = useState(false);
     const [toDate, setToDate] = useState(new Date());
     const [toOpen, setToOpen] = useState(false);
+    const [tstatus,setTstatus] = useState(false)
     const [bank,setBank] = useState('ALL_BANK');
     const banks = ["ALL_BANK","BCEL","LDB","JDB"]
     const report_type = 'InReport';
@@ -34,6 +37,7 @@ export default function Daily() {
     useEffect(()=>{
         getBSDReport(bank,report_type,date_type_default, fromDate,toDate);//? dateFormat(date) : dateFormat(getDateBefore(new Date()))
     },[])
+
     const getBSDReport = async (bank,report_type,date_type,toDate,fromDate) =>  {
         setIsLoading(true);
         await axios.post(`${API_URL}/BankSupervisionReport`,{
@@ -41,23 +45,30 @@ export default function Daily() {
                 webServicePassword: "123456",
                 bank_code: bank,
                 report_type: report_type,
-                date_type: date_type, //= T1, T2, T3,T4
-                fromDate: fromDate,
-                toDate: toDate,//'2022-12-09'
+                date_type: date_type, // D=>ປະຈຳວັນ, M=>ປະຈຳເດືອນ, T=>ປະຈຳໄຕມາດ, Y=>ປະຈຳປີ
+                fromDate: dateFormat(fromDate),
+                toDate: dateFormat(toDate),
             }
         )
         .then(res=>{
+            console.log('response_data=>',res.data)
             if(res.data.responseCode == '000'){
-                console.log(res.data)
+                
                 if(res.data.data !=""){
-                    setHeaderData(res.data.data[0].Header)
-                    setContentData(res.data.data[1].Sub)
+                    setData({'header':res.data.data[0].Header,'content':res.data.data[1].Sub})
+                    if(!defaultDate){
+                        setDefaultDate(new Date(res.data.data[0].Header[1]))
+                        setFromDate(null)
+                    }
                 }else{
                     setData()
+                    // setHeaderData(null)
+                    // setContentData(null)
                 }
             }else{// error
+                setData()
                 let msg = res.data.msg
-                //.show({
+                //Toast.show({
                 //     type: 'error',
                 //     text1: 'ຄົ້ນຫາບໍ່ສຳເລັດ!',
                 //     text2: msg
@@ -66,7 +77,7 @@ export default function Daily() {
             setIsLoading(false)
         })
         .catch(e =>{
-            console.log(e)
+            // console.log(e)
             setIsLoading(false)
         })
     }
@@ -75,6 +86,7 @@ export default function Daily() {
     }
     return (
         <View style={{flex:1}}>
+            <Spinner visible={isLoading}/>
             <View style={{
                 flexDirection:'row',
                 justifyContent:'space-evenly',
@@ -82,10 +94,12 @@ export default function Daily() {
             }}>
                 <View style={{flex: 1}}>
                     <DatePickerComponent 
-                        fdate={fromDate} setFdate={setFromDate} 
+                        fdate={fromDate ? fromDate : defaultDate} setFdate={setFromDate} 
                         fopen={fromOpen} setFopen={setFromOpent} 
                         tdate={toDate} setTdate={setToDate} 
                         topen={toOpen} setTopen={setToOpen}
+                        tstatus={tstatus}
+                        setTstatus={setTstatus}
                     />
                 </View>
             </View>
@@ -103,9 +117,9 @@ export default function Daily() {
                 
             </View>
             {
-                headerData && contentData ?
+                data ?
                 (
-                <TableComponent header={headerData} content={contentData}/>
+                <TableComponent header={data.header} content={data.content}/>
                 )
                 : (
                     <View style={{flex: 1, justifyContent:'center',alignItems:'center'}}>

@@ -54,5 +54,17 @@ function convertJSToAR(data){
 
     return newData //((Object.entries(data))[0])[2]
 }
-export {dateFormat,getDateBefore, dateShow, getKey,getMonth, getYear, getMonthYear,convertJSToAR}
+
+function reverseStringInDate(str){// 2022-12-10 <string> => 10-12-2022 <string>
+    if(/^(\d+-)*(\d+)$/.test(str)){ // check if just contain 0-9 and "-" that means str=2022-12-10 =>so chnage to str=10-12-2022 (true)
+        let date = new Date(str)
+        return date.getDate()+'-'+(date.getMonth()+1) +'-'+date.getFullYear() 
+    }
+    return str; // else just return str itself (false)
+}
+
+function numberFormate(num){
+    return num.toLocaleString('de-DE');
+}
+export {dateFormat,getDateBefore, dateShow, getKey,getMonth, getYear, getMonthYear,convertJSToAR,reverseStringInDate,numberFormate}
 

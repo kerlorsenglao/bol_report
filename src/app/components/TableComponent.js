@@ -2,6 +2,7 @@ import { StyleSheet, Text, View, ScrollView, useWindowDimensions } from 'react-n
 import React from 'react'
 import { COLORS, SIZES } from '../../constant'
 import { TouchableOpacity } from 'react-native-gesture-handler'
+import { reverseStringInDate } from '../help/Functions'
 
 export default function TableComponent({header, content}) {
     const {width,height} = useWindowDimensions()
@@ -36,7 +37,7 @@ export default function TableComponent({header, content}) {
                                 <Text style={{
                                     fontWeight:'bold', 
                                     alignSelf: index==0 ? null :'center',
-                                    }}>{item}</Text>
+                                    }}>{reverseStringInDate(item)}</Text>
                             </TouchableOpacity>
                         )
                     })
