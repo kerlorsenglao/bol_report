@@ -1,13 +1,12 @@
-import { StyleSheet, Text, View,TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View,TouchableOpacity, ToastAndroid  } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import Spinner from 'react-native-loading-spinner-overlay'
 import axios from "axios";
 import Config from "react-native-config";
-import DatePicker from 'react-native-date-picker'
-import {Picker} from '@react-native-picker/picker';
+import Toast from 'react-native-toast-message'
 
-import { dateFormat, getDateBefore, dateShow } from '../../help/Functions'
+import { dateFormat, getDateBefore, dateShow,checkSelectDateValidation } from '../../help/Functions'
 import BackInHomeComponent from '../../components/BackInHomeComponent'
 import { COLORS, SIZES } from '../../../constant';
 import DatePickerComponent from '../../components/DatePickerComponent';
@@ -19,10 +18,7 @@ const  API_URL = Config.API_URL;
 export default function Daily() {
     const [isLoading,setIsLoading] = useState(false)
     const [data,setData] = useState();
-    const [headerData,setHeaderData] = useState(null);
-    const [contentData, setContentData ]= useState(null);
     const [fromDate, setFromDate] = useState(new Date());
-    const [defaultDate,setDefaultDate] = useState(null);
     const [fromOpen,setFromOpent] = useState(false);
     const [toDate, setToDate] = useState(new Date());
     const [toOpen, setToOpen] = useState(false);
@@ -51,19 +47,18 @@ export default function Daily() {
             }
         )
         .then(res=>{
-            console.log('response_data=>',res.data)
             if(res.data.responseCode == '000'){
                 
                 if(res.data.data !=""){
-                    setData({'header':res.data.data[0].Header,'content':res.data.data[1].Sub})
-                    if(!defaultDate){
-                        setDefaultDate(new Date(res.data.data[0].Header[1]))
-                        setFromDate(null)
-                    }
+                    let header = res.data.data[0].Header;
+                    let content = res.data.data[1].Sub
+                    setData({'header': header,'content': content})
+                    console.log("header_length=>",header.length-1)
+                    setFromDate(new Date(header[1]))
+                    setToDate(new Date(header[header.length-1]))
+                    setTstatus(true)
                 }else{
                     setData()
-                    // setHeaderData(null)
-                    // setContentData(null)
                 }
             }else{// error
                 setData()
@@ -82,7 +77,12 @@ export default function Daily() {
         })
     }
     const SearchBSDReport = () =>{
-        getBSDReport(bank,report_type,date_type,toDate,fromDate)
+        console.log(toDate - fromDate)
+        if(checkSelectDateValidation(fromDate,toDate).result){
+            getBSDReport(bank,report_type,date_type,toDate,fromDate)
+        }else{
+            ToastAndroid.show(checkSelectDateValidation(fromDate,toDate).msg,ToastAndroid.SHORT)
+        }
     }
     return (
         <View style={{flex:1}}>
@@ -94,7 +94,7 @@ export default function Daily() {
             }}>
                 <View style={{flex: 1}}>
                     <DatePickerComponent 
-                        fdate={fromDate ? fromDate : defaultDate} setFdate={setFromDate} 
+                        fdate={fromDate} setFdate={setFromDate} 
                         fopen={fromOpen} setFopen={setFromOpent} 
                         tdate={toDate} setTdate={setToDate} 
                         topen={toOpen} setTopen={setToOpen}
