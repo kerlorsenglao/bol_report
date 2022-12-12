@@ -80,7 +80,7 @@ const Quaterly = () => {
 
     return (
         <View style={{flex:1}}>
-            <Spinner visible={isLoading} color='gray'/>   
+            {/* <Spinner visible={isLoading} color='gray'/>    */}
 
             {/* ສ່ວນ Search new */}
 
