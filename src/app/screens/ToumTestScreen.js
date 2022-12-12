@@ -1,4 +1,4 @@
-import { View, Text } from 'react-native'
+import { View, Text,ScrollView } from 'react-native'
 import React,{useState} from 'react'
 
 import SelectPickerComponent from '../components/SelectPickerComponent';
@@ -6,6 +6,7 @@ import DatePickerComponent from '../components/DatePickerComponent';
 import SearchButtonComponent from '../components/SearchButtonComponent';
 import MonthYearPickerComponent from '../components/MonthYearPickerComponent';
 import YearPickerComponent from '../components/YearPickerComponent';
+import LineChartComponent from '../components/LineChartComponent';
 
 const ToumTestScreen = () => {
 
@@ -46,15 +47,40 @@ const ToumTestScreen = () => {
     const [year2,setYear2] = useState(new Date().getFullYear())
     const [y2Status,setY2Status] = useState(false)    // ສະຖານະວ່າຖືກເລືອກບໍ່
 
+    // 6. LineChartComponent
+    const line_years = ["2019","2020","2021","2022"];
+    const graph_content = [
+      'ຊັບສິນ​ທັງ​ໝົດ','ໜີ້ສິນທັງ​ໝົດ','ທຶນທັງ​ໝົດ','ກຳໄລ/ຂາດທຶນສະສົມ','ກຳໄລ/ຂາດທຶນໃນປີ',
+      'ເງິນປ່ອຍກູ້ທັງ​ໝົດ','ໜີ້ຕ້ອງຮັບທວງຍາກ(ໃນຜັງ)','ເງິນຝາກຂອງລູກຄ້າ','ເງິນຝາກຂອງທະນາຄານ ແລະ ສະຖາບັນການເງິນອື່ນ'
+    ];
+    const datas = [
+      // 4ປີ ມີ4ໂຕເລກ
+      [
+        Math.random()*100,
+        Math.random()*100,
+        Math.random()*100,
+        Math.random()*100
+      ],
+      [Math.random()*100,Math.random()*100,Math.random()*100,Math.random()*100],
+      [Math.random()*100,Math.random()*100,Math.random()*100,Math.random()*100],
+      [Math.random()*100,Math.random()*100,Math.random()*100,Math.random()*100],
+      [Math.random()*100,Math.random()*100,Math.random()*100,Math.random()*100],
+      [Math.random()*100,Math.random()*100,Math.random()*100,Math.random()*100],
+      [Math.random()*100,Math.random()*100,Math.random()*100,Math.random()*100],
+      [Math.random()*100,Math.random()*100,Math.random()*100,Math.random()*100],
+      [Math.random()*100,Math.random()*100,Math.random()*100,Math.random()*100],
+    ]
+
+
 
   return (
-    <View>
-
+    <View style={{flex:1}}>
+{/* 
         <SelectPickerComponent data={bank} setData={setBank} datas={banks} />
         <Text style={{fontWeight:"bold"}}>{bank}</Text>
 
         <SelectPickerComponent data={year} setData={setYear} datas={years} />
-        <Text style={{fontWeight:"bold"}}>{year}</Text>
+        <Text style={{fontWeight:"bold"}}>{year}</Text>  */}
 
 
         <View style={{flexDirection:'row'}}>
@@ -79,9 +105,6 @@ const ToumTestScreen = () => {
                 {/* search button */}
                 <SearchButtonComponent searchFunction={ ()=>{ search(bank,fdate,tdate) }} />
             </View>
-            
-            
-
         </View>
         
         {/* Month year picker */}
@@ -110,7 +133,14 @@ const ToumTestScreen = () => {
             setY2Status={setY2Status}
         />
 
-
+        {/* LineChartComponent */}
+        <LineChartComponent 
+            line_years={line_years}
+            graph_content={graph_content}
+            datas={datas}
+            unit="ລ້ານ"
+        />
+        
     </View>
   )
 }
