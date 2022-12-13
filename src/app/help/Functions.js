@@ -5,6 +5,11 @@ function dateFormat(date){
 }
 
 function monthYearFormat(date){
+    if((date.getMonth()+1).toString().length < 2){
+        let month = (date.getMonth()+1).toString()
+        month = '0'+month
+        return date.getFullYear()+'-'+month
+    }
     return date.getFullYear()+'-'+ (date.getMonth()+1)
 }
 
