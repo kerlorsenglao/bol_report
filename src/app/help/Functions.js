@@ -90,7 +90,12 @@ function checkSelectDateValidation(fdate,tdate,date_type){ //ສາມາດເ�
         if(fdate > tdate) return {'result':false, 'msg':'ກະລຸນາບໍ່ເລືອກເດືອນສຸດທ້າຍໃຫຍ່ກວ່າເດືອນເລີ່ມຕົ້ນ'};
         if((tdate - fdate)/1000 > 13392000) return {'result':false, 'msg':'ເລືອກສູງສຸດໄດ້ພຽງ 5 ເດືອນ'}; // 5*31*24*60*60*1000 = 5ເດືອນ
         return {'result': true};
-    }else return {'result': true}
+    }else if(date_type == 'Y'){
+        if(fdate > tdate) return {'result':false, 'msg':'ກະລຸນາບໍ່ເລືອກປີສຸດທ້າຍໃຫຍ່ກວ່າປິເລີ່ມຕົ້ນ'};
+        if((tdate - fdate) > 5) return {'result':false, 'msg':'ເລືອກສູງສຸດໄດ້ພຽງ 5 ປີ'}; // 5*31*24*60*60*1000 = 5ເດືອນ
+        return {'result': true};
+    }
+    else return {'result': true}
     
 }
 export {

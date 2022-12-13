@@ -1,26 +1,23 @@
-import { StyleSheet, Text, View, ToastAndroid } from 'react-native'
+import { Text, View, ToastAndroid } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import Spinner from 'react-native-loading-spinner-overlay'
 import axios from "axios";
 import Config from "react-native-config";
 
-import { getKey} from '../../help/Functions'
+import { checkSelectDateValidation} from '../../help/Functions'
 import BackInHomeComponent from '../../components/BackInHomeComponent'
 import { COLORS, SIZES } from '../../../constant';
 
 import YearPickerComponent from '../../components/YearPickerComponent';
 import SearchButtonComponent from '../../components/SearchButtonComponent';
 import SelectPickerComponent from '../../components/SelectPickerComponent';
-
-import DatePicker from 'react-native-date-picker'
 import TableComponent from '../../components/TableComponent';
 
 const  API_URL = Config.API_URL;
 
 const Yearly = () => {
     const navigation = useNavigation();
-    // state
     const [isLoading,setIsLoading] = useState(false)
     const [bank,setBank] = useState('ALL_BANK')
     const banks = ["ALL_BANK","BCEL","LDB","JDB"]
@@ -37,7 +34,6 @@ const Yearly = () => {
     useEffect(()=>{
         getBSDReport(bank,report_type,date_type_default,year1,year2)
     },[])
-    // function for YearLy
     const getBSDReport = async (bank,report_type,date_type,year1,year2)=>{
         if(date_type != date_type_default){
             setIsLoading(true)
@@ -53,7 +49,6 @@ const Yearly = () => {
             }
         )
         .then(res=>{
-            console.log('Yearly =>',res.data.data)
             if(res.data.responseCode == '000'){
                 if(res.data.data !=""){
                     let header = res.data.data[0].Header;
@@ -68,11 +63,12 @@ const Yearly = () => {
             }else{// error
                 console.log('Not OK')
                 let msg = res.data.msg
-                Toast.show({
-                    type: 'error',
-                    text1: 'ຄົ້ນຫາບໍ່ສຳເລັດ!',
-                    text2: msg
-                });
+                ToastAndroid.show(msg,ToastAndroid.SHORT)
+                // Toast.show({
+                //     type: 'error',
+                //     text1: 'ຄົ້ນຫາບໍ່ສຳເລັດ!',
+                //     text2: msg
+                // });
             }
             setIsLoading(false)
         })
@@ -82,8 +78,13 @@ const Yearly = () => {
         })
     }
     const SearchBSDReport_Y=()=>{
-        return null
+        if(checkSelectDateValidation(year1,year2,date_type).result){
+            getBSDReport(bank,report_type,date_type,year1,year2)
+        }else{
+            ToastAndroid.show(checkSelectDateValidation(year1,year2,date_type).msg,ToastAndroid.SHORT)
+        }
     }
+        
     return (
         <View style={{flex:1}}>
             <Spinner visible={isLoading} color='gray'/>   
