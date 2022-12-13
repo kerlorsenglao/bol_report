@@ -1,4 +1,4 @@
-import { View, Text,ScrollView } from 'react-native'
+import { View, Text,ScrollView, TouchableOpacity } from 'react-native'
 import React,{useState} from 'react'
 
 import SelectPickerComponent from '../components/SelectPickerComponent';
@@ -7,6 +7,8 @@ import SearchButtonComponent from '../components/SearchButtonComponent';
 import MonthYearPickerComponent from '../components/MonthYearPickerComponent';
 import YearPickerComponent from '../components/YearPickerComponent';
 import LineChartComponent from '../components/LineChartComponent';
+import PieChartComponent from '../components/PieChartComponent';
+import TPickerComponent from '../components/TPickerComponent';
 
 const ToumTestScreen = () => {
 
@@ -43,8 +45,8 @@ const ToumTestScreen = () => {
     const [my2status,setMY2status] = useState(false)  // ສະຖານະວ່າຖືກເລືອກບໍ່
 
     // 5. YearPickerComponent 
-    const [year1,setYear1] = useState(new Date().getFullYear())
-    const [year2,setYear2] = useState(new Date().getFullYear())
+    const [year1,setYear1] = useState("2020")
+    const [year2,setYear2] = useState("2021")
     const [y2Status,setY2Status] = useState(false)    // ສະຖານະວ່າຖືກເລືອກບໍ່
 
     // 6. LineChartComponent
@@ -134,12 +136,18 @@ const ToumTestScreen = () => {
         />
 
         {/* LineChartComponent */}
-        <LineChartComponent 
+        {/* <LineChartComponent 
             line_years={line_years}
             graph_content={graph_content}
             datas={datas}
             unit="ລ້ານ"
-        />
+        /> */}
+
+        {/* PieChartComponent */}
+        <PieChartComponent/>
+
+        <TPickerComponent/>
+
         
     </View>
   )
