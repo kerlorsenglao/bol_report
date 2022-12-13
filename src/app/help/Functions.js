@@ -4,6 +4,10 @@ function dateFormat(date){
     return date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate()
 }
 
+function monthYearFormat(date){
+    return date.getFullYear()+'-'+ (date.getMonth()+1)
+}
+
 function getDateBefore(date){
     date.setDate(date.getDate() -1);
     return date;
@@ -68,13 +72,20 @@ function numberFormate(num){
     return num.toLocaleString('de-DE');
 }
 
-function checkSelectDateValidation(fdate,tdate){ //ສາມາດເລືອກໄດ້ຫລາຍສຸດ 5 ມື້ເທົ່ານັ້ນ
-    if(fdate > tdate) return {'result':false, 'msg':'ກະລຸນາບໍ່ເລືອກວັນທີ່ສຸດທ້າຍໃຫຍ່ກວ່າວັນທີເລີ່ມຕົ້ນ'};
-    if(tdate - fdate > 432000000) return {'result':false, 'msg':'ເລືອກສູງສຸດໄດ້ພຽງ 5 ມື້'}; // 5*24*60*60*1000 = 5ມື້
-    return {'result': true};
+function checkSelectDateValidation(fdate,tdate,date_type){ //ສາມາດເລືອກໄດ້ຫລາຍສຸດ 5 ມື້ເທົ່ານັ້ນ
+    if(date_type == 'D'){
+        if(fdate > tdate) return {'result':false, 'msg':'ກະລຸນາບໍ່ເລືອກວັນທີ່ສຸດທ້າຍໃຫຍ່ກວ່າວັນທີເລີ່ມຕົ້ນ'};
+        if(tdate - fdate > 432000000) return {'result':false, 'msg':'ເລືອກສູງສຸດໄດ້ພຽງ 5 ມື້'}; // 5*24*60*60*1000 = 5ມື້
+        return {'result': true}
+    }else if(date_type == 'M'){
+        if(fdate > tdate) return {'result':false, 'msg':'ກະລຸນາບໍ່ເລືອກເດືອນສຸດທ້າຍໃຫຍ່ກວ່າເດືອນເລີ່ມຕົ້ນ'};
+        if((tdate - fdate)/1000 > 13392000) return {'result':false, 'msg':'ເລືອກສູງສຸດໄດ້ພຽງ 5 ເດືອນ'}; // 5*31*24*60*60*1000 = 5ເດືອນ
+        return {'result': true};
+    }else return {'result': true}
+    
 }
 export {
-    dateFormat,getDateBefore, dateShow, 
+    dateFormat,monthYearFormat,getDateBefore, dateShow, 
     getKey,getMonth, getYear, getMonthYear,
     convertJSToAR,reverseStringInDate,numberFormate,
     checkSelectDateValidation,

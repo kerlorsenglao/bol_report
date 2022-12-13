@@ -76,11 +76,11 @@ export default function Daily() {
         })
     }
     const SearchBSDReport = () =>{
-        console.log(toDate - fromDate)
-        if(checkSelectDateValidation(fromDate,toDate).result){
+        // console.log(toDate - fromDate)
+        if(checkSelectDateValidation(fromDate,toDate,date_type).result){
             getBSDReport(bank,report_type,date_type,toDate,fromDate)
         }else{
-            ToastAndroid.show(checkSelectDateValidation(fromDate,toDate).msg,ToastAndroid.SHORT)
+            ToastAndroid.show(checkSelectDateValidation(fromDate,toDate,date_type).msg,ToastAndroid.SHORT)
         }
     }
     return (
