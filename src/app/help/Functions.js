@@ -64,13 +64,17 @@ function convertJSToAR(data){
     return newData //((Object.entries(data))[0])[2]
 }
 
-function reverseStringInDate(str){// 2022-12-10 <string> => 10-12-2022 <string>
-    if(/^(\d+-)*(\d+)$/.test(str)){ // check if just contain 0-9 and "-" that means str=2022-12-10 =>so chnage to str=10-12-2022 (true)
-        let date = new Date(str)
-        if(str.length > 7) return date.getDate()+'-'+(date.getMonth()+1) +'-'+date.getFullYear() 
-        if(str.length > 4 && str.length <= 7 ) return (date.getMonth()+1) +'-'+date.getFullYear()
+function reverseStringInDate(str,date_type){// 2022-12-10 <string> => 10-12-2022 <string>
+    if(date_type == 'T'){
+        return str
+    }else{
+        if(/^(\d+-)*(\d+)$/.test(str)){ // check if just contain 0-9 and "-" that means str=2022-12-10 =>so chnage to str=10-12-2022 (true)
+            let date = new Date(str)
+            if(str.length > 7) return date.getDate()+'-'+(date.getMonth()+1) +'-'+date.getFullYear() 
+            if(str.length > 4 && str.length <= 7 ) return (date.getMonth()+1) +'-'+date.getFullYear()
+        }
+        return str; // else just return str itself (false)
     }
-    return str; // else just return str itself (false)
 }
 
 function numberFormate(num){
@@ -86,7 +90,12 @@ function checkSelectDateValidation(fdate,tdate,date_type){ //ສາມາດເ�
         if(fdate > tdate) return {'result':false, 'msg':'ກະລຸນາບໍ່ເລືອກເດືອນສຸດທ້າຍໃຫຍ່ກວ່າເດືອນເລີ່ມຕົ້ນ'};
         if((tdate - fdate)/1000 > 13392000) return {'result':false, 'msg':'ເລືອກສູງສຸດໄດ້ພຽງ 5 ເດືອນ'}; // 5*31*24*60*60*1000 = 5ເດືອນ
         return {'result': true};
-    }else return {'result': true}
+    }else if(date_type == 'Y'){
+        if(fdate > tdate) return {'result':false, 'msg':'ກະລຸນາບໍ່ເລືອກປີສຸດທ້າຍໃຫຍ່ກວ່າປິເລີ່ມຕົ້ນ'};
+        if((tdate - fdate) > 5) return {'result':false, 'msg':'ເລືອກສູງສຸດໄດ້ພຽງ 5 ປີ'}; // 5*31*24*60*60*1000 = 5ເດືອນ
+        return {'result': true};
+    }
+    else return {'result': true}
     
 }
 export {
@@ -94,6 +103,5 @@ export {
     getKey,getMonth, getYear, getMonthYear,
     convertJSToAR,reverseStringInDate,numberFormate,
     checkSelectDateValidation,
-
 }
 
