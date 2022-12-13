@@ -106,7 +106,8 @@ const YearPickerComponent = ({year1,setYear1,year2,setYear2,y2Status,setY2Status
                     <View style={{flex:2,flexDirection:'row',alignItems:'center',justifyContent:'center'}}>
                         <TouchableOpacity
                             onPress={()=>{
-                                setYear1(year1-1)
+                                let num = Number(year1) - 1
+                                setYear1(num)
                             }}
                         >
                             <Ionicons name='chevron-back-sharp' size={25} color={COLORS.primary} />
@@ -116,7 +117,8 @@ const YearPickerComponent = ({year1,setYear1,year2,setYear2,y2Status,setY2Status
 
                         <TouchableOpacity
                             onPress={()=>{
-                                setYear1(year1+1)
+                                let num = Number(year1) + 1
+                                setYear1(num)
                             }}
                         >
                             <Ionicons name='chevron-forward' size={25} color={COLORS.primary} />
@@ -191,7 +193,8 @@ const YearPickerComponent = ({year1,setYear1,year2,setYear2,y2Status,setY2Status
                     <View style={{flex:2,flexDirection:'row',alignItems:'center',justifyContent:'center'}}>
                         <TouchableOpacity
                             onPress={()=>{
-                                setYear2(year2-1)
+                                let num = Number(year2) - 1
+                                setYear2(num)
                             }}
                         >
                             <Ionicons name='chevron-back-sharp' size={25} color={COLORS.primary} />
@@ -201,7 +204,8 @@ const YearPickerComponent = ({year1,setYear1,year2,setYear2,y2Status,setY2Status
 
                         <TouchableOpacity
                             onPress={()=>{
-                                setYear2(year2+1)
+                                let num = Number(year2) + 1
+                                setYear2(num)
                             }}
                         >
                             <Ionicons name='chevron-forward' size={25} color={COLORS.primary} />
