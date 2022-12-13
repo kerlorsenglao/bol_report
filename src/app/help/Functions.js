@@ -4,6 +4,15 @@ function dateFormat(date){
     return date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate()
 }
 
+function monthYearFormat(date){
+    if((date.getMonth()+1).toString().length < 2){
+        let month = (date.getMonth()+1).toString()
+        month = '0'+month
+        return date.getFullYear()+'-'+month
+    }
+    return date.getFullYear()+'-'+ (date.getMonth()+1)
+}
+
 function getDateBefore(date){
     date.setDate(date.getDate() -1);
     return date;
@@ -58,7 +67,8 @@ function convertJSToAR(data){
 function reverseStringInDate(str){// 2022-12-10 <string> => 10-12-2022 <string>
     if(/^(\d+-)*(\d+)$/.test(str)){ // check if just contain 0-9 and "-" that means str=2022-12-10 =>so chnage to str=10-12-2022 (true)
         let date = new Date(str)
-        return date.getDate()+'-'+(date.getMonth()+1) +'-'+date.getFullYear() 
+        if(str.length > 7) return date.getDate()+'-'+(date.getMonth()+1) +'-'+date.getFullYear() 
+        if(str.length > 4 && str.length <= 7 ) return (date.getMonth()+1) +'-'+date.getFullYear()
     }
     return str; // else just return str itself (false)
 }
@@ -67,13 +77,20 @@ function numberFormate(num){
     return num.toLocaleString('de-DE');
 }
 
-function checkSelectDateValidation(fdate,tdate){ //ສາມາດເລືອກໄດ້ຫລາຍສຸດ 5 ມື້ເທົ່ານັ້ນ
-    if(fdate > tdate) return {'result':false, 'msg':'ກະລຸນາບໍ່ເລືອກວັນທີ່ສຸດທ້າຍໃຫຍ່ກວ່າວັນທີເລີ່ມຕົ້ນ'};
-    if(tdate - fdate > 432000000) return {'result':false, 'msg':'ເລືອກສູງສຸດໄດ້ພຽງ 5 ມື້'}; // 5*24*60*60*1000 = 5ມື້
-    return {'result': true};
+function checkSelectDateValidation(fdate,tdate,date_type){ //ສາມາດເລືອກໄດ້ຫລາຍສຸດ 5 ມື້ເທົ່ານັ້ນ
+    if(date_type == 'D'){
+        if(fdate > tdate) return {'result':false, 'msg':'ກະລຸນາບໍ່ເລືອກວັນທີ່ສຸດທ້າຍໃຫຍ່ກວ່າວັນທີເລີ່ມຕົ້ນ'};
+        if(tdate - fdate > 432000000) return {'result':false, 'msg':'ເລືອກສູງສຸດໄດ້ພຽງ 5 ມື້'}; // 5*24*60*60*1000 = 5ມື້
+        return {'result': true}
+    }else if(date_type == 'M'){
+        if(fdate > tdate) return {'result':false, 'msg':'ກະລຸນາບໍ່ເລືອກເດືອນສຸດທ້າຍໃຫຍ່ກວ່າເດືອນເລີ່ມຕົ້ນ'};
+        if((tdate - fdate)/1000 > 13392000) return {'result':false, 'msg':'ເລືອກສູງສຸດໄດ້ພຽງ 5 ເດືອນ'}; // 5*31*24*60*60*1000 = 5ເດືອນ
+        return {'result': true};
+    }else return {'result': true}
+    
 }
 export {
-    dateFormat,getDateBefore, dateShow, 
+    dateFormat,monthYearFormat,getDateBefore, dateShow, 
     getKey,getMonth, getYear, getMonthYear,
     convertJSToAR,reverseStringInDate,numberFormate,
     checkSelectDateValidation,
