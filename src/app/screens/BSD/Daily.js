@@ -31,7 +31,6 @@ export default function Daily() {
 
     const navigation = useNavigation();
     useEffect(()=>{
-        console.log('length string=>',date_type_default.length)
         getBSDReport(bank,report_type,date_type_default, fromDate,toDate);//? dateFormat(date) : dateFormat(getDateBefore(new Date()))
     },[])
 
