@@ -58,7 +58,8 @@ function convertJSToAR(data){
 function reverseStringInDate(str){// 2022-12-10 <string> => 10-12-2022 <string>
     if(/^(\d+-)*(\d+)$/.test(str)){ // check if just contain 0-9 and "-" that means str=2022-12-10 =>so chnage to str=10-12-2022 (true)
         let date = new Date(str)
-        return date.getDate()+'-'+(date.getMonth()+1) +'-'+date.getFullYear() 
+        if(str.length > 7) return date.getDate()+'-'+(date.getMonth()+1) +'-'+date.getFullYear() 
+        if(str.length > 4 && str.length <= 7 ) return (date.getMonth()+1) +'-'+date.getFullYear()
     }
     return str; // else just return str itself (false)
 }

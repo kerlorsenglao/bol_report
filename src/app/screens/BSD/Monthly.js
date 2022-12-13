@@ -1,17 +1,19 @@
-import { StyleSheet, Text, View,TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View,TouchableOpacity, ToastAndroid } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import Spinner from 'react-native-loading-spinner-overlay'
 import axios from "axios";
 import Config from "react-native-config";
 
-import {Picker} from '@react-native-picker/picker';
-
-import { getKey, getMonthYear, dateFormat } from '../../help/Functions'
+import { getKey, getMonthYear, dateFormat,checkSelectDateValidation } from '../../help/Functions'
 import BackInHomeComponent from '../../components/BackInHomeComponent'
 import { COLORS, SIZES } from '../../../constant';
 import { ScrollView } from 'react-native-gesture-handler';
 import ShowItem from '../../components/ShowItem';
+import MonthYearPickerComponent from '../../components/MonthYearPickerComponent';
+import SelectPickerComponent from '../../components/SelectPickerComponent';
+import SearchButtonComponent from '../../components/SearchButtonComponent';
+import TableComponent from '../../components/TableComponent';
 
 import DatePicker from 'react-native-date-picker'
 
@@ -19,47 +21,58 @@ const  API_URL = Config.API_URL;
 
 export default function Monthly() {
     const navigation = useNavigation();
-    // state
     const [isLoading,setIsLoading] = useState(false)
     const [bank,setBank] = useState('ALL_BANK')
-    const [data,setData] = useState({});
-    const [keys,setKeys] = useState([]);
+    const banks = ["ALL_BANK","BCEL","LDB","JDB"]
+    const [data,setData] = useState();
+    const [my1,setMY1] = useState(new Date());
+    const [show1,setShow1] = useState(false)
+    const [my2,setMY2] = useState(new Date());
+    const [show2,setShow2] = useState(false)
+    const [my2status,setMY2status] = useState(false) 
+    const report_type = 'InReport';
+    const date_type = 'M';
+    const date_type_default = 'DEFAULT_M'
 
-    const [date, setDate] = useState(new Date());
-    const [openDatePicker, setOpenDatePicker] = useState(false);
+   
 
     useEffect(()=>{
-        // get data
-        // getBSDReport(bank,date)
+        getBSDReport(bank,report_type,date_type_default,my1,my2)
     },[])
 
 
     // function for MonthLy
-    const getBSDReport = async (bnk,date)=>{
-        setIsLoading(true);
+    const getBSDReport = async (bank,report_type,date_type,my1,my2)=>{
+        if(date_type != date_type_default){
+            setIsLoading(true)
+        }
         await axios.post(`${API_URL}/BankSupervisionReport`,{
-                webServiceUser: "bol_it",
-                webServicePassword: "123456",
-                bank_code: bnk,
-                report_type: "InReport",
-                date_type: "M",
-                date: date.getFullYear()+'-'+(date.getMonth()+1)
+            webServiceUser: "bol_it",
+            webServicePassword: "123456",
+            bank_code: bank,
+            report_type: report_type,
+            date_type: date_type, // D=>ປະຈຳວັນ, M=>ປະຈຳເດືອນ, T=>ປະຈຳໄຕມາດ, Y=>ປະຈຳປີ
+            fromDate: getMonthYear(my1),
+            toDate: getMonthYear(my2),
             }
         )
         .then(res=>{
-            // console.log(res.data)
+            console.log("get Monthly=>",res.data)
             if(res.data.responseCode == '000'){
                 if(res.data.data !=""){
-                    let newKey = getKey(res.data.data[0])
-                    setKeys(newKey)
-                    setData(res.data.data[0])
+                    let header = res.data.data[0].Header;
+                    let content = res.data.data[1].Sub
+                    setData({'header': header,'content': content})
+                    setMY1(new Date(header[1]))
+                    setMY2(new Date(header[header.length-1]))
+                    setMY2status(true)
                 }else{
-                    setData({})
+                    setData()
                 }
             }else{// error
                 console.log('Not OK')
                 let msg = res.data.msg
-                Toast.show({
+                ToastAndroid.show({
                     type: 'error',
                     text1: 'ຄົ້ນຫາບໍ່ສຳເລັດ!',
                     text2: msg
@@ -73,16 +86,25 @@ export default function Monthly() {
         })
     }
 
+    const SearchBSDReport_M = () =>{
+        console.log('my1=>',my1)
+        console.log('my2=>',my2)
+        // if(checkSelectDateValidation(my1,my2).result){
+            getBSDReport(bank,report_type,date_type,my1,my2)
+        // }else{
+        //     ToastAndroid.show(checkSelectDateValidation(my1,my2).msg,ToastAndroid.SHORT)
+        // }
+    }
     return (
         <View style={{flex:1}}>
-            {/* <Spinner visible={isLoading} color='gray'/>    */}
+            <Spinner visible={isLoading}/>   
             {/* ສ່ວນ Search */}
-            <View style={{
+            {/* <View style={{
                 flexDirection:'row',
                 justifyContent:'space-evenly',
                 padding:5,
             }}>
-                {/* ເລືອກເດືອນ */}
+               
                 <TouchableOpacity
                     style={{
                     flex: 2,
@@ -119,14 +141,14 @@ export default function Monthly() {
                     }}
                 />
 
-                {/* ເລືອກທະນາຄານ */}
+             
                 <View style={{
                     flex:3,
                     borderBottomColor: COLORS.primary,
                     borderBottomWidth: 1,
                     borderRadius:5,
                     marginHorizontal:2,
-                    // backgroundColor:'blue',
+                  
                     }}>
                     <Picker
                         mode='dropdown'
@@ -150,7 +172,7 @@ export default function Monthly() {
                     </Picker>
                 </View>
 
-                {/* ປຸ່ມຄົ້ນຫາ */}
+              
                 <TouchableOpacity
                     style={{
                         flex:1,
@@ -168,44 +190,46 @@ export default function Monthly() {
                 >
                     <Text>ຄົ້ນຫາ</Text>
                 </TouchableOpacity>
-            </View>
-            {/* end ສ່ວນ Search */}
-
-            {/* ສ່ວນສະແດງລາຍງານ */}
-            {
-                Object.keys(data).length !== 0 ?
-                (
-                <View style={{height: '81%'}}>
-                    {/* ຫົວຂໍ້ */}
-                    <View style={{flexDirection:'row',justifyContent:'space-between',marginHorizontal:5,backgroundColor: COLORS.secondary,paddingVertical:10,borderTopLeftRadius: 5,borderTopRightRadius: 5,}}>
-                        <View style={{flex: 3,paddingLeft:5}}>
-                            <Text style={{color: COLORS.black, fontSize: SIZES.medium,}}>ລາຍການ</Text>
-                        </View>
-                        <View style={{flex:2,justifyContent: 'center',alignItems:'center'}}>
-                            <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>ຈຳນວນ</Text>
-                        </View>
-                        <View style={{flex:1,justifyContent: 'center',alignItems:'center'}}>
-                            <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>ຫົວໜ່ວຍ</Text>
-                        </View>
-                    </View>
-                    {/* ເສັ້ນຂິດ */}
-                    <View style={{backgroundColor: COLORS.primary, height:1, marginHorizontal: 5}}/>
-                    
-                    {/* ສ່ວນສະແດງຂໍ້ມູນ */}
-                    <ScrollView>
-                        
-                        
-                        {
-                            keys.map((mykey,index)=>{
-                                return <ShowItem key={index} index={index} item={data[mykey]} />
-                            })
-                            
-                        }
-                    </ScrollView>
+            </View> */}
+            <View style={{
+                flexDirection:'row',
+                justifyContent:'space-evenly',
+                paddingVertical: 5
+            }}>
+                <View style={{flex: 1}}>
+                    <MonthYearPickerComponent
+                        my1={my1}
+                        setMY1={setMY1}
+                        show1={show1}
+                        setShow1={setShow1}
+            
+                        my2={my2}
+                        setMY2={setMY2}
+                        show2={show2}
+                        setShow2={setShow2}
+                        my2status={my2status}
+                        setMY2status={setMY2status}
+                    />
                 </View>
-                )
-                : 
+            </View>
+            <View style={{
+                flexDirection:'row',
+                justifyContent: 'space-evenly',
+                paddingHorizontal: 5,
+                height: 42,
+            }}>
+                <SelectPickerComponent data={bank} setData={setBank} datas={banks}/>
+                <View style={{width: '20%'}}/>
+                <View style={{width: '20%'}}>
+                    <SearchButtonComponent searchFunction={SearchBSDReport_M}/>
+                </View>
+            </View>
+            {
+                data ?
                 (
+                <TableComponent header={data.header} content={data.content}/>
+                )
+                : (
                     <View style={{flex: 1, justifyContent:'center',alignItems:'center'}}>
                         <Text style={{color: COLORS.gray, fontSize: SIZES.large}}>ບໍ່ມີຂໍ້ມູນ</Text>
                     </View>

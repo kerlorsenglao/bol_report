@@ -31,6 +31,7 @@ export default function Daily() {
 
     const navigation = useNavigation();
     useEffect(()=>{
+        console.log('length string=>',date_type_default.length)
         getBSDReport(bank,report_type,date_type_default, fromDate,toDate);//? dateFormat(date) : dateFormat(getDateBefore(new Date()))
     },[])
 
@@ -48,12 +49,10 @@ export default function Daily() {
         )
         .then(res=>{
             if(res.data.responseCode == '000'){
-                
                 if(res.data.data !=""){
                     let header = res.data.data[0].Header;
                     let content = res.data.data[1].Sub
                     setData({'header': header,'content': content})
-                    console.log("header_length=>",header.length-1)
                     setFromDate(new Date(header[1]))
                     setToDate(new Date(header[header.length-1]))
                     setTstatus(true)
