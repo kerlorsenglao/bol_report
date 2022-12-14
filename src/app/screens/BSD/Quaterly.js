@@ -5,7 +5,7 @@ import Spinner from 'react-native-loading-spinner-overlay'
 import axios from "axios";
 import Config from "react-native-config";
 
-import { getQuaterly } from '../../help/Functions'
+import { getQuaterly,checkSelectDateValidation } from '../../help/Functions'
 import BackInHomeComponent from '../../components/BackInHomeComponent'
 import { COLORS, SIZES } from '../../../constant';
 
@@ -53,8 +53,6 @@ const Quaterly = () => {
             }
         )
         .then(res=>{
-            // console.log('QuaterlyHeader=>',res.data.data[0].Header)
-            // console.log('QuaterlySub=>',res.data.data[1].Sub)
             if(res.data.responseCode == '000'){
                 if(res.data.data !=""){
                     let header = res.data.data[0].Header;
@@ -65,7 +63,6 @@ const Quaterly = () => {
                     setY1(header[1].trim().slice(8))
                     setY2(header[header.length-1].trim().slice(8))
                     setTY2Status(true)
-                    console.log('TY2=>',header[header.length-1].trim().slice(0,7))
                 }else{
                     setData()
                 }
@@ -83,12 +80,11 @@ const Quaterly = () => {
         })
     }
     const SearchBSDReport_T = () =>{
-        console.log('Call API search here')
-        // if(checkSelectDateValidation(fromDate,toDate,date_type).result){
-        //     getBSDReport(bank,report_type,date_type,toDate,fromDate)
-        // }else{
-        //     ToastAndroid.show(checkSelectDateValidation(fromDate,toDate,date_type).msg,ToastAndroid.SHORT)
-        // }
+        if(checkSelectDateValidation(y1,y2,date_type).result){
+            getBSDReport(bank,report_type,date_type,t1,t2,y1,y2)
+        }else{
+            ToastAndroid.show(checkSelectDateValidation(y1,y2,date_type).msg,ToastAndroid.SHORT)
+        }
     }
     return (
         <View style={{flex:1}}>
