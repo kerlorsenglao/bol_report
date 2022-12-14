@@ -174,6 +174,7 @@ const TPickerComponent = ({
                             <View style={{flex:3,flexDirection:'row',alignItems:'center',justifyContent:'center'}}>
                                 <View style={{flex:1,flexDirection:'row',alignItems:'center',justifyContent:'center'}}>
                                     <TouchableOpacity
+                                        style={{flex:1,alignItems:'center'}}
                                         onPress={()=>{
                                             let num = Number(myYear1) - 1
                                             setMyYear1(num)
@@ -182,9 +183,10 @@ const TPickerComponent = ({
                                         <Ionicons name='caret-back-sharp' size={25} color={COLORS.primary} />
                                     </TouchableOpacity>
 
-                                    <Text style={{color: COLORS.primary,fontSize:20,marginHorizontal:20}}>{myYear1}</Text>
+                                    <Text style={{color: COLORS.primary,fontSize:20,marginHorizontal:2}}>{myYear1}</Text>
 
                                     <TouchableOpacity
+                                        style={{flex:1,alignItems:'center'}}
                                         onPress={()=>{
                                             let num = Number(myYear1) + 1
                                             setMyYear1(num)
@@ -201,16 +203,16 @@ const TPickerComponent = ({
                     {/* button */}
                     <View style={{flex:1,flexDirection:'row',alignItems:'flex-start',justifyContent:'center'}}>
                         <TouchableOpacity 
-                            style={{marginHorizontal:20}}
+                            style={{marginHorizontal:20,paddingVertical:5,flex:1}}
                             onPress={()=>{
                                 setShowModal1(false)
                             }}
                         >
-                            <Text style={{color: '#a1a1a1'}}>ຍົກເລີກ</Text>
+                            <Text style={{color: '#a1a1a1',textAlign:'right',}}>ຍົກເລີກ</Text>
                         </TouchableOpacity>
 
                         <TouchableOpacity 
-                            style={{marginHorizontal:20}}
+                            style={{marginHorizontal:20,paddingVertical:5,flex:1}}
                             onPress={()=>{
                                 setT1(myT1)
                                 setY1(myYear1)
@@ -312,6 +314,7 @@ const TPickerComponent = ({
                             <View style={{flex:3,flexDirection:'row',alignItems:'center',justifyContent:'center'}}>
                                 <View style={{flex:1,flexDirection:'row',alignItems:'center',justifyContent:'center'}}>
                                     <TouchableOpacity
+                                        style={{flex:1,alignItems:'center'}}
                                         onPress={()=>{
                                             let num = Number(myYear2) - 1
                                             setMyYear2(num)
@@ -320,9 +323,10 @@ const TPickerComponent = ({
                                         <Ionicons name='caret-back-sharp' size={25} color={COLORS.primary} />
                                     </TouchableOpacity>
 
-                                    <Text style={{color: COLORS.primary,fontSize:20,marginHorizontal:20}}>{myYear2}</Text>
+                                    <Text style={{color: COLORS.primary,fontSize:20,marginHorizontal:2}}>{myYear2}</Text>
 
                                     <TouchableOpacity
+                                        style={{flex:1,alignItems:'center'}}
                                         onPress={()=>{
                                             let num = Number(myYear2) + 1
                                             setMyYear2(num)
@@ -339,17 +343,17 @@ const TPickerComponent = ({
                     {/* button */}
                     <View style={{flex:1,flexDirection:'row',alignItems:'flex-start',justifyContent:'center'}}>
                         <TouchableOpacity 
-                            style={{marginHorizontal:20}}
+                            style={{marginHorizontal:20,paddingVertical:5,flex:1}}
                             onPress={()=>{
                                 setTY2Status(false)
                                 setShowModal2(false)
                             }}
                         >
-                            <Text style={{color: '#a1a1a1'}}>ຍົກເລີກ</Text>
+                            <Text style={{color: '#a1a1a1',textAlign:'right'}}>ຍົກເລີກ</Text>
                         </TouchableOpacity>
 
                         <TouchableOpacity 
-                            style={{marginHorizontal:20}}
+                            style={{marginHorizontal:20,paddingVertical:5,flex:1}}
                             onPress={()=>{
                                 setT2(myT2)
                                 setY2(myYear2)
