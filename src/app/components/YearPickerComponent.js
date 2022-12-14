@@ -105,6 +105,7 @@ const YearPickerComponent = ({year1,setYear1,year2,setYear2,y2Status,setY2Status
                     {/* click year */}
                     <View style={{flex:2,flexDirection:'row',alignItems:'center',justifyContent:'center'}}>
                         <TouchableOpacity
+                            style={{flex:1,alignItems:'flex-end',justifyContent:'center',height:"100%"}}
                             onPress={()=>{
                                 let num = Number(year1) - 1
                                 setYear1(num)
@@ -116,6 +117,7 @@ const YearPickerComponent = ({year1,setYear1,year2,setYear2,y2Status,setY2Status
                         <Text style={{color: COLORS.primary,fontSize:25,marginHorizontal:30}}>{year1}</Text>
 
                         <TouchableOpacity
+                            style={{flex:1,alignItems:'flex-start',justifyContent:'center',height:"100%"}}
                             onPress={()=>{
                                 let num = Number(year1) + 1
                                 setYear1(num)
@@ -192,6 +194,7 @@ const YearPickerComponent = ({year1,setYear1,year2,setYear2,y2Status,setY2Status
                     {/* click year */}
                     <View style={{flex:2,flexDirection:'row',alignItems:'center',justifyContent:'center'}}>
                         <TouchableOpacity
+                            style={{flex:1,alignItems:'flex-end',justifyContent:'center',height:"100%"}}
                             onPress={()=>{
                                 let num = Number(year2) - 1
                                 setYear2(num)
@@ -203,6 +206,7 @@ const YearPickerComponent = ({year1,setYear1,year2,setYear2,y2Status,setY2Status
                         <Text style={{color: COLORS.primary,fontSize:25,marginHorizontal:30}}>{year2}</Text>
 
                         <TouchableOpacity
+                            style={{flex:1,alignItems:'flex-start',justifyContent:'center',height:"100%"}}
                             onPress={()=>{
                                 let num = Number(year2) + 1
                                 setYear2(num)

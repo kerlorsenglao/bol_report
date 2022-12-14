@@ -7,8 +7,8 @@ import SearchButtonComponent from '../components/SearchButtonComponent';
 import MonthYearPickerComponent from '../components/MonthYearPickerComponent';
 import YearPickerComponent from '../components/YearPickerComponent';
 import LineChartComponent from '../components/LineChartComponent';
-import PieChartComponent from '../components/PieChartComponent';
 import TPickerComponent from '../components/TPickerComponent';
+import PieChartComponent from '../components/PieChartComponent';
 
 const ToumTestScreen = () => {
 
@@ -81,6 +81,16 @@ const ToumTestScreen = () => {
     const [t2,setT2] = useState("T1")
     const [y2,setY2] = useState("2020")
     const [ty2Status,setTY2Status] = useState(false)  // ສະຖານະວ່າຖືກເລືອກບໍ່
+
+    // 8. PieChartComponent 
+    const propsData = [
+        {la_name:'ອັດຕາສ່ວນ ຄວາມພຽງພໍຂອງທຶນ (≥8%)',value:"8",unit:"%"},
+        {la_name:'ອັດຕາສ່ວນໜີ້ NPLs (ເກນ ≤3%)'    ,value:"3",unit:"%"},
+        {la_name:'ອັດຕາສ່ວນ ROA (ເກນ ≥1%)'     ,value:"4.6",unit:"%"},
+        {la_name:'ອັດຕາສ່ວນ ROE (ເກນ ≥10%)'  ,value:"26.90",unit:"%"},
+        {la_name:'ອັດຕາສ່ວນ ເງິນສົດຄ້າງຄັງ (≥2%)'   ,value:"55",unit:"%"},
+        {la_name:'ອັດຕາສ່ວນ ເງິນສົດ+ເງິນຝາກຢູ່ທ/ຄອື່ນ / ໜີ້ສິນທັງໝົດ (20-25%)',value:"17",unit:"%"},
+    ]
 
   return (
     <View style={{flex:1}}>
@@ -167,7 +177,7 @@ const ToumTestScreen = () => {
         />
 
         {/* PieChartComponent */}
-        <PieChartComponent/>
+        <PieChartComponent propsData={propsData}/>
 
     </View>
   )
