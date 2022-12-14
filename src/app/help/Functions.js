@@ -83,25 +83,37 @@ function numberFormate(num){
 
 function checkSelectDateValidation(fdate,tdate,date_type){ //ສາມາດເລືອກໄດ້ຫລາຍສຸດ 5 ມື້ເທົ່ານັ້ນ
     if(date_type == 'D'){
-        if(fdate > tdate) return {'result':false, 'msg':'ກະລຸນາບໍ່ເລືອກວັນທີ່ສຸດທ້າຍໃຫຍ່ກວ່າວັນທີເລີ່ມຕົ້ນ'};
+        if(fdate > tdate) return {'result':false, 'msg':'ກະລຸນາເລືອກວັນທີ່ສຸດທ້າຍໃຫ້ໃຫຍ່ກວ່າວັນທີເລີ່ມຕົ້ນ'};
         if(tdate - fdate > 432000000) return {'result':false, 'msg':'ເລືອກສູງສຸດໄດ້ພຽງ 5 ມື້'}; // 5*24*60*60*1000 = 5ມື້
         return {'result': true}
     }else if(date_type == 'M'){
-        if(fdate > tdate) return {'result':false, 'msg':'ກະລຸນາບໍ່ເລືອກເດືອນສຸດທ້າຍໃຫຍ່ກວ່າເດືອນເລີ່ມຕົ້ນ'};
+        if(fdate > tdate) return {'result':false, 'msg':'ກະລຸນາເລືອກເດືອນສຸດທ້າຍໃຫ້ໃຫຍ່ກວ່າເດືອນເລີ່ມຕົ້ນ'};
         if((tdate - fdate)/1000 > 13392000) return {'result':false, 'msg':'ເລືອກສູງສຸດໄດ້ພຽງ 5 ເດືອນ'}; // 5*31*24*60*60*1000 = 5ເດືອນ
         return {'result': true};
     }else if(date_type == 'Y'){
-        if(fdate > tdate) return {'result':false, 'msg':'ກະລຸນາບໍ່ເລືອກປີສຸດທ້າຍໃຫຍ່ກວ່າປິເລີ່ມຕົ້ນ'};
+        if(fdate > tdate) return {'result':false, 'msg':'ກະລຸນາເລືອກປີສຸດທ້າຍໃຫ້ໃຫຍ່ກວ່າປິເລີ່ມຕົ້ນ'};
         if((tdate - fdate) > 5) return {'result':false, 'msg':'ເລືອກສູງສຸດໄດ້ພຽງ 5 ປີ'}; // 5*31*24*60*60*1000 = 5ເດືອນ
+        return {'result': true};
+    }else if(date_type == 'T'){
+        if(parseInt(fdate) > parseInt(tdate)) return {'result':false, 'msg':'ກະລຸນາເລືອກປີສຸດທ້າຍໃຫ້ໃຫຍ່ກວ່າປິເລີ່ມຕົ້ນ'};
+        if(parseInt(tdate)-parseInt(fdate) > 1) return {'result':false, 'msg':'ເລືອກສູງສຸດໄດ້ພຽງ 1 ປີ'};
         return {'result': true};
     }
     else return {'result': true}
     
 }
+
+function getQuaterly(str){
+    if(str == 'ໄຕມາດ 1') return 'T1'
+    if(str == 'ໄຕມາດ 2') return 'T2'
+    if(str == 'ໄຕມາດ 3') return 'T3'
+    if(str == 'ໄຕມາດ 4') return 'T4'
+    return 'T'
+}
 export {
     dateFormat,monthYearFormat,getDateBefore, dateShow, 
     getKey,getMonth, getYear, getMonthYear,
     convertJSToAR,reverseStringInDate,numberFormate,
-    checkSelectDateValidation,
+    checkSelectDateValidation,getQuaterly
 }
 

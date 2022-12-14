@@ -133,7 +133,7 @@ const TPickerComponent = ({
                                     flex: 1,
                                     borderBottomColor: COLORS.primary, 
                                     borderBottomWidth: 1,
-                                    marginLeft:30,
+                                    marginLeft:20,
                                     marginRight:10,
                                     // backgroundColor:"blue",
                                     // marginBottom:20
@@ -271,7 +271,7 @@ const TPickerComponent = ({
                                     flex: 1,
                                     borderBottomColor: COLORS.primary, 
                                     borderBottomWidth: 1,
-                                    marginLeft:30,
+                                    marginLeft:20,
                                     marginRight:10,
                                     // backgroundColor:"blue",
                                     // marginBottom:20

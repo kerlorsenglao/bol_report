@@ -4,7 +4,7 @@ import { COLORS, SIZES } from '../../constant'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { reverseStringInDate } from '../help/Functions'
 
-export default function TableComponent({header, content}) {
+export default function TableComponent({header, content, date_type}) {
     const {width,height} = useWindowDimensions()
     const tableHeader =(data)=>{
         return (
@@ -37,7 +37,7 @@ export default function TableComponent({header, content}) {
                                 <Text style={{
                                     fontWeight:'bold', 
                                     alignSelf: index==0 ? null :'center',
-                                    }}>{reverseStringInDate(item)}</Text>
+                                    }}>{reverseStringInDate(item, date_type)}</Text>
                             </TouchableOpacity>
                         )
                     })

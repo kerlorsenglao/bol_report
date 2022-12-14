@@ -1,369 +1,133 @@
-import { StyleSheet, Text, View,TouchableOpacity,useWindowDimensions } from 'react-native'
+import { Text, View,ToastAndroid} from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import Spinner from 'react-native-loading-spinner-overlay'
 import axios from "axios";
 import Config from "react-native-config";
 
-import {Picker} from '@react-native-picker/picker';
-
-import { getKey, getMonthYear, dateFormat } from '../../help/Functions'
+import { getQuaterly,checkSelectDateValidation } from '../../help/Functions'
 import BackInHomeComponent from '../../components/BackInHomeComponent'
 import { COLORS, SIZES } from '../../../constant';
-import { ScrollView } from 'react-native-gesture-handler';
-import ShowItem from '../../components/ShowItem';
 
-import DatePicker from 'react-native-date-picker'
+import TPickerComponent from '../../components/TPickerComponent';
+import SelectPickerComponent from '../../components/SelectPickerComponent';
+import SearchButtonComponent from '../../components/SearchButtonComponent';
+import TableComponent from '../../components/TableComponent';
+
 
 const  API_URL = Config.API_URL;
 
 const Quaterly = () => {
     const navigation = useNavigation();
-    const window = useWindowDimensions();
-    const windowWidth = window.width;
-    const windowHeight = window.height;
-
-    // state
     const [isLoading,setIsLoading] = useState(false)
     const [bank,setBank] = useState('ALL_BANK')
-    const [t,setT] = useState('T1')
-    const [data,setData] = useState({});
-    const [keys,setKeys] = useState([]);
+    const banks = ["ALL_BANK","BCEL","LDB","JDB"]
+    const [data,setData] = useState();
 
-    const [date, setDate] = useState(new Date());
-    const [openDatePicker, setOpenDatePicker] = useState(false);
+    const [t1,setT1] = useState("T1")
+    const [y1,setY1] = useState(new Date().getFullYear().toString())
+
+    const [t2,setT2] = useState("T1")
+    const [y2,setY2] = useState(new Date().getFullYear().toString())
+    const [ty2Status,setTY2Status] = useState(false)
+    const report_type = 'InReport';
+    const date_type= 'T';
+    const date_type_default = 'DEFAULT_T'
 
     useEffect(()=>{
-        // get data
-        getBSDReport(bank,date,t)
+        getBSDReport(bank,report_type,date_type_default,t1,t2,y1,y2)
     },[])
 
-
-    // function for MonthLy
-    const getBSDReport = async (bnk,date,ty)=>{
-        setIsLoading(true);
+    const getBSDReport = async (bank,report_type,date_type,t1,t2,y1,y2)=>{
+        if(date_type_default != t1+'-'+t2){
+            setIsLoading(true);
+        }
         await axios.post(`${API_URL}/BankSupervisionReport`,{
                 webServiceUser: "bol_it",
                 webServicePassword: "123456",
-                bank_code: bnk,
-                report_type: "InReport",
-                date_type: "M",
-                date: date.getFullYear()+'-'+(date.getMonth()+1),
-                type:ty
+                bank_code: bank,
+                report_type: report_type,
+                date_type: date_type == date_type_default ? date_type_default : t1+'-'+t2 ,
+                fromDate: y1,
+                toDate: y2,
             }
         )
         .then(res=>{
             if(res.data.responseCode == '000'){
                 if(res.data.data !=""){
-                    let newKey = getKey(res.data.data[0])
-                    setKeys(newKey)
-                    setData(res.data.data[0])
+                    let header = res.data.data[0].Header;
+                    let content = res.data.data[1].Sub
+                    setData({'header': header,'content': content})
+                    setT1(getQuaterly(header[1].trim().slice(0,7)))
+                    setT2(getQuaterly(header[header.length-1].trim().slice(0,7)))
+                    setY1(header[1].trim().slice(8))
+                    setY2(header[header.length-1].trim().slice(8))
+                    setTY2Status(true)
                 }else{
-                    setData({})
+                    setData()
                 }
             }else{// error
                 console.log('Not OK')
                 let msg = res.data.msg
-                Toast.show({
-                    type: 'error',
-                    text1: 'ຄົ້ນຫາບໍ່ສຳເລັດ!',
-                    text2: msg
-                });
+                ToastAndroid.show(msg,ToastAndroid.SHORT)
             }
             setIsLoading(false)
         })
         .catch(e =>{
             console.log(e)
             setIsLoading(false)
+            ToastAndroid.show('ກະລຸນາກວດສອບອິນເຕີເນັດ',ToastAndroid.SHORT)
         })
     }
-
+    const SearchBSDReport_T = () =>{
+        if(checkSelectDateValidation(y1,y2,date_type).result){
+            getBSDReport(bank,report_type,date_type,t1,t2,y1,y2)
+        }else{
+            ToastAndroid.show(checkSelectDateValidation(y1,y2,date_type).msg,ToastAndroid.SHORT)
+        }
+    }
     return (
         <View style={{flex:1}}>
-            {/* <Spinner visible={isLoading} color='gray'/>    */}
+            <Spinner visible={isLoading}/>   
+            <View style={{
+                flexDirection:'row',
+                justifyContent:'space-evenly',
+                paddingVertical: 5
+            }}>
+                <View style={{flex: 1}}>
+                <TPickerComponent
+                    t1={t1}
+                    setT1={setT1}
+                    y1={y1}
+                    setY1={setY1}
 
-            {/* ສ່ວນ Search new */}
-
-            {
-                windowHeight>windowWidth ?
-                (
-                <View> 
-                    <View style={{flexDirection:'row',justifyContent:'space-around',padding:5,}}>
-                        {/* ເລືອກໄຕມາດ */}
-                        <View style={{flex:2,
-                                borderBottomColor: COLORS.primary,
-                                borderBottomWidth: 1,
-                                borderRadius:5,
-                                marginHorizontal:20,
-// >>>>>>> 8e1e1eda83e1bd1538b9f8ae9e70b1a3baecc4a7
-                        }}>
-                            <Picker
-                                    mode='dropdown'
-                                    selectedValue={t}
-                                    onValueChange={(itemValue, itemIndex) =>
-                                        setT(itemValue)
-                                    }
-                                    style={{
-                                        color: COLORS.primary,
-                                        height: 45,
-                                        alignItems:'center',
-                                        textAlign:'center'
-                                    }}
-                                    dropdownIconColor={COLORS.primary}
-                                    
-                                    >
-                                    <Picker.Item label="ໄຕມາດ 1" value='T1' />
-                                    <Picker.Item label="ໄຕມາດ 2" value="T2" />
-                                    <Picker.Item label="ໄຕມາດ 3" value="T3" />
-                                    <Picker.Item label="ໄຕມາດ 4" value="T4" />
-                            </Picker>
-                        </View>
-
-                        {/* ເລືອກປີ */}
-                        <TouchableOpacity
-                                style={{flex: 1,
-                                    borderBottomColor: COLORS.primary,
-                                    borderBottomWidth: 1,
-                                    // width:100,
-                                    marginHorizontal:20,
-                                    paddingTop:10,
-                                    paddingBottom: 3,
-                                    justifyContent:'center',
-                                    alignItems:'center'
-                                }}
-                                onPress={()=>{
-                                    setOpenDatePicker(true)
-                                }}
-                        >
-                            <Text style={{color: COLORS.primary, fontSize: SIZES.medium}}>{date.getFullYear()}</Text>
-                        </TouchableOpacity>
-                        <DatePicker
-                                title='ເລືອກປີ'
-                                modal
-                                confirmText='ຕົກລົງ'
-                                cancelText='ຍົກເລີກ'
-                                mode='date'
-                                textColor='#00b3b3'
-                                open={openDatePicker}
-                                date={date}
-                                onConfirm={(date) => {
-                                    setOpenDatePicker(false)
-                                    setDate(date)
-                                }}
-                                onCancel={() => {
-                                    setOpenDatePicker(false)
-                                }}
-                        />
-                    </View>
-
-                    <View style={{flexDirection:'row',justifyContent:'space-around',padding:5,}}>
-                        {/* ເລືອກທະນາຄານ */}
-                        <View style={{
-                                flex:2,
-                                borderBottomColor: COLORS.primary,
-                                borderBottomWidth: 1,
-                                borderRadius:5,
-                                marginHorizontal:20,
-                        }}>
-                                <Picker
-                                    mode='dropdown'
-                                    selectedValue={bank}
-                                    onValueChange={(itemValue, itemIndex) =>
-                                        setBank(itemValue)
-                                    }
-                                    style={{
-                                        color: COLORS.primary,
-                                        height: 45,
-                                        alignItems:'center',
-                                        textAlign:'center'
-                                    }}
-                                    dropdownIconColor={COLORS.primary}
-                                    
-                                    >
-                                    <Picker.Item label="ALL_BANK" value='ALL_BANK' />
-                                    <Picker.Item label="BCEL" value="BCEL" />
-                                    <Picker.Item label="LDB" value="LDB" />
-                                    <Picker.Item label="JDB" value="JDB" />
-                                </Picker>
-                        </View>
-
-                        {/* ປຸ່ມຄົ້ນຫາ */}
-                        <TouchableOpacity
-                                style={{
-                                    flex:1,
-                                    backgroundColor:COLORS.primary,
-                                    justifyContent:'center',
-                                    alignItems:'center',
-                                    marginHorizontal:20,
-                                    borderRadius:5,
-                                }}
-            
-                                onPress={()=>{
-                                    getBSDReport(bank,date,t);
-                                }}
-                        >
-                            <Text>ຄົ້ນຫາ</Text>
-                        </TouchableOpacity>
-                    </View>
-                </View>
-                )
-                :
-                (
-                <View style={{flexDirection:'row',justifyContent:'space-around',padding:5,}}>
-                    {/* ເລືອກໄຕມາດ */}
-                    <View style={{flex:2,
-                            borderBottomColor: COLORS.primary,
-                            borderBottomWidth: 1,
-                            borderRadius:5,
-                            marginHorizontal:20,
-                    }}>
-                        <Picker
-                                mode='dropdown'
-                                selectedValue={t}
-                                onValueChange={(itemValue, itemIndex) =>
-                                    setT(itemValue)
-                                }
-                                style={{
-                                    color: COLORS.primary,
-                                    height: 45,
-                                    alignItems:'center',
-                                    textAlign:'center'
-                                }}
-                                dropdownIconColor={COLORS.primary}
-                                
-                                >
-                                <Picker.Item label="ໄຕມາດ 1" value='T1' />
-                                <Picker.Item label="ໄຕມາດ 2" value="T2" />
-                                <Picker.Item label="ໄຕມາດ 3" value="T3" />
-                                <Picker.Item label="ໄຕມາດ 4" value="T4" />
-                        </Picker>
-                    </View>
-    
-                    {/* ເລືອກປີ */}
-                    <TouchableOpacity
-                            style={{flex: 1,
-                                borderBottomColor: COLORS.primary,
-                                borderBottomWidth: 1,
-                                // width:100,
-                                marginHorizontal:20,
-                                paddingTop:10,
-                                paddingBottom: 3,
-                                justifyContent:'center',
-                                alignItems:'center'
-                            }}
-                            onPress={()=>{
-                                setOpenDatePicker(true)
-                            }}
-
-                    >
-                        <Text style={{color: COLORS.primary, fontSize: SIZES.medium}}>{date.getFullYear()}</Text>
-                    </TouchableOpacity>
-                    <DatePicker
-                            title='ເລືອກປີ'
-                            modal
-                            confirmText='ຕົກລົງ'
-                            cancelText='ຍົກເລີກ'
-                            mode='date'
-                            textColor='#00b3b3'
-                            open={openDatePicker}
-                            date={date}
-                            onConfirm={(date) => {
-                                setOpenDatePicker(false)
-                                setDate(date)
-                            }}
-                            onCancel={() => {
-                                setOpenDatePicker(false)
-                            }}
-                    />
-
-                    {/* ເລືອກທະນາຄານ */}
-                    <View style={{
-
-                            flex:2,
-                            borderBottomColor: COLORS.primary,
-                            borderBottomWidth: 1,
-                            borderRadius:5,
-                            marginHorizontal:20,
-                    }}>
-                            <Picker
-                                mode='dropdown'
-                                selectedValue={bank}
-                                onValueChange={(itemValue, itemIndex) =>
-                                    setBank(itemValue)
-                                }
-                                style={{
-                                    color: COLORS.primary,
-                                    height: 45,
-                                    alignItems:'center',
-                                    textAlign:'center'
-                                }}
-                                dropdownIconColor={COLORS.primary}
-                                
-                                >
-                                <Picker.Item label="ALL_BANK" value='ALL_BANK' />
-                                <Picker.Item label="BCEL" value="BCEL" />
-                                <Picker.Item label="LDB" value="LDB" />
-                                <Picker.Item label="JDB" value="JDB" />
-                            </Picker>
-
-                    </View>
-
-                    {/* ປຸ່ມຄົ້ນຫາ */}
-                    <TouchableOpacity
-
-                            style={{
-                                flex:1,
-                                backgroundColor:COLORS.primary,
-                                justifyContent:'center',
-                                alignItems:'center',
-                                marginHorizontal:20,
-                                borderRadius:5,
-                            }}
+                    t2={t2}
+                    setT2={setT2}
+                    y2={y2}
+                    setY2={setY2}
         
-                            onPress={()=>{
-                                getBSDReport(bank,date,t);
-                            }}
-                    >
-                        <Text>ຄົ້ນຫາ</Text>
-                    </TouchableOpacity>
+                    ty2Status={ty2Status}
+                    setTY2Status={setTY2Status}
+                />
                 </View>
-                )
-            }
+            </View>
+            <View style={{
+                flexDirection:'row',
+                justifyContent: 'space-evenly',
+                paddingHorizontal: 5,
+                height: 42,
+            }}>
+                <SelectPickerComponent data={bank} setData={setBank} datas={banks}/>
+                <View style={{width: '20%'}}/>
+                <View style={{width: '20%'}}>
+                    <SearchButtonComponent searchFunction={SearchBSDReport_T}/>
+                </View>
+            </View>
 
-            {/* end ສ່ວນ Search new */}
-
-            {/* ສ່ວນສະແດງລາຍງານ */}
             {
-                Object.keys(data).length !== 0 ?
+              data ?  
                 (
-                <View style={{height: '73%'}}>
-                    {/* ຫົວຂໍ້ */}
-                    <View style={{flexDirection:'row',justifyContent:'space-between',marginHorizontal:5,backgroundColor: COLORS.secondary,paddingVertical:10,borderTopLeftRadius: 5,borderTopRightRadius: 5,}}>
-                        <View style={{flex: 3,paddingLeft:5}}>
-                            <Text style={{color: COLORS.black, fontSize: SIZES.medium,}}>ລາຍການ</Text>
-                        </View>
-                        <View style={{flex:2,justifyContent: 'center',alignItems:'center'}}>
-                            <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>ຈຳນວນ</Text>
-                        </View>
-                        <View style={{flex:1,justifyContent: 'center',alignItems:'center'}}>
-                            <Text style={{color: COLORS.black, fontSize: SIZES.medium}}>ຫົວໜ່ວຍ</Text>
-                        </View>
-                    </View>
-                    {/* ເສັ້ນຂິດ */}
-                    <View style={{backgroundColor: COLORS.primary, height:1, marginHorizontal: 5}}/>
-                    
-                    {/* ສ່ວນສະແດງຂໍ້ມູນ */}
-                    <ScrollView>
-                        
-                        
-                        {
-                            keys.map((mykey,index)=>{
-                                return <ShowItem key={index} index={index} item={data[mykey]} />
-                            })
-                            
-                        }
-                    </ScrollView>
-                </View>
+                    <TableComponent header={data.header} content={data.content} date_type={date_type}/>
                 )
                 : 
                 (
