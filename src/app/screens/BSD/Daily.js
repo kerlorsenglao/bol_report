@@ -117,7 +117,7 @@ export default function Daily() {
             {
                 data ?
                 (
-                <TableComponent header={data.header} content={data.content}/>
+                    <TableComponent header={data.header} content={data.content}/>
                 )
                 : (
                     <View style={{flex: 1, justifyContent:'center',alignItems:'center'}}>

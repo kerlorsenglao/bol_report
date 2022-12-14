@@ -98,10 +98,18 @@ function checkSelectDateValidation(fdate,tdate,date_type){ //ສາມາດເ�
     else return {'result': true}
     
 }
+
+function getQuaterly(str){
+    if(str = 'ໄຕມາດ1') return 'T1'
+    if(str = 'ໄຕມາດ2') return 'T2'
+    if(str = 'ໄຕມາດ3') return 'T3'
+    if(str = 'ໄຕມາດ4') return 'T4'
+    return 'T'
+}
 export {
     dateFormat,monthYearFormat,getDateBefore, dateShow, 
     getKey,getMonth, getYear, getMonthYear,
     convertJSToAR,reverseStringInDate,numberFormate,
-    checkSelectDateValidation,
+    checkSelectDateValidation,getQuaterly
 }
 
