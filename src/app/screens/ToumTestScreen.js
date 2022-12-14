@@ -74,6 +74,13 @@ const ToumTestScreen = () => {
     ]
 
 
+    // 7. TPickerComponent ໄຕມາດ ແລະ ປີ
+    const [t1,setT1] = useState("T1")
+    const [y1,setY1] = useState("2020")
+
+    const [t2,setT2] = useState("T1")
+    const [y2,setY2] = useState("2020")
+    const [ty2Status,setTY2Status] = useState(false)  // ສະຖານະວ່າຖືກເລືອກບໍ່
 
   return (
     <View style={{flex:1}}>
@@ -143,12 +150,25 @@ const ToumTestScreen = () => {
             unit="ລ້ານ"
         /> */}
 
+        {/* TPickerComponent ໄຕມາດ ແລະ ປີ */}
+        <TPickerComponent
+            t1={t1}
+            setT1={setT1}
+            y1={y1}
+            setY1={setY1}
+
+            t2={t2}
+            setT2={setT2}
+            y2={y2}
+            setY2={setY2}
+  
+            ty2Status={ty2Status}
+            setTY2Status={setTY2Status}
+        />
+
         {/* PieChartComponent */}
         <PieChartComponent/>
 
-        <TPickerComponent/>
-
-        
     </View>
   )
 }
