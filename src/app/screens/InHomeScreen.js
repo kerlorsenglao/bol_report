@@ -11,11 +11,11 @@ export default function InHomeScreen({navigation}) {
   return (
     <ScrollView>
         <GraphComponent/> 
-        <View style={{ backgroundColor: COLORS.secondary,height:1,marginBottom:2,marginHorizontal:5}}/>
+        {/* <View style={{ backgroundColor: COLORS.secondary,height:1,marginBottom:2,marginHorizontal:5}}/> */}
         <View
             style={{
                 backgroundColor: COLORS.secondary,
-                marginHorizontal:5,
+                marginHorizontal:10,
                 height: 600,
                 borderTopRightRadius: 20,
                 borderTopLeftRadius: 20
@@ -24,7 +24,8 @@ export default function InHomeScreen({navigation}) {
             <View style={{ justifyContent:'center',alignItems:'center',marginTop:10,marginBottom:5}}>
                 <Text style={{color: COLORS.black, fontSize: SIZES.medium, fontWeight: 'bold'}}>ລາຍງານຂອງບັນດາກົມ</Text>
             </View>
-            <TouchableOpacity
+
+            {/* <TouchableOpacity
                 onPress={()=>navigation.navigate('BSD')}
                 style={{
                     backgroundColor: COLORS.gray_ligth,
@@ -47,6 +48,7 @@ export default function InHomeScreen({navigation}) {
                 >
                 <Text style={{color: '#000000', fontSize: SIZES.mediumf,}}>ກົມຄຸ້ມຄອງທະນາຄານທຸລະກິດ</Text>
             </TouchableOpacity>
+
             <TouchableOpacity
                 onPress={()=>navigation.navigate('MPD')}
                 style={{
@@ -70,6 +72,7 @@ export default function InHomeScreen({navigation}) {
                 >
                 <Text style={{color: '#000000', fontSize: SIZES.medium}}>ກົມນະໂຍບາຍເງີນຕາ</Text>
             </TouchableOpacity>
+
             <TouchableOpacity
                 onPress={()=>navigation.navigate('BOD')}
                 style={{
@@ -93,6 +96,7 @@ export default function InHomeScreen({navigation}) {
                 >
                 <Text style={{color: '#000000', fontSize: SIZES.medium}}>ກົມບໍລິການທະນາຄານທຸລະກິດ</Text>
             </TouchableOpacity>
+
             <TouchableOpacity
                 style={{
                     backgroundColor: COLORS.gray_ligth,
@@ -114,7 +118,13 @@ export default function InHomeScreen({navigation}) {
                 }}
                 >
                 <Text style={{color: '#000000', fontSize: SIZES.medium}}>ກົມຊຳລະ</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
+
+
+            {/* add by toum 14/12/2022 */}
+            <DepartmentItem navigation={navigation} deptName="ກົມຄຸ້ມຄອງທະນາຄານທຸລະກິດ" screenName="BSD"/>
+            <DepartmentItem navigation={navigation} deptName="ກົມນະໂຍບາຍເງີນຕາ" screenName="MPD"/>
+            <DepartmentItem navigation={navigation} deptName="ກົມບໍລິການທະນາຄານທຸລະກິດ" screenName="BOD"/>
            
 
             <FooterComponent/>
