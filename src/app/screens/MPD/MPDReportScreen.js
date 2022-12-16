@@ -1,18 +1,46 @@
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import BackInHomeComponent from '../../components/BackInHomeComponent'
 import { ScrollView } from 'react-native-gesture-handler'
 import { COLORS, SIZES } from '../../../constant';
 import * as Animatable from 'react-native-animatable'
+import HeaderComponent from '../../components/HeaderComponent';
+import { useIsFocused } from '@react-navigation/native';
 
-export default function MPDReportScreen({navigation}) {
+export default function MPDReportScreen({route,navigation}) {
+
     const [show1,setShow1] = useState(true)
     const [show2,setShow2] = useState(true)
     const [show3,setShow3] = useState(true)
+
+    const isFocus = useIsFocused()
+
+    useEffect(()=>{
+        checkShow()
+    },[isFocus])
+
+    const checkShow = ()=> {
+        if(route.params != undefined){
+            let _show = route.params.show
+            // setShow(_show)
+            setShow1((_show==1 ? true: false))
+            setShow2((_show==2 ? true: false))
+            setShow3((_show==3 ? true: false))
+            
+        }else{
+            setShow1(true)
+            setShow2(true)
+            setShow3(true)
+        }
+    }
+    
   return (
     <View style={{flex:1}}>
-      <ScrollView style={{marginTop: 10}}>
+
+        <HeaderComponent headerName="ກົມນະໂຍບາຍເງີນຕາ" navigation={navigation} bold={false} />
+        
+      <ScrollView style={{marginTop: 5}}>
 
         {/* add by toum 14/12/2022 */}
 
@@ -32,9 +60,9 @@ export default function MPDReportScreen({navigation}) {
                     animation='fadeInDown'
                     duration={100}
             >
-                <SubMenuComponent subMenuName="1.1 ສະຖິຕິເງິນຕາ (ຂໍ້ມູນລາຍງານພາຍໃນ)" navigation={navigation} screenName="MPD_BOPQuaterly" />
-                <SubMenuComponent subMenuName="1.2 ສະຖິຕິເງິນຕາ (ຂໍ້ມູນລາຍງານພາຍນອກ)" navigation={navigation} screenName="" />
-                <SubMenuComponent subMenuName="1.3 ສິນເຊື່ອແຍກຂະແໜງການ (ພາຍນອກ)" navigation={navigation} screenName="" />
+                <SubMenuComponent subMenuName="1.1 ສະຖິຕິເງິນຕາ (ຂໍ້ມູນລາຍງານພາຍໃນ)" navigation={navigation} screenName="MonetaryStatisticIntra" />
+                <SubMenuComponent subMenuName="1.2 ສະຖິຕິເງິນຕາ (ຂໍ້ມູນລາຍງານພາຍນອກ)" navigation={navigation} screenName="MonetaryStatisticExtra" />
+                <SubMenuComponent subMenuName="1.3 ສິນເຊື່ອແຍກຂະແໜງການ (ພາຍນອກ)" navigation={navigation} screenName="LoanBySector" />
                 
             </Animatable.View>
             :
@@ -56,11 +84,11 @@ export default function MPDReportScreen({navigation}) {
                     animation='fadeInDown'
                     duration={100}
             >
-                <SubMenuComponent subMenuName="2.1 ສະຖິຕິດຸນການຊໍາລະ" navigation={navigation} screenName="" />
-                <SubMenuComponent subMenuName="2.2 ການສົ່ງອອກ ແລະ ນຳເຂົ້າ" navigation={navigation} screenName="" />
-                <SubMenuComponent subMenuName="2.3 ການລົງທຶນໂດຍກົງຈາກຕ່າງປະເທດ (Foreign Direct Investment)" navigation={navigation} screenName="" />
-                <SubMenuComponent subMenuName="2.4 ໜີ້ສິນຕໍ່ຕ່າງປະເທດຂອງລັດຖະບານ" navigation={navigation} screenName="" />
-                <SubMenuComponent subMenuName="2.5 ສະຖິຕິກະແສເງິນໂອນລະຫວ່າງປະເທດຜ່ານລະບົບທະນາຄານ" navigation={navigation} screenName="" />
+                <SubMenuComponent subMenuName="2.1 ສະຖິຕິດຸນການຊໍາລະ" navigation={navigation} screenName="BOPStatistic" />
+                <SubMenuComponent subMenuName="2.2 ການສົ່ງອອກ ແລະ ນຳເຂົ້າ" navigation={navigation} screenName="BOPExportImport" />
+                <SubMenuComponent subMenuName="2.3 ການລົງທຶນໂດຍກົງຈາກຕ່າງປະເທດ (Foreign Direct Investment)" navigation={navigation} screenName="FDInvestment" />
+                <SubMenuComponent subMenuName="2.4 ໜີ້ສິນຕໍ່ຕ່າງປະເທດຂອງລັດຖະບານ" navigation={navigation} screenName="GovForeignDebit" />
+                <SubMenuComponent subMenuName="2.5 ສະຖິຕິກະແສເງິນໂອນລະຫວ່າງປະເທດຜ່ານລະບົບທະນາຄານ" navigation={navigation} screenName="ITRSofBanking" />
                 
             </Animatable.View>
             :
@@ -83,8 +111,8 @@ export default function MPDReportScreen({navigation}) {
                     animation='fadeInDown'
                     duration={100}
             >
-                <SubMenuComponent subMenuName="3.1 ອັດຕາດອກເງິນຝາກ" navigation={navigation} screenName="" />
-                <SubMenuComponent subMenuName="3.2 ອັດຕາດອກເງິນກູ້" navigation={navigation} screenName="" />
+                <SubMenuComponent subMenuName="3.1 ອັດຕາດອກເງິນຝາກ" navigation={navigation} screenName="DepositInterest" />
+                <SubMenuComponent subMenuName="3.2 ອັດຕາດອກເງິນກູ້" navigation={navigation} screenName="LoanInterest" />
             </Animatable.View>
             :
             null
