@@ -12,6 +12,9 @@ import DrawerComponent from '../components/DrawerComponent';
 
 import MPDReportScreen from './MPD/MPDReportScreen'
 import BODReportScreen from './BOD/BODReportScreen'
+import BOPExportImportScreen from './MPD/MPD2BOP/BOPExportImport/BOPExportImportScreen'
+import FDInvestmentScreen from './MPD/MPD2BOP/FDInvestment/FDInvestmentScreen'
+import ITRSofBankingScreen from './MPD/MPD2BOP/ITRSofBanking/ITRSofBankingScreen'
 
 const Drawer = createDrawerNavigator();
 
@@ -31,6 +34,9 @@ export default function InHomeScreen({navigation}) {
           <Drawer.Screen name="InHomePageScreen" component={InHomePageScreen} />
           <Drawer.Screen name="MPD" component={MPDReportScreen} />
           <Drawer.Screen name="BOD" component={BODReportScreen} />
+          <Drawer.Screen name="BOPExportImport" component={BOPExportImportScreen} />
+          <Drawer.Screen name="FDInvestment" component={FDInvestmentScreen} />
+          <Drawer.Screen name="ITRSofBanking" component={ITRSofBankingScreen} />
         </Drawer.Navigator>
       )
 }

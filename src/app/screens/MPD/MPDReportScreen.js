@@ -60,9 +60,9 @@ export default function MPDReportScreen({route,navigation}) {
                     animation='fadeInDown'
                     duration={100}
             >
-                <SubMenuComponent subMenuName="1.1 ສະຖິຕິເງິນຕາ (ຂໍ້ມູນລາຍງານພາຍໃນ)" navigation={navigation} screenName="MPD_BOPQuaterly" />
-                <SubMenuComponent subMenuName="1.2 ສະຖິຕິເງິນຕາ (ຂໍ້ມູນລາຍງານພາຍນອກ)" navigation={navigation} screenName="" />
-                <SubMenuComponent subMenuName="1.3 ສິນເຊື່ອແຍກຂະແໜງການ (ພາຍນອກ)" navigation={navigation} screenName="" />
+                <SubMenuComponent subMenuName="1.1 ສະຖິຕິເງິນຕາ (ຂໍ້ມູນລາຍງານພາຍໃນ)" navigation={navigation} screenName="MonetaryStatisticIntra" />
+                <SubMenuComponent subMenuName="1.2 ສະຖິຕິເງິນຕາ (ຂໍ້ມູນລາຍງານພາຍນອກ)" navigation={navigation} screenName="MonetaryStatisticExtra" />
+                <SubMenuComponent subMenuName="1.3 ສິນເຊື່ອແຍກຂະແໜງການ (ພາຍນອກ)" navigation={navigation} screenName="LoanBySector" />
                 
             </Animatable.View>
             :
@@ -84,11 +84,11 @@ export default function MPDReportScreen({route,navigation}) {
                     animation='fadeInDown'
                     duration={100}
             >
-                <SubMenuComponent subMenuName="2.1 ສະຖິຕິດຸນການຊໍາລະ" navigation={navigation} screenName="" />
-                <SubMenuComponent subMenuName="2.2 ການສົ່ງອອກ ແລະ ນຳເຂົ້າ" navigation={navigation} screenName="" />
-                <SubMenuComponent subMenuName="2.3 ການລົງທຶນໂດຍກົງຈາກຕ່າງປະເທດ (Foreign Direct Investment)" navigation={navigation} screenName="" />
-                <SubMenuComponent subMenuName="2.4 ໜີ້ສິນຕໍ່ຕ່າງປະເທດຂອງລັດຖະບານ" navigation={navigation} screenName="" />
-                <SubMenuComponent subMenuName="2.5 ສະຖິຕິກະແສເງິນໂອນລະຫວ່າງປະເທດຜ່ານລະບົບທະນາຄານ" navigation={navigation} screenName="" />
+                <SubMenuComponent subMenuName="2.1 ສະຖິຕິດຸນການຊໍາລະ" navigation={navigation} screenName="BOPStatistic" />
+                <SubMenuComponent subMenuName="2.2 ການສົ່ງອອກ ແລະ ນຳເຂົ້າ" navigation={navigation} screenName="BOPExportImport" />
+                <SubMenuComponent subMenuName="2.3 ການລົງທຶນໂດຍກົງຈາກຕ່າງປະເທດ (Foreign Direct Investment)" navigation={navigation} screenName="FDInvestment" />
+                <SubMenuComponent subMenuName="2.4 ໜີ້ສິນຕໍ່ຕ່າງປະເທດຂອງລັດຖະບານ" navigation={navigation} screenName="GovForeignDebit" />
+                <SubMenuComponent subMenuName="2.5 ສະຖິຕິກະແສເງິນໂອນລະຫວ່າງປະເທດຜ່ານລະບົບທະນາຄານ" navigation={navigation} screenName="ITRSofBanking" />
                 
             </Animatable.View>
             :
@@ -111,8 +111,8 @@ export default function MPDReportScreen({route,navigation}) {
                     animation='fadeInDown'
                     duration={100}
             >
-                <SubMenuComponent subMenuName="3.1 ອັດຕາດອກເງິນຝາກ" navigation={navigation} screenName="" />
-                <SubMenuComponent subMenuName="3.2 ອັດຕາດອກເງິນກູ້" navigation={navigation} screenName="" />
+                <SubMenuComponent subMenuName="3.1 ອັດຕາດອກເງິນຝາກ" navigation={navigation} screenName="DepositInterest" />
+                <SubMenuComponent subMenuName="3.2 ອັດຕາດອກເງິນກູ້" navigation={navigation} screenName="LoanInterest" />
             </Animatable.View>
             :
             null
