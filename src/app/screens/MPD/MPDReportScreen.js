@@ -1,18 +1,46 @@
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import BackInHomeComponent from '../../components/BackInHomeComponent'
 import { ScrollView } from 'react-native-gesture-handler'
 import { COLORS, SIZES } from '../../../constant';
 import * as Animatable from 'react-native-animatable'
+import HeaderComponent from '../../components/HeaderComponent';
+import { useIsFocused } from '@react-navigation/native';
 
-export default function MPDReportScreen({navigation}) {
+export default function MPDReportScreen({route,navigation}) {
+
     const [show1,setShow1] = useState(true)
     const [show2,setShow2] = useState(true)
     const [show3,setShow3] = useState(true)
+
+    const isFocus = useIsFocused()
+
+    useEffect(()=>{
+        checkShow()
+    },[isFocus])
+
+    const checkShow = ()=> {
+        if(route.params != undefined){
+            let _show = route.params.show
+            // setShow(_show)
+            setShow1((_show==1 ? true: false))
+            setShow2((_show==2 ? true: false))
+            setShow3((_show==3 ? true: false))
+            
+        }else{
+            setShow1(true)
+            setShow2(true)
+            setShow3(true)
+        }
+    }
+    
   return (
     <View style={{flex:1}}>
-      <ScrollView style={{marginTop: 10}}>
+
+        <HeaderComponent headerName="ກົມນະໂຍບາຍເງີນຕາ" navigation={navigation} bold={false} />
+        
+      <ScrollView style={{marginTop: 5}}>
 
         {/* add by toum 14/12/2022 */}
 

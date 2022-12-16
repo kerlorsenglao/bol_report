@@ -1,7 +1,8 @@
-import { View, Text } from 'react-native'
+import { View, Text, TouchableOpacity } from 'react-native'
 import React, { useContext } from 'react'
 
-import { NavigationContainer } from '@react-navigation/native'
+import Ionicons from 'react-native-vector-icons/Ionicons'
+import { NavigationContainer, useNavigation } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
 import HomeScreen2 from '../screen/HomeScreen2'
@@ -16,12 +17,21 @@ import HomeScreen3 from '../screen/HomeScreen3'
 import InHomeScreen from '../app/screens/InHomeScreen'
 import OutHomeScreen from '../app/screens/OutHomeScreen'
 import StartScreen from '../app/screens/StartScreen'
-import BODReportScreen from '../app/screens/BOD/BODReportScreen'
+// ກົມຄຸ້ມຄອງ
 import BSDReportScreen from '../app/screens/BSD/BSDReportScreen'
+// ກົມນະໂຍບາຍ
 import MPDReportScreen from '../app/screens/MPD/MPDReportScreen'
 import BOPQuaterly from '../app/screens/MPD/Report1/BOPQuaterly'
 import Monestatistic from '../app/screens/MPD/Report10/Monestatistic'
 import Testing from '../app/screens/Testing'
+// ກົມບໍລິການ
+import BODReportScreen from '../app/screens/BOD/BODReportScreen'
+import BODForeignReserveScreen from '../app/screens/BOD/BODForeignReserve/BODForeignReserveScreen'
+import BODLoanScreen from '../app/screens/BOD/BODLoan/BODLoanScreen'
+import BODInternalMoneyMarketScreen from '../app/screens/BOD/BODInternalMoneyMarket/BODInternalMoneyMarketScreen'
+import BODAccountingServiceScreen from '../app/screens/BOD/BODAccountingService/BODAccountingServiceScreen'
+import BODDepositBalanceScreen from '../app/screens/BOD/BODDepositBalance/BODDepositBalanceScreen'
+import BODExchangeRateFxSpotScreen from '../app/screens/BOD/BODExchangeRateFxSpot/BODExchangeRateFxSpotScreen'
 
 import { COLORS } from '../constant'
 import ToumTestScreen from '../app/screens/ToumTestScreen'
@@ -81,16 +91,18 @@ export default function Navigation() {
                                 name="InHome"
                                 component={InHomeScreen}
                                 options={{
-                                    title:'ລາຍງານພາຍໃນ',
-                                    headerTitleAlign:'center',
-                                    headerTitleStyle:{
-                                        color: COLORS.white,
-                                        fontWeight: 'bold'
-                                    },
-                                    headerStyle:{
-                                        backgroundColor: COLORS.primary
-                                    }
+                                    headerShown: false,
+                                    // title:'ລາຍງານພາຍໃນ',
+                                    // headerTitleAlign:'center',
+                                    // headerTitleStyle:{
+                                    //     color: COLORS.white,
+                                    //     fontWeight: 'bold'
+                                    // },
+                                    // headerStyle:{
+                                    //     backgroundColor: COLORS.primary
+                                    // },
                                 }}
+                                
                             />
                              <StackNavigation.Screen 
                                 name="OutHome"
@@ -108,21 +120,7 @@ export default function Navigation() {
                                     }
                                 }}
                             />
-                            <StackNavigation.Screen 
-                                name="BOD"
-                                component={BODReportScreen}
-                                options={{
-                                    title:'ກົມບໍລິການທະນາຄານທຸລະກິດ',
-                                    headerTitleAlign:'center',
-                                    headerTitleStyle:{
-                                        color: COLORS.white,
-                                        // fontWeight: 'bold'
-                                    },
-                                    headerStyle:{
-                                        backgroundColor: COLORS.primary
-                                    }
-                                }}
-                            />
+                            
                             <StackNavigation.Screen 
                                 name="BSD"
                                 component={BSDReportScreen}
@@ -142,15 +140,16 @@ export default function Navigation() {
                                 name="MPD"
                                 component={MPDReportScreen}
                                 options={{
-                                    title:'ກົມນະໂຍບາຍເງີນຕາ',
-                                    headerTitleAlign:'center',
-                                    headerTitleStyle:{
-                                        color: COLORS.white,
-                                        // fontWeight: 'bold'
-                                    },
-                                    headerStyle:{
-                                        backgroundColor: COLORS.primary
-                                    }
+                                    headerShown:false
+                                    // title:'ກົມນະໂຍບາຍເງີນຕາ',
+                                    // headerTitleAlign:'center',
+                                    // headerTitleStyle:{
+                                    //     color: COLORS.white,
+                                    //     // fontWeight: 'bold'
+                                    // },
+                                    // headerStyle:{
+                                    //     backgroundColor: COLORS.primary
+                                    // }
                                 }}
                             />
                             <StackNavigation.Screen 
@@ -183,22 +182,116 @@ export default function Navigation() {
                                     }
                                 }}
                             />
-                            
+                            {/* ໜ້າລາຍງານຂອງກົມບໍລິການ */}
                             <StackNavigation.Screen 
-                                name="Search"
-                                component={SearchScreen}
+                                name="BOD"
+                                component={BODReportScreen}
                                 options={{
-                                    headerShown:false
+                                    title:'ກົມບໍລິການທະນາຄານທຸລະກິດ',
+                                    headerTitleAlign:'center',
+                                    headerTitleStyle:{
+                                        color: COLORS.white,
+                                        // fontWeight: 'bold'
+                                    },
+                                    headerStyle:{
+                                        backgroundColor: COLORS.primary
+                                    }
                                 }}
                             />
                             
                             <StackNavigation.Screen 
-                                name="Result"
-                                component={ResultScreen}
+                                name="BODForeignReserve"
+                                component={BODForeignReserveScreen}
                                 options={{
-                                    headerShown:false
+                                    title:'ການບໍລິຫານຄັງສຳຮອງເງິນຕາຕ່າງປະເທດ',
+                                    headerTitleAlign:'center',
+                                    headerTitleStyle:{
+                                        color: COLORS.white,
+                                        fontSize:17
+                                        // fontWeight: 'bold'
+                                    },
+                                    headerStyle:{
+                                        backgroundColor: COLORS.primary
+                                    }
                                 }}
                             />
+
+                            <StackNavigation.Screen 
+                                name="BODLoan"
+                                component={BODLoanScreen}
+                                options={{
+                                    title:'ວຽກງານສິນເຊື່ອ',
+                                    headerTitleAlign:'center',
+                                    headerTitleStyle:{
+                                        color: COLORS.white,
+                                    },
+                                    headerStyle:{
+                                        backgroundColor: COLORS.primary
+                                    }
+                                }}
+                            />
+
+                            <StackNavigation.Screen 
+                                name="BODInternalMoneyMarket"
+                                component={BODInternalMoneyMarketScreen}
+                                options={{
+                                    title:'ວຽກງານຕະຫຼາດເງິນພາຍໃນ',
+                                    headerTitleAlign:'center',
+                                    headerTitleStyle:{
+                                        color: COLORS.white,
+                                    },
+                                    headerStyle:{
+                                        backgroundColor: COLORS.primary
+                                    }
+                                }}
+                            />
+
+                            <StackNavigation.Screen 
+                                name="BODAccountingService"
+                                component={BODAccountingServiceScreen}
+                                options={{
+                                    title:'ວຽກງານບັນຊີ-ບໍລິການ',
+                                    headerTitleAlign:'center',
+                                    headerTitleStyle:{
+                                        color: COLORS.white,
+                                    },
+                                    headerStyle:{
+                                        backgroundColor: COLORS.primary
+                                    }
+                                }}
+                            />
+
+                            <StackNavigation.Screen 
+                                name="BODDepositBalance"
+                                component={BODDepositBalanceScreen}
+                                options={{
+                                    title:'ຍອດເງິນຝາກຂອງແຕ່ລະພາກສ່ວນ',
+                                    headerTitleAlign:'center',
+                                    headerTitleStyle:{
+                                        color: COLORS.white,
+                                    },
+                                    headerStyle:{
+                                        backgroundColor: COLORS.primary
+                                    }
+                                }}
+                            />
+
+                            <StackNavigation.Screen 
+                                name="BODExchangeRateFxSpot"
+                                component={BODExchangeRateFxSpotScreen}
+                                options={{
+                                    title:'ອັດຕາແລກປ່ຽນສະເລ່ຍຂອງການຊື້-ຂາຍເງິນຕາຕ່າງປະເທດ',
+                                    headerTitleAlign:'center',
+                                    headerTitleStyle:{
+                                        color: COLORS.white,
+                                        fontSize:12
+                                    },
+                                    headerStyle:{
+                                        backgroundColor: COLORS.primary
+                                    }
+                                }}
+                            />
+
                             </>
                         ):
                         (

@@ -6,7 +6,7 @@ import { COLORS, SIZES } from '../../constant'
 export default function BackInHomeComponent({navigation}) {
   return (
     <TouchableOpacity
-        onPress={()=>navigation.navigate('InHome')}
+        onPress={()=>navigation.navigate('InHomePageScreen')}
         style={{
             position: 'absolute',
             bottom: 15,
