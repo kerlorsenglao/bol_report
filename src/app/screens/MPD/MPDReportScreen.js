@@ -61,8 +61,8 @@ export default function MPDReportScreen({route,navigation}) {
                     duration={100}
             >
                 <SubMenuComponent subMenuName="1.1 ສະຖິຕິເງິນຕາ (ຂໍ້ມູນລາຍງານພາຍໃນ)" navigation={navigation} screenName="MonetaryStatisticIntra" />
-                <SubMenuComponent subMenuName="1.2 ສະຖິຕິເງິນຕາ (ຂໍ້ມູນລາຍງານພາຍນອກ)" navigation={navigation} screenName="MonetaryStatisticExtra" />
-                <SubMenuComponent subMenuName="1.3 ສິນເຊື່ອແຍກຂະແໜງການ (ພາຍນອກ)" navigation={navigation} screenName="LoanBySector" />
+                {/* <SubMenuComponent subMenuName="1.2 ສະຖິຕິເງິນຕາ (ຂໍ້ມູນລາຍງານພາຍນອກ)" navigation={navigation} screenName="MonetaryStatisticExtra" /> */}
+                <SubMenuComponent subMenuName="1.2 ສິນເຊື່ອແຍກຂະແໜງການ (ພາຍນອກ)" navigation={navigation} screenName="LoanBySector" />
                 
             </Animatable.View>
             :

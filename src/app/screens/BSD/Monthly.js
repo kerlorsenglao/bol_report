@@ -1,6 +1,6 @@
 import { Text, View,ToastAndroid } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import { useNavigation } from '@react-navigation/native'
+import { useIsFocused, useNavigation } from '@react-navigation/native'
 import Spinner from 'react-native-loading-spinner-overlay'
 import axios from "axios";
 import Config from "react-native-config";
@@ -17,6 +17,7 @@ const  API_URL = Config.API_URL;
 
 export default function Monthly() {
     const navigation = useNavigation();
+    const isFocus = useIsFocused();
     const [isLoading,setIsLoading] = useState(false)
     const [bank,setBank] = useState('ALL_BANK')
     const banks = ["ALL_BANK","BCEL","LDB","JDB"]
@@ -30,14 +31,16 @@ export default function Monthly() {
     const date_type = 'M';
     const date_type_default = 'DEFAULT_M'
 
+    const [visited,setVisited] = useState(false)
     useEffect(()=>{
-        getBSDReport(bank,report_type,date_type_default,my1,my2)
-    },[])
+        if(!visited &&isFocus) {
+            getBSDReport(bank,report_type,date_type_default,my1,my2)
+            setVisited(true)
+        }
+    },[isFocus])
     // function for MonthLy
     const getBSDReport = async (bank,report_type,date_type,my1,my2)=>{
-        if(date_type != date_type_default){
-            setIsLoading(true)
-        }
+        setIsLoading(true)
         await axios.post(`${API_URL}/BankSupervisionReport`,{
             webServiceUser: "bol_it",
             webServicePassword: "123456",

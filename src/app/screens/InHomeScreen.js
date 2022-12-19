@@ -23,7 +23,7 @@ export default function InHomeScreen({navigation}) {
 
         <Drawer.Navigator 
             initialRouteName='InHomePageScreen'
-            backBehavior='initialRoute'
+            backBehavior='history'
             screenOptions={({route})=>({
                 headerShown:false
                 
