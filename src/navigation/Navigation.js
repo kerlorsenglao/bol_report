@@ -1,7 +1,6 @@
 import { View, Text, TouchableOpacity } from 'react-native'
 import React, { useContext } from 'react'
 
-import Ionicons from 'react-native-vector-icons/Ionicons'
 import { NavigationContainer, useNavigation } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
@@ -61,6 +60,8 @@ import ToumTestScreen from '../app/screens/ToumTestScreen'
 const StackNavigation = createNativeStackNavigator();
 
 export default function Navigation() {
+
+    // const navigation = useNavigation()
     const {token, splashLoading} = useContext(AuthContext);
 
     return (
