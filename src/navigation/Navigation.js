@@ -1,7 +1,7 @@
 import { View, Text } from 'react-native'
 import React, { useContext } from 'react'
 
-import { NavigationContainer } from '@react-navigation/native'
+import { NavigationContainer, useNavigation } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
 import HomeScreen2 from '../screen/HomeScreen2'
@@ -29,6 +29,8 @@ import ToumTestScreen from '../app/screens/ToumTestScreen'
 const StackNavigation = createNativeStackNavigator();
 
 export default function Navigation() {
+
+    // const navigation = useNavigation()
     const {token, splashLoading} = useContext(AuthContext);
 
     return (
