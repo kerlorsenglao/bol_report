@@ -77,11 +77,11 @@ export default function TableComponent({header, content, date_type}) {
                                                 <Text 
                                                     style={{
                                                         alignSelf: jndex==0 ? null :'center',
-                                                        fontSize: item[val].toString().includes(H)?SIZES.medium: 14,
-                                                        fontWeight: item[val].toString().includes(H) || item[val].toString().includes(S)  ? 'bold' : null,
-                                                        color: item[val].toString().includes(S) ? '#595959' : COLORS.black,
+                                                        fontSize: item[val] ? item[val].toString().includes(H)?SIZES.medium: 14 : null,
+                                                        fontWeight: item[val] ? item[val].toString().includes(H) || item[val].toString().includes(S)  ? 'bold' : null : null,
+                                                        color: item[val] ? item[val].toString().includes(S) ? '#595959' : COLORS.black : null,
                                                         
-                                                        }}>{item[val].toString().includes(H) || item[val].toString().includes(S)? item[val].slice(2) : item[val]}</Text>
+                                                        }}>{ item[val] ? item[val].toString().includes(H) || item[val].toString().includes(S)? item[val].slice(2) : item[val] : " "}</Text>
                                             </TouchableOpacity>
                                         )
                                     })
