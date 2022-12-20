@@ -25,7 +25,7 @@ const TPickerComponent = ({
 
     const LT = ["ໄຕມາດ1","ໄຕມາດ2","ໄຕມາດ3","ໄຕມາດ4"]
     const ET = ["T1","T2","T3","T4"]
-    const T = {"T1":"ໄຕມາດ1","T2":"ໄຕມາດ2","T3":"ໄຕມາດ3","T4":"ໄຕມາດ4"}
+    const T = {"T1":"Q1","T2":"Q2","T3":"Q3","T4":"Q4"}
 
     const [myYear1,setMyYear1] = useState(y1)
     const [myYear2,setMyYear2] = useState(y2)
