@@ -1,26 +1,26 @@
-import { View, Text } from 'react-native'
+import { View, Text,TouchableOpacity } from 'react-native'
 import React,{ useEffect, useState } from 'react'
 import Toast from 'react-native-toast-message'
+import { useIsFocused, useNavigation } from '@react-navigation/native'
 import Spinner from 'react-native-loading-spinner-overlay'
 import axios from "axios";
 import Config from "react-native-config";
 
-import { checkSelectDateValidation,monthYearFormat } from '../../../../help/Functions'
-import BackInHomeComponent from '../../../../components/BackInHomeComponent';
-import { COLORS, SIZES } from '../../../../../constant'
-import TableComponent from '../../../../components/TableComponent';
-
-import YearPickerComponent from '../../../../components/YearPickerComponent'
-import SearchButtonComponent from '../../../../components/SearchButtonComponent'
-import { useNavigation } from '@react-navigation/native';
+import { checkSelectDateValidation,monthYearFormat } from '../../../../../help/Functions'
+import BackInHomeComponent from '../../../../../components/BackInHomeComponent'
+import { COLORS, SIZES } from '../../../../../../constant'
+import TableComponent from '../../../../../components/TableComponent'
+import YearPickerComponent from '../../../../../components/YearPickerComponent'
+import SearchButtonComponent from '../../../../../components/SearchButtonComponent'
 
 const  API_URL = Config.API_URL;
 const API_NAME = "???"
 
-// this function create by Toum at 21/12/2022
-const GovForeignDebitScreen = () => {
+// this function create by Toum at 19/12/2022
+const Yearly = () => {
 
-    const navigation = useNavigation()
+    const navigation = useNavigation();
+    const isFocus = useIsFocused()
     const [isLoading,setIsLoading] = useState(false)
     const [data,setData] = useState();
 
@@ -32,14 +32,18 @@ const GovForeignDebitScreen = () => {
     const date_type = 'Y';
     const date_type_default = 'DEFAULT_Y'
 
+    const [visited,setVisited] = useState(false)
     // useEffect
     useEffect(()=>{
-      getGovForeignDebitReport_Y(report_type,date_type_default,year1,year2)
-    },[])
+      if(!visited && isFocus) {
+          getBOPExportImportReport_Y(report_type,date_type_default,year1,year2)
+          setVisited(true)
+      }
+    },[isFocus])
 
     // function for Yearly
-    const getGovForeignDebitReport_Y = async (report_type,date_type,year1,year2)=>{
-        // setIsLoading(true)
+    const getBOPExportImportReport_Y = async (report_type,date_type,year1,year2)=>{
+        setIsLoading(true)
         // await axios.post(`${API_URL}/${API_NAME}`,
         //     {
         //         webServiceUser: "bol_it",
@@ -92,10 +96,10 @@ const GovForeignDebitScreen = () => {
         setIsLoading(false)
     }
 
-    const SearchGovForeignDebitReport_Y = () =>{
+    const SearchBOPExportImportReport_Y = () =>{
         if(y2Status==true){
             if(checkSelectDateValidation(year1,year2,date_type).result){
-                getGovForeignDebitReport_Y(report_type,date_type,year1,year2)
+                getBOPExportImportReport_Y(report_type,date_type,year1,year2)
             }else{
                 Toast.show({
                     type: 'error',
@@ -103,7 +107,7 @@ const GovForeignDebitScreen = () => {
                 });
             }
         }else{
-            getGovForeignDebitReport_Y(report_type,date_type,year1,year2)
+            getBOPExportImportReport_Y(report_type,date_type,year1,year2)
         }
     }
 
@@ -122,7 +126,7 @@ const GovForeignDebitScreen = () => {
                     />
             </View>
             <View style={{flex:1}}>
-                <SearchButtonComponent searchFunction={SearchGovForeignDebitReport_Y}/>
+                <SearchButtonComponent searchFunction={SearchBOPExportImportReport_Y}/>
             </View>
         </View>
 
@@ -144,4 +148,4 @@ const GovForeignDebitScreen = () => {
   )
 }
 
-export default GovForeignDebitScreen
+export default Yearly
