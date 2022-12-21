@@ -51,7 +51,7 @@ const DatePickerComponent = ({fdate,setFdate,fopen,setFopen,tdate,setTdate,topen
                         setTopen(true)
                     }}
                 >
-                    <Text style={{color: COLORS.primary, fontSize: SIZES.medium}}>
+                    <Text style={{color: tstatus ? COLORS.primary : COLORS.gray, fontSize: SIZES.medium}}>
                         {
                             tstatus? tdate.getDate()+'/'+(tdate.getMonth()+1)+'/'+tdate.getFullYear()
                             : 'dd/mm/YYYY'
