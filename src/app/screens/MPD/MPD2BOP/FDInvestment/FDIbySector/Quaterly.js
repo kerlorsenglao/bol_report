@@ -40,13 +40,13 @@ const Quaterly = () => {
     // useEffect
     useEffect(()=>{
       if(!visited && isFocus){
-        getBOPExportImportReport_Q(report_type,date_type_default,t1,t2,y1,y2)
+        getFDIbySectorReport_Q(report_type,date_type_default,t1,t2,y1,y2)
         setVisited(true)
       }
     },[isFocus])
 
     // function for Quaterly
-    const getBOPExportImportReport_Q = async (report_type,date_type,t1,t2,y1,y2)=>{
+    const getFDIbySectorReport_Q = async (report_type,date_type,t1,t2,y1,y2)=>{
         // setIsLoading(true);
         // await axios.post(`${API_URL}/${API_NAME}`,
         //     {
@@ -102,10 +102,10 @@ const Quaterly = () => {
         setIsLoading(false)
     }
 
-    const SearchBOPExportImportReport_Q = () =>{
+    const SearchFDIbySectorReport_Q = () =>{
         if(ty2Status==true){
             if(checkSelectDateValidation(y1,y2,date_type).result){
-                getBOPExportImportReport_Q(report_type,date_type,t1,t2,y1,y2)
+                getFDIbySectorReport_Q(report_type,date_type,t1,t2,y1,y2)
             }else{
                 Toast.show({
                     type: 'error',
@@ -113,7 +113,7 @@ const Quaterly = () => {
                 });
             }
         }else{
-            getBOPExportImportReport_Q(report_type,date_type,t1,t2,y1,y2)
+            getFDIbySectorReport_Q(report_type,date_type,t1,t2,y1,y2)
         }
     }
 
@@ -138,7 +138,7 @@ const Quaterly = () => {
                 />
             </View>
             <View style={{flex:1}}>
-                <SearchButtonComponent searchFunction={SearchBOPExportImportReport_Q}/>
+                <SearchButtonComponent searchFunction={SearchFDIbySectorReport_Q}/>
             </View>
         </View>
 

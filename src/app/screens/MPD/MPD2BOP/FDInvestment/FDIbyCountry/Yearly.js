@@ -36,13 +36,13 @@ const Yearly = () => {
     // useEffect
     useEffect(()=>{
       if(!visited && isFocus) {
-          getBOPExportImportReport_Y(report_type,date_type_default,year1,year2)
+            getFDIbyCountryReport_Y(report_type,date_type_default,year1,year2)
           setVisited(true)
       }
     },[isFocus])
 
     // function for Yearly
-    const getBOPExportImportReport_Y = async (report_type,date_type,year1,year2)=>{
+    const getFDIbyCountryReport_Y = async (report_type,date_type,year1,year2)=>{
         setIsLoading(true)
         // await axios.post(`${API_URL}/${API_NAME}`,
         //     {
@@ -96,10 +96,10 @@ const Yearly = () => {
         setIsLoading(false)
     }
 
-    const SearchBOPExportImportReport_Y = () =>{
+    const SearchFDIbyCountryReport_Y = () =>{
         if(y2Status==true){
             if(checkSelectDateValidation(year1,year2,date_type).result){
-                getBOPExportImportReport_Y(report_type,date_type,year1,year2)
+                getFDIbyCountryReport_Y(report_type,date_type,year1,year2)
             }else{
                 Toast.show({
                     type: 'error',
@@ -107,7 +107,7 @@ const Yearly = () => {
                 });
             }
         }else{
-            getBOPExportImportReport_Y(report_type,date_type,year1,year2)
+            getFDIbyCountryReport_Y(report_type,date_type,year1,year2)
         }
     }
 
@@ -126,7 +126,7 @@ const Yearly = () => {
                     />
             </View>
             <View style={{flex:1}}>
-                <SearchButtonComponent searchFunction={SearchBOPExportImportReport_Y}/>
+                <SearchButtonComponent searchFunction={SearchFDIbyCountryReport_Y}/>
             </View>
         </View>
 

@@ -33,11 +33,11 @@ const Monthly = () => {
     const date_type_default = 'DEFAULT_M'
 
     useEffect(()=>{
-        getBOPExportImportReport_M(report_type,date_type_default,my1,my2)
+        getFDIbySectorReport_M(report_type,date_type_default,my1,my2)
     },[])
 
     // function for MonthLy
-    const getBOPExportImportReport_M = async (report_type,date_type,my1,my2)=>{
+    const getFDIbySectorReport_M = async (report_type,date_type,my1,my2)=>{
         // setIsLoading(true)
         // await axios.post(`${API_URL}/${API_NAME}`,{
         //         webServiceUser: "bol_it",
@@ -92,10 +92,10 @@ const Monthly = () => {
 
     }
 
-  const SearchBOPExportImportReport_M = () =>{
+  const SearchFDIbySectorReport_M = () =>{
       if(my2status==true){
         if(checkSelectDateValidation(my1,my2,date_type).result){
-            getBOPExportImportReport_M(report_type,date_type,my1,my2)
+            getFDIbySectorReport_M(report_type,date_type,my1,my2)
         }else{
             Toast.show({
                     type: 'error',
@@ -103,7 +103,7 @@ const Monthly = () => {
             });
         }
       }else{
-          getBOPExportImportReport_M(report_type,date_type,my1,my2)
+        getFDIbySectorReport_M(report_type,date_type,my1,my2)
       }
   }
 
@@ -127,7 +127,7 @@ const Monthly = () => {
                 />
             </View>
             <View style={{flex:1}}>
-                <SearchButtonComponent searchFunction={SearchBOPExportImportReport_M}/>
+                <SearchButtonComponent searchFunction={SearchFDIbySectorReport_M}/>
             </View>
         </View>
 
