@@ -68,7 +68,7 @@ const MonthYearPickerComponent = ({my1,setMY1,show1,setShow1,my2,setMY2,show2,se
                         setShow2(true)
                     }}
                 >
-                    <Text style={{color: COLORS.primary, fontSize: SIZES.medium}}>
+                    <Text style={{color: my2status ? COLORS.primary: COLORS.gray, fontSize: SIZES.medium}}>
                         {
                             my2status ? (my2.getMonth()+1)+'/'+my2.getFullYear()
                             : 'mm/YYYY'

@@ -56,7 +56,7 @@ const YearPickerComponent = ({year1,setYear1,year2,setYear2,y2Status,setY2Status
                         setShowModal2(true)
                     }}
                 >
-                    <Text style={{color: COLORS.primary, fontSize: SIZES.medium}}>
+                    <Text style={{color: y2Status ? COLORS.primary : COLORS.gray, fontSize: SIZES.medium}}>
                         { y2Status ? year2 : 'YYYY' }
                     </Text>
                 </TouchableOpacity>

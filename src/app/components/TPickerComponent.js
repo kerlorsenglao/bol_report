@@ -25,7 +25,7 @@ const TPickerComponent = ({
 
     const LT = ["ໄຕມາດ1","ໄຕມາດ2","ໄຕມາດ3","ໄຕມາດ4"]
     const ET = ["T1","T2","T3","T4"]
-    const T = {"T1":"Q1","T2":"Q2","T3":"Q3","T4":"Q4"}
+    const T = {"T1":"ໄຕມາດ1","T2":"ໄຕມາດ2","T3":"ໄຕມາດ3","T4":"ໄຕມາດ4"}
 
     const [myYear1,setMyYear1] = useState(y1)
     const [myYear2,setMyYear2] = useState(y2)
@@ -38,7 +38,8 @@ const TPickerComponent = ({
                     style={{
                         borderBottomColor: COLORS.primary,
                         borderBottomWidth: 1,
-                        marginHorizontal:10,
+                        // marginHorizontal:10,
+                        marginLeft:8,
                         paddingTop:10,
                         paddingBottom: 3,
                         justifyContent:'center',
@@ -51,7 +52,7 @@ const TPickerComponent = ({
                     }}
                 >
                     <Text style={{color: COLORS.primary, fontSize: SIZES.medium}}>
-                        { T[t1] + ' / '+ y1 }
+                        { T[t1] + '/'+ y1 }
                     </Text>
                 </TouchableOpacity>
             </View>
@@ -66,7 +67,8 @@ const TPickerComponent = ({
                     style={{
                         borderBottomColor: COLORS.primary,
                         borderBottomWidth: 1,
-                        marginHorizontal:10,
+                        // marginHorizontal:10,
+                        marginRight:8,
                         paddingTop:10,
                         paddingBottom: 3,
                         justifyContent:'center',
@@ -78,8 +80,8 @@ const TPickerComponent = ({
                         setShowModal2(true)
                     }}
                 >
-                    <Text style={{color: COLORS.primary, fontSize: SIZES.medium}}>
-                        { ty2Status ? T[t2] + ' / '+ y2 : 'ໄຕມາດ / YYYY' }
+                    <Text style={{color: ty2Status? COLORS.primary: COLORS.gray, fontSize: SIZES.medium}}>
+                        { ty2Status ? T[t2] + '/'+ y2 : 'ໄຕມາດ/YYYY' }
                     </Text>
                 </TouchableOpacity>
             </View>

@@ -6,40 +6,49 @@ import Spinner from 'react-native-loading-spinner-overlay'
 import axios from "axios";
 import Config from "react-native-config";
 
-import { checkSelectDateValidation,monthYearFormat } from '../../../../../help/Functions'
-import BackInHomeComponent from '../../../../../components/BackInHomeComponent'
-import { COLORS, SIZES } from '../../../../../../constant'
-import TableComponent from '../../../../../components/TableComponent'
-import MonthYearPickerComponent from '../../../../../components/MonthYearPickerComponent'
-import SearchButtonComponent from '../../../../../components/SearchButtonComponent'
+import { checkSelectDateValidation,monthYearFormat } from '../../../../help/Functions'
+import BackInHomeComponent from '../../../../components/BackInHomeComponent'
+import { COLORS, SIZES } from '../../../../../constant'
+import TableComponent from '../../../../components/TableComponent'
+import MonthYearPickerComponent from '../../../../components/MonthYearPickerComponent'
+import SelectPickerComponent from '../../../../components/SelectPickerComponent'
+import SearchButtonComponent from '../../../../components/SearchButtonComponent'
 
 const API_URL = Config.API_URL;
-const API_NAME = "getBOPExpImpReport"
+const API_NAME = "getBOPQuaterlyReport"
+const API_NAME_GDP = "getBOPQuaterlyGDPReport"
 
-// this function create by Toum at 19/12/2022
+// this function create by Toum at 21/12/2022
 const Monthly = () => {
 
     const navigation = useNavigation();
     const [isLoading,setIsLoading] = useState(false)
     const [data,setData] = useState();
 
+    const [option,setOption] = useState('ສະຖິຕິດຸນການຊໍາລະ')
+    const options = ["ສະຖິຕິດຸນການຊໍາລະ","ສະຖິຕິດຸນການຊໍາລະເປັນເປີເຊັນທຽບໃສ່ GDP"]
     const [my1,setMY1] = useState(new Date());
     const [show1,setShow1] = useState(false)
     const [my2,setMY2] = useState(new Date());
     const [show2,setShow2] = useState(false)
     const [my2status,setMY2status] = useState(false) 
+
     const report_type = 'InReport';
     const date_type = 'M';
     const date_type_default = 'DEFAULT_M'
 
     useEffect(()=>{
-        getBOPExportImportReport_M(report_type,date_type_default,my1,my2)
+        getBOPStatisticReport_M(report_type,date_type_default,my1,my2)
     },[])
 
     // function for MonthLy
-    const getBOPExportImportReport_M = async (report_type,date_type,my1,my2)=>{
+    const getBOPStatisticReport_M = async (report_type,date_type,my1,my2)=>{
+        let REQ_API_NAME = API_NAME
+        if(option.includes("GDP")){
+            REQ_API_NAME = API_NAME_GDP
+        }
         setIsLoading(true)
-        await axios.post(`${API_URL}/${API_NAME}`,{
+        await axios.post(`${API_URL}/${REQ_API_NAME}`,{
                 webServiceUser: "bol_it",
                 webServicePassword: "123456",
                 report_type: report_type,
@@ -92,10 +101,10 @@ const Monthly = () => {
 
     }
 
-  const SearchBOPExportImportReport_M = () =>{
+  const SearchBOPStatisticReport_M = () =>{
       if(my2status==true){
         if(checkSelectDateValidation(my1,my2,date_type).result){
-            getBOPExportImportReport_M(report_type,date_type,my1,my2)
+            getBOPStatisticReport_M(report_type,date_type,my1,my2)
         }else{
             Toast.show({
                     type: 'error',
@@ -103,7 +112,7 @@ const Monthly = () => {
             });
         }
       }else{
-          getBOPExportImportReport_M(report_type,date_type,my1,my2)
+        getBOPStatisticReport_M(report_type,date_type,my1,my2)
       }
   }
 
@@ -127,8 +136,12 @@ const Monthly = () => {
                 />
             </View>
             <View style={{flex:1}}>
-                <SearchButtonComponent searchFunction={SearchBOPExportImportReport_M}/>
+                <SearchButtonComponent searchFunction={SearchBOPStatisticReport_M}/>
             </View>
+        </View>
+        
+        <View style={{height:45}}>
+            <SelectPickerComponent data={option} setData={setOption} datas={options} />
         </View>
 
 
