@@ -1,46 +1,49 @@
-import { View, Text } from 'react-native'
+import { View, Text,TouchableOpacity } from 'react-native'
 import React,{ useEffect, useState } from 'react'
 import Toast from 'react-native-toast-message'
+import { useIsFocused, useNavigation } from '@react-navigation/native'
 import Spinner from 'react-native-loading-spinner-overlay'
 import axios from "axios";
 import Config from "react-native-config";
 
-import { checkSelectDateValidation,monthYearFormat } from '../../../../help/Functions'
-import BackInHomeComponent from '../../../../components/BackInHomeComponent';
-import { COLORS, SIZES } from '../../../../../constant'
-import TableComponent from '../../../../components/TableComponent';
-
-import MonthYearPickerComponent from '../../../../components/MonthYearPickerComponent';
-import SearchButtonComponent from '../../../../components/SearchButtonComponent'
-import { useNavigation } from '@react-navigation/native';
+import { checkSelectDateValidation,monthYearFormat } from '../../../../../help/Functions'
+import BackInHomeComponent from '../../../../../components/BackInHomeComponent'
+import { COLORS, SIZES } from '../../../../../../constant'
+import TableComponent from '../../../../../components/TableComponent'
+import YearPickerComponent from '../../../../../components/YearPickerComponent'
+import SearchButtonComponent from '../../../../../components/SearchButtonComponent'
 
 const  API_URL = Config.API_URL;
 const API_NAME = "???"
 
-// this function create by Toum at 21/12/2022
-const DepositInterestScreen = () => {
+// this function create by Toum at 19/12/2022
+const Yearly = () => {
 
-    const navigation = useNavigation()
+    const navigation = useNavigation();
+    const isFocus = useIsFocused()
     const [isLoading,setIsLoading] = useState(false)
     const [data,setData] = useState();
 
-    const [my1,setMY1] = useState(new Date());
-    const [show1,setShow1] = useState(false)
-    const [my2,setMY2] = useState(new Date());
-    const [show2,setShow2] = useState(false)
-    const [my2status,setMY2status] = useState(false) 
-    const report_type = 'InReport';
-    const date_type = 'M';
-    const date_type_default = 'DEFAULT_M'
+    const [year1,setYear1] = useState(new Date().getFullYear())
+    const [year2,setYear2] = useState(new Date().getFullYear())
+    const [y2Status,setY2Status] = useState(false) 
 
+    const report_type = 'InReport';
+    const date_type = 'Y';
+    const date_type_default = 'DEFAULT_Y'
+
+    const [visited,setVisited] = useState(false)
     // useEffect
     useEffect(()=>{
-      getDepositInterestReport_M(report_type,date_type_default,my1,my2)
-    },[])
+      if(!visited && isFocus) {
+          getITRSbyCurrency_Y(report_type,date_type_default,year1,year2)
+          setVisited(true)
+      }
+    },[isFocus])
 
     // function for Yearly
-    const getDepositInterestReport_M = async (report_type,date_type,my1,my2)=>{
-        // setIsLoading(true)
+    const getITRSbyCurrency_Y = async (report_type,date_type,year1,year2)=>{
+        setIsLoading(true)
         // await axios.post(`${API_URL}/${API_NAME}`,
         //     {
         //         webServiceUser: "bol_it",
@@ -93,18 +96,18 @@ const DepositInterestScreen = () => {
         setIsLoading(false)
     }
 
-    const SearchDepositInterestReport_M = () =>{
-        if(my2status==true){
-            if(checkSelectDateValidation(my1,my2,date_type).result){
-                getDepositInterestReport_M(report_type,date_type,my1,my2)
+    const SearchITRSbyCurrency_Y = () =>{
+        if(y2Status==true){
+            if(checkSelectDateValidation(year1,year2,date_type).result){
+                getITRSbyCurrency_Y(report_type,date_type,year1,year2)
             }else{
                 Toast.show({
                     type: 'error',
-                    text1: checkSelectDateValidation(my1,my2,date_type).msg,
+                    text1: checkSelectDateValidation(year1,year2,date_type).msg,
                 });
             }
         }else{
-            getDepositInterestReport_M(report_type,date_type,my1,my2)
+            getITRSbyCurrency_Y(report_type,date_type,year1,year2)
         }
     }
 
@@ -113,22 +116,17 @@ const DepositInterestScreen = () => {
         <Spinner visible={isLoading}/>   
         <View style={{flexDirection:'row',justifyContent:'space-evenly',paddingVertical: 5}}>
             <View style={{flex:4}}>
-                <MonthYearPickerComponent
-                    my1={my1}
-                    setMY1={setMY1}
-                    show1={show1}
-                    setShow1={setShow1}
-                    
-                    my2={my2}
-                    setMY2={setMY2}
-                    show2={show2}
-                    setShow2={setShow2}
-                    my2status={my2status}
-                    setMY2status={setMY2status}
-                />
+                    <YearPickerComponent
+                        year1={year1}
+                        setYear1={setYear1}
+                        year2={year2}
+                        setYear2={setYear2}
+                        y2Status={y2Status}
+                        setY2Status={setY2Status}
+                    />
             </View>
             <View style={{flex:1}}>
-                <SearchButtonComponent searchFunction={SearchDepositInterestReport_M}/>
+                <SearchButtonComponent searchFunction={SearchITRSbyCurrency_Y}/>
             </View>
         </View>
 
@@ -144,10 +142,12 @@ const DepositInterestScreen = () => {
                     </View>
                 )
             }
-        <Toast />
+        <Toast onPress={()=>{
+                Toast.hide()
+            }}/>
         <BackInHomeComponent navigation={navigation}/>
     </View>
   )
 }
 
-export default DepositInterestScreen
+export default Yearly
