@@ -1,7 +1,7 @@
 import { View, Text,TouchableOpacity } from 'react-native'
 import React,{ useEffect, useState } from 'react'
 import Toast from 'react-native-toast-message'
-import { useNavigation } from '@react-navigation/native'
+import { useIsFocused, useNavigation } from '@react-navigation/native'
 import Spinner from 'react-native-loading-spinner-overlay'
 import axios from "axios";
 import Config from "react-native-config";
@@ -14,12 +14,13 @@ import MonthYearPickerComponent from '../../../../../components/MonthYearPickerC
 import SearchButtonComponent from '../../../../../components/SearchButtonComponent'
 
 const API_URL = Config.API_URL;
-const API_NAME = "getFDICountryReport"
+const API_NAME = "???"
 
-// this function create by Toum at 21/12/2022
+// this function create by Toum at 19/12/2022
 const Monthly = () => {
 
     const navigation = useNavigation();
+    const isFocus = useIsFocused()
     const [isLoading,setIsLoading] = useState(false)
     const [data,setData] = useState();
 
@@ -32,70 +33,74 @@ const Monthly = () => {
     const date_type = 'M';
     const date_type_default = 'DEFAULT_M'
 
+    const [visited,setVisited] = useState(false)
     useEffect(()=>{
-        getFDIbyCountryReport_M(report_type,date_type_default,my1,my2)
-    },[])
+        if(!visited && isFocus){
+            getBOPExportImportReport_M(report_type,date_type_default,my1,my2)
+            setVisited(true)
+        }
+    },[isFocus])
 
     // function for MonthLy
-    const getFDIbyCountryReport_M = async (report_type,date_type,my1,my2)=>{
-        setIsLoading(true)
-        await axios.post(`${API_URL}/${API_NAME}`,{
-                webServiceUser: "bol_it",
-                webServicePassword: "123456",
-                report_type: report_type,
-                date_type: date_type, // D=>ປະຈຳວັນ, M=>ປະຈຳເດືອນ, T=>ປະຈຳໄຕມາດ, Y=>ປະຈຳປີ
-                fromDate: monthYearFormat(my1),
-                toDate: my2status ? monthYearFormat(my2): monthYearFormat(my1),
-            }
-        )
-        .then(res=>{
-            if(res.data.responseCode == '000'){
-                if(res.data.data !=""){
-                    let header = res.data.data[0].Header;
-                    let content = res.data.data[1].Sub
-                    setData({'header': header,'content': content})
-                    setMY1(new Date(header[1]))
-                    setMY2(new Date(header[header.length-1]))
-                    setMY2status(true)
-                }else{
-                    setData()
-                }
-            }
-            else{// error
-                console.log('Not OK')
-                let msg = res.data.msg
-                Toast.show({
-                    type: 'error',
-                    text1: 'ຄົ້ນຫາບໍ່ສຳເລັດ!',
-                    text2: msg
-                });
-            }
-            setIsLoading(false)
-        })
-        .catch(e => {
-            console.log(e)
-            Toast.show({
-                    type: 'error',
-                    text1: 'ກະລຸນາກວດສອບອິນເຕີເນັດ!',
-            });
-            setIsLoading(false)
-        })
+    const getBOPExportImportReport_M = async (report_type,date_type,my1,my2)=>{
+        // setIsLoading(true)
+        // await axios.post(`${API_URL}/${API_NAME}`,{
+        //         webServiceUser: "bol_it",
+        //         webServicePassword: "123456",
+        //         report_type: report_type,
+        //         date_type: date_type, // D=>ປະຈຳວັນ, M=>ປະຈຳເດືອນ, T=>ປະຈຳໄຕມາດ, Y=>ປະຈຳປີ
+        //         fromDate: monthYearFormat(my1),
+        //         toDate: my2status ? monthYearFormat(my2): monthYearFormat(my1),
+        //     }
+        // )
+        // .then(res=>{
+        //     if(res.data.responseCode == '000'){
+        //         if(res.data.data !=""){
+        //             let header = res.data.data[0].Header;
+        //             let content = res.data.data[1].Sub
+        //             setData({'header': header,'content': content})
+        //             setMY1(new Date(header[1]))
+        //             setMY2(new Date(header[header.length-1]))
+        //             setMY2status(true)
+        //         }else{
+        //             setData()
+        //         }
+        //     }
+        //     else{// error
+        //         console.log('Not OK')
+        //         let msg = res.data.msg
+        //         Toast.show({
+        //             type: 'error',
+        //             text1: 'ຄົ້ນຫາບໍ່ສຳເລັດ!',
+        //             text2: msg
+        //         });
+        //     }
+        //     setIsLoading(false)
+        // })
+        // .catch(e => {
+        //     console.log(e)
+        //     Toast.show({
+        //             type: 'error',
+        //             text1: 'ກະລຸນາກວດສອບອິນເຕີເນັດ!',
+        //     });
+        //     setIsLoading(false)
+        // })
     
         // this is for test, delete it when we have API
-        // setIsLoading(true)
-        // Toast.show({
-        //     type: 'success',
-        //     text1: 'successfull!',
-        //     text2: 'hahahah'
-        // });
-        // setIsLoading(false)
+        setIsLoading(true)
+        Toast.show({
+            type: 'success',
+            text1: 'successfull!',
+            text2: 'hahahah'
+        });
+        setIsLoading(false)
 
     }
 
-  const SearchFDIbyCountryReport_M = () =>{
+  const SearchBOPExportImportReport_M = () =>{
       if(my2status==true){
         if(checkSelectDateValidation(my1,my2,date_type).result){
-            getFDIbyCountryReport_M(report_type,date_type,my1,my2)
+            getBOPExportImportReport_M(report_type,date_type,my1,my2)
         }else{
             Toast.show({
                     type: 'error',
@@ -103,7 +108,7 @@ const Monthly = () => {
             });
         }
       }else{
-        getFDIbyCountryReport_M(report_type,date_type,my1,my2)
+          getBOPExportImportReport_M(report_type,date_type,my1,my2)
       }
   }
 
@@ -127,7 +132,7 @@ const Monthly = () => {
                 />
             </View>
             <View style={{flex:1}}>
-                <SearchButtonComponent searchFunction={SearchFDIbyCountryReport_M}/>
+                <SearchButtonComponent searchFunction={SearchBOPExportImportReport_M}/>
             </View>
         </View>
 

@@ -14,7 +14,7 @@ import YearPickerComponent from '../../../../../components/YearPickerComponent'
 import SearchButtonComponent from '../../../../../components/SearchButtonComponent'
 
 const  API_URL = Config.API_URL;
-const API_NAME = "???"
+const API_NAME = "getBOPExpImpByCountryReport"
 
 // this function create by Toum at 19/12/2022
 const Yearly = () => {
@@ -44,56 +44,56 @@ const Yearly = () => {
     // function for Yearly
     const getBOPExportImportReport_Y = async (report_type,date_type,year1,year2)=>{
         setIsLoading(true)
-        // await axios.post(`${API_URL}/${API_NAME}`,
-        //     {
-        //         webServiceUser: "bol_it",
-        //         webServicePassword: "123456",
-        //         report_type: report_type,
-        //         date_type: date_type, // D=>ປະຈຳວັນ, M=>ປະຈຳເດືອນ, T=>ປະຈຳໄຕມາດ, Y=>ປະຈຳປີ
-        //         fromDate: year1,
-        //         toDate: year2,
-        //     }
-        // )
-        // .then(res=>{
-        //     if(res.data.responseCode == '000'){
-        //         if(res.data.data !=""){
-        //             let header = res.data.data[0].Header;
-        //             let content = res.data.data[1].Sub
-        //             setData({'header': header,'content': content})
-        //             setYear1(header[1])
-        //             setYear2(header[header.length-1])
-        //             setY2Status(true)
-        //         }else{
-        //             setData()
-        //         }
-        //     }else{// error
-        //         console.log('Not OK')
-        //         let msg = res.data.msg
-        //         Toast.show({
-        //             type: 'error',
-        //             text1: 'ຄົ້ນຫາບໍ່ສຳເລັດ!',
-        //             text2: msg
-        //         });
-        //     }
-        //     setIsLoading(false)
-        // })
-        // .catch(e =>{
-        //     console.log(e)
-        //     setIsLoading(false)
-        //     Toast.show({
-        //         type: 'error',
-        //         text1: 'ກະລຸນາກວດສອບອິນເຕີເນັດ',
-        //     });
-        // })  
+        await axios.post(`${API_URL}/${API_NAME}`,
+            {
+                webServiceUser: "bol_it",
+                webServicePassword: "123456",
+                report_type: report_type,
+                date_type: date_type, // D=>ປະຈຳວັນ, M=>ປະຈຳເດືອນ, T=>ປະຈຳໄຕມາດ, Y=>ປະຈຳປີ
+                fromDate: year1,
+                toDate: year2,
+            }
+        )
+        .then(res=>{
+            if(res.data.responseCode == '000'){
+                if(res.data.data !=""){
+                    let header = res.data.data[0].Header;
+                    let content = res.data.data[1].Sub
+                    setData({'header': header,'content': content})
+                    setYear1(header[1])
+                    setYear2(header[header.length-1])
+                    setY2Status(true)
+                }else{
+                    setData()
+                }
+            }else{// error
+                console.log('Not OK')
+                let msg = res.data.msg
+                Toast.show({
+                    type: 'error',
+                    text1: 'ຄົ້ນຫາບໍ່ສຳເລັດ!',
+                    text2: msg
+                });
+            }
+            setIsLoading(false)
+        })
+        .catch(e =>{
+            console.log(e)
+            setIsLoading(false)
+            Toast.show({
+                type: 'error',
+                text1: 'ກະລຸນາກວດສອບອິນເຕີເນັດ',
+            });
+        })  
 
         // this is for test, delete it when we have API
-        setIsLoading(true)
-        Toast.show({
-            type: 'success',
-            text1: 'successfull!',
-            text2: 'hahahah'
-        });
-        setIsLoading(false)
+        // setIsLoading(true)
+        // Toast.show({
+        //     type: 'success',
+        //     text1: 'successfull!',
+        //     text2: 'hahahah'
+        // });
+        // setIsLoading(false)
     }
 
     const SearchBOPExportImportReport_Y = () =>{

@@ -14,9 +14,9 @@ import TPickerComponent from '../../../../../components/TPickerComponent'
 import SearchButtonComponent from '../../../../../components/SearchButtonComponent'
 
 const  API_URL = Config.API_URL;
-const API_NAME = "getFDISectorReport"
+const API_NAME = "???"
 
-// this function create by Toum at 21/12/2022
+// this function create by Toum at 19/12/2022
 
 const Quaterly = () => {
 
@@ -40,72 +40,72 @@ const Quaterly = () => {
     // useEffect
     useEffect(()=>{
       if(!visited && isFocus){
-        getFDIbySectorReport_Q(report_type,date_type_default,t1,t2,y1,y2)
+        getBOPExportImportReport_Q(report_type,date_type_default,t1,t2,y1,y2)
         setVisited(true)
       }
     },[isFocus])
 
     // function for Quaterly
-    const getFDIbySectorReport_Q = async (report_type,date_type,t1,t2,y1,y2)=>{
-        setIsLoading(true);
-        await axios.post(`${API_URL}/${API_NAME}`,
-            {
-                webServiceUser: "bol_it",
-                webServicePassword: "123456",
-                report_type: report_type,
-                date_type: date_type == date_type_default ? date_type_default : t1+'-'+t2 ,
-                fromDate: y1,
-                toDate: y2,
-            }
-        )
-        .then(res=>{
-            if(res.data.responseCode == '000'){
-                if(res.data.data !=""){
-                    let header = res.data.data[0].Header;
-                    let content = res.data.data[1].Sub
-                    setData({'header': header,'content': content})
-                    setT1(getQuaterly(header[1].trim().slice(0,7)))
-                    setT2(getQuaterly(header[header.length-1].trim().slice(0,7)))
-                    setY1(header[1].trim().slice(8))
-                    setY2(header[header.length-1].trim().slice(8))
-                    setTY2Status(true)
-                }else{
-                    setData()
-                }
-            }else{// error
-                console.log('Not OK')
-                let msg = res.data.msg
-                Toast.show({
-                  type: 'error',
-                  text1: msg,
-                });
+    const getBOPExportImportReport_Q = async (report_type,date_type,t1,t2,y1,y2)=>{
+        // setIsLoading(true);
+        // await axios.post(`${API_URL}/${API_NAME}`,
+        //     {
+        //         webServiceUser: "bol_it",
+        //         webServicePassword: "123456",
+        //         report_type: report_type,
+        //         date_type: date_type == date_type_default ? date_type_default : t1+'-'+t2 ,
+        //         fromDate: y1,
+        //         toDate: y2,
+        //     }
+        // )
+        // .then(res=>{
+        //     if(res.data.responseCode == '000'){
+        //         if(res.data.data !=""){
+        //             let header = res.data.data[0].Header;
+        //             let content = res.data.data[1].Sub
+        //             setData({'header': header,'content': content})
+        //             setT1(getQuaterly(header[1].trim().slice(0,7)))
+        //             setT2(getQuaterly(header[header.length-1].trim().slice(0,7)))
+        //             setY1(header[1].trim().slice(8))
+        //             setY2(header[header.length-1].trim().slice(8))
+        //             setTY2Status(true)
+        //         }else{
+        //             setData()
+        //         }
+        //     }else{// error
+        //         console.log('Not OK')
+        //         let msg = res.data.msg
+        //         Toast.show({
+        //           type: 'error',
+        //           text1: msg,
+        //         });
                 
-            }
-            setIsLoading(false)
-        })
-        .catch(e => {
-            console.log(e)
-            setIsLoading(false)
-            Toast.show({
-              type: 'error',
-              text1: 'ກະລຸນາກວດສອບອິນເຕີເນັດ',
-            });
-        })
+        //     }
+        //     setIsLoading(false)
+        // })
+        // .catch(e => {
+        //     console.log(e)
+        //     setIsLoading(false)
+        //     Toast.show({
+        //       type: 'error',
+        //       text1: 'ກະລຸນາກວດສອບອິນເຕີເນັດ',
+        //     });
+        // })
 
         // this is for test, delete it when we have API
-        // setIsLoading(true)
-        // Toast.show({
-        //   type: 'success',
-        //   text1: 'successfull!',
-        //   text2: 'hahahah'
-        // });
-        // setIsLoading(false)
+        setIsLoading(true)
+        Toast.show({
+          type: 'success',
+          text1: 'successfull!',
+          text2: 'hahahah'
+        });
+        setIsLoading(false)
     }
 
-    const SearchFDIbySectorReport_Q = () =>{
+    const SearchBOPExportImportReport_Q = () =>{
         if(ty2Status==true){
             if(checkSelectDateValidation(y1,y2,date_type).result){
-                getFDIbySectorReport_Q(report_type,date_type,t1,t2,y1,y2)
+                getBOPExportImportReport_Q(report_type,date_type,t1,t2,y1,y2)
             }else{
                 Toast.show({
                     type: 'error',
@@ -113,7 +113,7 @@ const Quaterly = () => {
                 });
             }
         }else{
-            getFDIbySectorReport_Q(report_type,date_type,t1,t2,y1,y2)
+            getBOPExportImportReport_Q(report_type,date_type,t1,t2,y1,y2)
         }
     }
 
@@ -138,7 +138,7 @@ const Quaterly = () => {
                 />
             </View>
             <View style={{flex:1}}>
-                <SearchButtonComponent searchFunction={SearchFDIbySectorReport_Q}/>
+                <SearchButtonComponent searchFunction={SearchBOPExportImportReport_Q}/>
             </View>
         </View>
 
