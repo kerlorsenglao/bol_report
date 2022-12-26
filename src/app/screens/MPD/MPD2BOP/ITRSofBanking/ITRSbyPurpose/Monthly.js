@@ -148,7 +148,9 @@ const Monthly = () => {
                     </View>
                 )
             }
-        <Toast />
+        <Toast onPress={()=>{
+                Toast.hide()
+            }}/>
         <BackInHomeComponent navigation={navigation}/>
     </View>
   )

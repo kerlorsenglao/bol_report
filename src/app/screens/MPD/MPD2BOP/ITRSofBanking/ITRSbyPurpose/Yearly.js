@@ -142,7 +142,9 @@ const Yearly = () => {
                     </View>
                 )
             }
-        <Toast />
+        <Toast onPress={()=>{
+                Toast.hide()
+            }}/>
         <BackInHomeComponent navigation={navigation}/>
     </View>
   )

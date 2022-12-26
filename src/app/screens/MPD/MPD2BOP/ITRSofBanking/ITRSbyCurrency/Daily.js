@@ -33,11 +33,11 @@ const Daily = () => {
 
     // useEffect
     useEffect(()=>{
-        getITRSbyPurpose_D(report_type,date_type_default, fromDate,toDate);
+        getITRSbyCurrency_D(report_type,date_type_default, fromDate,toDate);
     },[])
 
     // function for Daily
-    const getITRSbyPurpose_D = async (report_type,date_type,fromDate,toDate)=>{
+    const getITRSbyCurrency_D = async (report_type,date_type,fromDate,toDate)=>{
         // setIsLoading(true)
         // await axios.post(`${API_URL}/${API_NAME}`,{
         //         webServiceUser: "bol_it",
@@ -92,10 +92,10 @@ const Daily = () => {
 
     }
 
-    const SearchITRSbyPurpose_D = () =>{
+    const SearchITRSbyCurrency_D = () =>{
         if(tstatus==true){
           if(checkSelectDateValidation(fromDate,toDate,date_type).result){
-            getITRSbyPurpose_D(report_type,date_type,fromDate,toDate)
+            getITRSbyCurrency_D(report_type,date_type,fromDate,toDate)
           }else{
               Toast.show({
                       type: 'error',
@@ -103,7 +103,7 @@ const Daily = () => {
               });
           }
         }else{
-            getITRSbyPurpose_D(report_type,date_type,fromDate,toDate)   
+            getITRSbyCurrency_D(report_type,date_type,fromDate,toDate)   
         }
     }
 
@@ -125,7 +125,7 @@ const Daily = () => {
                         setTstatus={setTstatus}
                     />
                 </View>
-                <SearchButtonComponent searchFunction={SearchITRSbyPurpose_D}/>
+                <SearchButtonComponent searchFunction={SearchITRSbyCurrency_D}/>
             </View>
             
             {

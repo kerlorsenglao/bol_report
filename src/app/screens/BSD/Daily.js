@@ -84,7 +84,7 @@ export default function Daily() {
     }
     return (
         <View style={{flex:1}}>
-            <Spinner visible={isLoading}/>
+            <Spinner visible={isLoading} cancelable={true}/>
             <View style={{
                 flexDirection:'row',
                 justifyContent:'space-evenly',

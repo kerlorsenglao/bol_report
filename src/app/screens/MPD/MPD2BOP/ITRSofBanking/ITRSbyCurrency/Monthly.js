@@ -1,26 +1,26 @@
-import { View, Text } from 'react-native'
+import { View, Text,TouchableOpacity } from 'react-native'
 import React,{ useEffect, useState } from 'react'
 import Toast from 'react-native-toast-message'
+import { useIsFocused, useNavigation } from '@react-navigation/native'
 import Spinner from 'react-native-loading-spinner-overlay'
 import axios from "axios";
 import Config from "react-native-config";
 
-import { checkSelectDateValidation,monthYearFormat } from '../../../../help/Functions'
-import BackInHomeComponent from '../../../../components/BackInHomeComponent';
-import { COLORS, SIZES } from '../../../../../constant'
-import TableComponent from '../../../../components/TableComponent';
+import { checkSelectDateValidation,monthYearFormat } from '../../../../../help/Functions'
+import BackInHomeComponent from '../../../../../components/BackInHomeComponent'
+import { COLORS, SIZES } from '../../../../../../constant'
+import TableComponent from '../../../../../components/TableComponent'
+import MonthYearPickerComponent from '../../../../../components/MonthYearPickerComponent'
+import SearchButtonComponent from '../../../../../components/SearchButtonComponent'
 
-import MonthYearPickerComponent from '../../../../components/MonthYearPickerComponent';
-import SearchButtonComponent from '../../../../components/SearchButtonComponent'
-import { useNavigation } from '@react-navigation/native';
-
-const  API_URL = Config.API_URL;
+const API_URL = Config.API_URL;
 const API_NAME = "???"
 
-// this function create by Toum at 21/12/2022
-const DepositInterestScreen = () => {
+// this function create by Toum at 19/12/2022
+const Monthly = () => {
 
-    const navigation = useNavigation()
+    const navigation = useNavigation();
+    const isFocus = useIsFocused()
     const [isLoading,setIsLoading] = useState(false)
     const [data,setData] = useState();
 
@@ -33,22 +33,24 @@ const DepositInterestScreen = () => {
     const date_type = 'M';
     const date_type_default = 'DEFAULT_M'
 
-    // useEffect
+    const [visited,setVisited] = useState(false)
     useEffect(()=>{
-      getDepositInterestReport_M(report_type,date_type_default,my1,my2)
-    },[])
+        if(!visited && isFocus){
+            getITRSbyCurrency_M(report_type,date_type_default,my1,my2)
+            setVisited(true)
+        }
+    },[isFocus])
 
-    // function for Yearly
-    const getDepositInterestReport_M = async (report_type,date_type,my1,my2)=>{
+    // function for MonthLy
+    const getITRSbyCurrency_M = async (report_type,date_type,my1,my2)=>{
         // setIsLoading(true)
-        // await axios.post(`${API_URL}/${API_NAME}`,
-        //     {
+        // await axios.post(`${API_URL}/${API_NAME}`,{
         //         webServiceUser: "bol_it",
         //         webServicePassword: "123456",
         //         report_type: report_type,
         //         date_type: date_type, // D=>ປະຈຳວັນ, M=>ປະຈຳເດືອນ, T=>ປະຈຳໄຕມາດ, Y=>ປະຈຳປີ
-        //         fromDate: year1,
-        //         toDate: year2,
+        //         fromDate: monthYearFormat(my1),
+        //         toDate: my2status ? monthYearFormat(my2): monthYearFormat(my1),
         //     }
         // )
         // .then(res=>{
@@ -57,13 +59,14 @@ const DepositInterestScreen = () => {
         //             let header = res.data.data[0].Header;
         //             let content = res.data.data[1].Sub
         //             setData({'header': header,'content': content})
-        //             setYear1(header[1])
-        //             setYear2(header[header.length-1])
-        //             setY2Status(true)
+        //             setMY1(new Date(header[1]))
+        //             setMY2(new Date(header[header.length-1]))
+        //             setMY2status(true)
         //         }else{
         //             setData()
         //         }
-        //     }else{// error
+        //     }
+        //     else{// error
         //         console.log('Not OK')
         //         let msg = res.data.msg
         //         Toast.show({
@@ -74,15 +77,15 @@ const DepositInterestScreen = () => {
         //     }
         //     setIsLoading(false)
         // })
-        // .catch(e =>{
+        // .catch(e => {
         //     console.log(e)
-        //     setIsLoading(false)
         //     Toast.show({
-        //         type: 'error',
-        //         text1: 'ກະລຸນາກວດສອບອິນເຕີເນັດ',
+        //             type: 'error',
+        //             text1: 'ກະລຸນາກວດສອບອິນເຕີເນັດ!',
         //     });
-        // })  
-
+        //     setIsLoading(false)
+        // })
+    
         // this is for test, delete it when we have API
         setIsLoading(true)
         Toast.show({
@@ -91,22 +94,23 @@ const DepositInterestScreen = () => {
             text2: 'hahahah'
         });
         setIsLoading(false)
+
     }
 
-    const SearchDepositInterestReport_M = () =>{
-        if(my2status==true){
-            if(checkSelectDateValidation(my1,my2,date_type).result){
-                getDepositInterestReport_M(report_type,date_type,my1,my2)
-            }else{
-                Toast.show({
+  const SearchITRSbyCurrency_M = () =>{
+      if(my2status==true){
+        if(checkSelectDateValidation(my1,my2,date_type).result){
+            getITRSbyCurrency_M(report_type,date_type,my1,my2)
+        }else{
+            Toast.show({
                     type: 'error',
                     text1: checkSelectDateValidation(my1,my2,date_type).msg,
-                });
-            }
-        }else{
-            getDepositInterestReport_M(report_type,date_type,my1,my2)
+            });
         }
-    }
+      }else{
+          getITRSbyCurrency_M(report_type,date_type,my1,my2)
+      }
+  }
 
   return (
     <View style={{flex:1}}>
@@ -128,7 +132,7 @@ const DepositInterestScreen = () => {
                 />
             </View>
             <View style={{flex:1}}>
-                <SearchButtonComponent searchFunction={SearchDepositInterestReport_M}/>
+                <SearchButtonComponent searchFunction={SearchITRSbyCurrency_M}/>
             </View>
         </View>
 
@@ -144,10 +148,12 @@ const DepositInterestScreen = () => {
                     </View>
                 )
             }
-        <Toast />
+        <Toast onPress={()=>{
+                Toast.hide()
+            }}/>
         <BackInHomeComponent navigation={navigation}/>
     </View>
   )
 }
 
-export default DepositInterestScreen
+export default Monthly
