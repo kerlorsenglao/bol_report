@@ -4,6 +4,7 @@ import { useIsFocused, useNavigation } from '@react-navigation/native'
 import Spinner from 'react-native-loading-spinner-overlay'
 import axios from "axios";
 import Config from "react-native-config";
+import Toast from 'react-native-toast-message'
 
 import { getQuaterly,checkSelectDateValidation } from '../../help/Functions'
 import BackInHomeComponent from '../../components/BackInHomeComponent'
@@ -72,21 +73,37 @@ const Quaterly = () => {
             }else{// error
                 console.log('Not OK')
                 let msg = res.data.msg
-                ToastAndroid.show(msg,ToastAndroid.SHORT)
+                Toast.show({
+                    type: 'error',
+                    text1: 'ຄົ້ນຫາບໍ່ສຳເລັດ!',
+                    text2: msg
+                });
+                // ToastAndroid.show(msg,ToastAndroid.SHORT)
             }
             setIsLoading(false)
         })
         .catch(e =>{
             console.log(e)
             setIsLoading(false)
-            ToastAndroid.show('ກະລຸນາກວດສອບອິນເຕີເນັດ',ToastAndroid.SHORT)
+            Toast.show({
+                type: 'error',
+                text1: 'ກະລຸນາກວດສອບອິນເຕີເນັດ!',
+            });
+            // ToastAndroid.show('ກະລຸນາກວດສອບອິນເຕີເນັດ',ToastAndroid.SHORT)
         })
     }
     const SearchBSDReport_T = () =>{
-        if(checkSelectDateValidation(y1,y2,date_type).result){
-            getBSDReport(bank,report_type,date_type,t1,t2,y1,y2)
+        if(ty2Status==true){
+            if(checkSelectDateValidation(y1,y2,date_type).result){
+                getBSDReport(bank,report_type,date_type,t1,t2,y1,y2)
+            }else{
+                Toast.show({
+                    type: 'error',
+                    text1: checkSelectDateValidation(y1,y2,date_type).msg,
+                });
+            }
         }else{
-            ToastAndroid.show(checkSelectDateValidation(y1,y2,date_type).msg,ToastAndroid.SHORT)
+            getBSDReport(bank,report_type,date_type,t1,t2,y1,y2)
         }
     }
     return (
@@ -140,7 +157,9 @@ const Quaterly = () => {
                 )
             }
 
-
+            <Toast onPress={()=>{
+                Toast.hide()
+            }}/>
             <BackInHomeComponent navigation={navigation}/>
         </View>
     )

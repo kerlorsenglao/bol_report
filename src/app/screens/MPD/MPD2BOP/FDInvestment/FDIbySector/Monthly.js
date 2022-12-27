@@ -86,7 +86,7 @@ const Monthly = () => {
         // Toast.show({
         //     type: 'success',
         //     text1: 'successfull!',
-        //     text2: 'hahahah'
+        //     text2: 'ທົດລອງ, ບໍ່ມີຂໍ້ມູນ'
         // });
         // setIsLoading(false)
 

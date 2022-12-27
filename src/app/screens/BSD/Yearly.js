@@ -4,6 +4,7 @@ import { useIsFocused, useNavigation } from '@react-navigation/native'
 import Spinner from 'react-native-loading-spinner-overlay'
 import axios from "axios";
 import Config from "react-native-config";
+import Toast from 'react-native-toast-message'
 
 import { checkSelectDateValidation} from '../../help/Functions'
 import BackInHomeComponent from '../../components/BackInHomeComponent'
@@ -66,25 +67,37 @@ const Yearly = () => {
             }else{// error
                 console.log('Not OK')
                 let msg = res.data.msg
-                ToastAndroid.show(msg,ToastAndroid.SHORT)
-                // Toast.show({
-                //     type: 'error',
-                //     text1: 'ຄົ້ນຫາບໍ່ສຳເລັດ!',
-                //     text2: msg
-                // });
+                // ToastAndroid.show(msg,ToastAndroid.SHORT)
+                Toast.show({
+                    type: 'error',
+                    text1: 'ຄົ້ນຫາບໍ່ສຳເລັດ!',
+                    text2: msg
+                });
             }
             setIsLoading(false)
         })
         .catch(e =>{
             console.log(e)
             setIsLoading(false)
+            Toast.show({
+                type: 'error',
+                text1: 'ກະລຸນາກວດສອບອິນເຕີເນັດ!',
+            });
         })
     }
     const SearchBSDReport_Y=()=>{
-        if(checkSelectDateValidation(year1,year2,date_type).result){
-            getBSDReport(bank,report_type,date_type,year1,year2)
+        if(y2Status==true){
+            if(checkSelectDateValidation(year1,year2,date_type).result){
+                getBSDReport(bank,report_type,date_type,year1,year2)
+            }else{
+                Toast.show({
+                    type: 'error',
+                    text1: checkSelectDateValidation(year1,year2,date_type).msg,
+                });
+                // ToastAndroid.show(checkSelectDateValidation(year1,year2,date_type).msg,ToastAndroid.SHORT)
+            }
         }else{
-            ToastAndroid.show(checkSelectDateValidation(year1,year2,date_type).msg,ToastAndroid.SHORT)
+            getBSDReport(bank,report_type,date_type,year1,year2)
         }
     }
         
@@ -131,6 +144,9 @@ const Yearly = () => {
                     </View>
                 )
             }
+            <Toast onPress={()=>{
+                Toast.hide()
+            }}/>
             <BackInHomeComponent navigation={navigation}/>
         </View>
     )

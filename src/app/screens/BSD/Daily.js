@@ -61,25 +61,42 @@ export default function Daily() {
             }else{// error
                 setData()
                 let msg = res.data.msg
-                //Toast.show({
-                //     type: 'error',
-                //     text1: 'ຄົ້ນຫາບໍ່ສຳເລັດ!',
-                //     text2: msg
-                // });
+                Toast.show({
+                    type: 'error',
+                    text1: 'ຄົ້ນຫາບໍ່ສຳເລັດ!',
+                    text2: msg
+                });
             }
             setIsLoading(false)
         })
         .catch(e =>{
             // console.log(e)
+            Toast.show({
+                    type: 'error',
+                    text1: 'ກະລຸນາກວດສອບອິນເຕີເນັດ!',
+            });
             setIsLoading(false)
         })
     }
     const SearchBSDReport = () =>{
         // console.log(toDate - fromDate)
-        if(checkSelectDateValidation(fromDate,toDate,date_type).result){
-            getBSDReport(bank,report_type,date_type,toDate,fromDate)
+        // if(checkSelectDateValidation(fromDate,toDate,date_type).result){
+        //     getBSDReport(bank,report_type,date_type,toDate,fromDate)
+        // }else{
+        //     ToastAndroid.show(checkSelectDateValidation(fromDate,toDate,date_type).msg,ToastAndroid.SHORT)
+        // }
+
+        if(tstatus==true){
+            if(checkSelectDateValidation(fromDate,toDate,date_type).result){
+                getBSDReport(bank,report_type,date_type,fromDate,toDate)
+            }else{
+                Toast.show({
+                        type: 'error',
+                        text1: checkSelectDateValidation(fromDate,toDate,date_type).msg,
+                });
+            }
         }else{
-            ToastAndroid.show(checkSelectDateValidation(fromDate,toDate,date_type).msg,ToastAndroid.SHORT)
+            getBSDReport(bank,report_type,date_type,fromDate,toDate)  
         }
     }
     return (
@@ -125,6 +142,9 @@ export default function Daily() {
                     </View>
                 )
             }
+            <Toast onPress={()=>{
+                Toast.hide()
+            }}/>
             <BackInHomeComponent navigation={navigation}/>
         </View>
     )

@@ -75,7 +75,7 @@ const Monthly = () => {
           console.log(e)
           Toast.show({
                   type: 'error',
-                  text1: 'ເກີດຂໍ້ຜີດພາດ!',
+                  text1: 'ກະລຸນາກວດສອບອິນເຕີເນັດ',
                   text2: e
           });
           setIsLoading(false)
