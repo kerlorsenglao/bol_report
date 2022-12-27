@@ -4,6 +4,7 @@ import { useIsFocused, useNavigation } from '@react-navigation/native'
 import Spinner from 'react-native-loading-spinner-overlay'
 import axios from "axios";
 import Config from "react-native-config";
+import Toast from 'react-native-toast-message'
 
 import { checkSelectDateValidation,monthYearFormat } from '../../help/Functions'
 import BackInHomeComponent from '../../components/BackInHomeComponent'
@@ -66,25 +67,47 @@ export default function Monthly() {
             }else{// error
                 console.log('Not OK')
                 let msg = res.data.msg
-                ToastAndroid.show({
+                Toast.show({
                     type: 'error',
                     text1: 'ຄົ້ນຫາບໍ່ສຳເລັດ!',
                     text2: msg
                 });
+                // ToastAndroid.show({
+                //     type: 'error',
+                //     text1: 'ຄົ້ນຫາບໍ່ສຳເລັດ!',
+                //     text2: msg
+                // });
             }
             setIsLoading(false)
         })
         .catch(e =>{
             console.log(e)
+            Toast.show({
+                type: 'error',
+                text1: 'ກະລຸນາກວດສອບອິນເຕີເນັດ!',
+            });
             setIsLoading(false)
         })
     }
 
     const SearchBSDReport_M = () =>{
-        if(checkSelectDateValidation(my1,my2,date_type).result){
-            getBSDReport(bank,report_type,date_type,my1,my2)
+        // if(checkSelectDateValidation(my1,my2,date_type).result){
+        //     getBSDReport(bank,report_type,date_type,my1,my2)
+        // }else{
+        //     ToastAndroid.show(checkSelectDateValidation(my1,my2,date_type).msg,ToastAndroid.SHORT)
+        // }
+
+        if(my2status==true){
+            if(checkSelectDateValidation(my1,my2,date_type).result){
+                getBSDReport(bank,report_type,date_type,my1,my2)
+            }else{
+                Toast.show({
+                        type: 'error',
+                        text1: checkSelectDateValidation(my1,my2,date_type).msg,
+                });
+            }
         }else{
-            ToastAndroid.show(checkSelectDateValidation(my1,my2,date_type).msg,ToastAndroid.SHORT)
+            getBSDReport(bank,report_type,date_type,my1,my2) 
         }
     }
     return (
@@ -134,6 +157,9 @@ export default function Monthly() {
                     </View>
                 )
             }
+            <Toast onPress={()=>{
+                Toast.hide()
+            }}/>
             <BackInHomeComponent navigation={navigation}/>
         </View>
     )
