@@ -1,12 +1,13 @@
 import { View,StyleSheet } from 'react-native'
-import React, { useState } from 'react'
+import React, { useState,useContext } from 'react'
 import Ionicons from 'react-native-vector-icons/Ionicons'
-
+import { AuthContext } from '../help/AuthContext'
 import { Avatar,Title,Caption,Text,Drawer } from 'react-native-paper'
 
 import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
 
 const DrawerComponent = (props) => {
+    const { Logout } = useContext(AuthContext);
 
     const menu = [
         {menu_id:0,menu_name:'ກົມຄຸ້ມຄອງທະນາຄານທຸລະກິດ',submenu:[
@@ -114,7 +115,7 @@ const DrawerComponent = (props) => {
                         <Ionicons name='power-outline' size={size} color="#000" />
                     )}
                     label={() => <Text style={{color: '#000'}}>ອອກຈາກລະບົບ</Text>}
-                    onPress={()=>{}}
+                    onPress={()=>{Logout()}}
                 />
         </Drawer.Section>
     </View>

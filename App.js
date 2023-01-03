@@ -4,7 +4,7 @@ import React from 'react'
 
 import { COLORS } from './src/constant'
 import Navigation from './src/navigation/Navigation'
-import { AuthContext,AuthProvider } from './src/context/AuthContext'
+import { AuthContext,AuthProvider } from './src/app/help/AuthContext'
 
 export default function App() {
     return (
