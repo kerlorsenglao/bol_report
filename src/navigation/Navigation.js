@@ -6,11 +6,11 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
 import HomeScreen2 from '../screen/HomeScreen2'
 import RegisterScreen from '../screen/RegisterScreen'
-import LoginScreen from '../screen/LoginScreen'
+import LoginScreen from '../app/screens/LoginScreen'
 import SearchScreen from '../screen/SearchScreen'
 import ResultScreen from '../screen/ResultScreen'
 import SplashScreen from '../screen/SplashScreen'
-import { AuthContext } from '../context/AuthContext'
+import { AuthContext } from '../app/help/AuthContext'
 import HomeScreen3 from '../screen/HomeScreen3'
 
 import InHomeScreen from '../app/screens/InHomeScreen'

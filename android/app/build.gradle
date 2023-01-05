@@ -135,8 +135,13 @@ android {
         applicationId "com.bol_report"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 4
-        versionName "0.0.4"
+<<<<<<< HEAD
+        versionCode 6
+        versionName "0.0.5"
+=======
+        versionCode 3
+        versionName "0.0.3"
+>>>>>>> 9df86989d691a1b11f49bdd6a4837a772fea4274
     }
     splits {
         abi {

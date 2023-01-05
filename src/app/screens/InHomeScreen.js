@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, ScrollView , TouchableOpacity} from 'react-native'
-import React from 'react'
+import React,{ useContext } from 'react'
 import { COLORS, FONTS, SIZES } from '../../constant'
 
 import GraphComponent from '../components/GraphComponent'
@@ -9,6 +9,7 @@ import HeaderComponent from '../components/HeaderComponent'
 
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import DrawerComponent from '../components/DrawerComponent';
+import { AuthContext } from '../help/AuthContext'
 
 import MPDReportScreen from './MPD/MPDReportScreen'
 import BODReportScreen from './BOD/BODReportScreen'
@@ -45,6 +46,7 @@ export default function InHomeScreen({navigation}) {
 const styles = StyleSheet.create({})
 
 const InHomePageScreen = ({navigation}) => {
+    const {menu} = useContext(AuthContext);
     return (
         <View>
             <HeaderComponent headerName="ລາຍງານພາຍໃນ" navigation={navigation} bold={true} />
@@ -66,9 +68,38 @@ const InHomePageScreen = ({navigation}) => {
         
         
                     {/* add by toum 14/12/2022 */}
-                    <DepartmentItem navigation={navigation} deptName="ກົມຄຸ້ມຄອງທະນາຄານທຸລະກິດ" screenName="BSD"/>
-                    <DepartmentItem navigation={navigation} deptName="ກົມນະໂຍບາຍເງີນຕາ" screenName="MPD"/>
-                    <DepartmentItem navigation={navigation} deptName="ກົມບໍລິການທະນາຄານທຸລະກິດ" screenName="BOD"/>
+                    {
+                        menu.includes("BANK_SUPERVISION") ? 
+                        <DepartmentItem navigation={navigation} deptName="ກົມຄຸ້ມຄອງທະນາຄານທຸລະກິດ" screenName="BSD"/>
+                        :
+                        null
+                    }
+                    {
+                        menu.includes("MONETARY_POLICY") ? 
+                        <DepartmentItem navigation={navigation} deptName="ກົມນະໂຍບາຍເງີນຕາ" screenName="MPD"/>
+                        :
+                        null
+                    }
+                    {
+                        menu.includes("BANKING_OPERATIONS") ? 
+                        <DepartmentItem navigation={navigation} deptName="ກົມບໍລິການທະນາຄານທຸລະກິດ" screenName="BOD"/>
+                        :
+                        null
+                    }
+                    {
+                        menu.includes("kk") ? 
+                        <DepartmentItem navigation={navigation} deptName="ກົມຄຸ້ມຄອງສະຖາບັນການເງິນ" screenName=""/>
+                        :
+                        null
+                    }
+                    {
+                        menu.includes("ss") ? 
+                        <DepartmentItem navigation={navigation} deptName="ກົມຄຸ້ມຄອງລະບົບຊໍາລະ" screenName=""/>
+                        :
+                        null
+                    }
+                    
+                    
                 
         
                     <FooterComponent/>
