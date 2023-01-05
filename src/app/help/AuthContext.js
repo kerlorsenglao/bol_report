@@ -85,8 +85,28 @@ export const AuthProvider = ({children})=>{
 
     // get data from store and check token
     const checkIsLogined = async () => {
-
+        try {
+            setSplashLoading(true)
+            let userInfo = await AsyncStorage.getItem('userInfo');
+            let token = await AsyncStorage.getItem('token');
+            let token_id = await AsyncStorage.getItem('token_id');
+            let menu = await AsyncStorage.getItem('menu');
+            if(userInfo){
+                setUserInfo(JSON.parse(userInfo))
+                setToken(token)
+                setTokenID(token_id)
+                setMenu(menu.split(','))
+            }
+            setSplashLoading(false)
+        } catch (error) {
+            setSplashLoading(false)
+            console.log(`is logined error ${e}`)
+        }
     }
+
+    useEffect(()=>{
+        checkIsLogined()
+    },[])
 
     // logout
     const Logout = () => {

@@ -1,10 +1,11 @@
 import { Text, View, ToastAndroid } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState,useContext } from 'react'
 import { useIsFocused, useNavigation } from '@react-navigation/native'
 import Spinner from 'react-native-loading-spinner-overlay'
 import axios from "axios";
 import Config from "react-native-config";
 import Toast from 'react-native-toast-message'
+import { AuthContext } from '../../help/AuthContext'
 
 import { checkSelectDateValidation} from '../../help/Functions'
 import BackInHomeComponent from '../../components/BackInHomeComponent'
@@ -32,6 +33,7 @@ const Yearly = () => {
     const report_type = 'InReport';
     const date_type = 'Y';
     const date_type_default = 'DEFAULT_Y'
+    const {token} = useContext(AuthContext);
 
     const [visited,setVisited] = useState(false)
     useEffect(()=>{
@@ -43,13 +45,14 @@ const Yearly = () => {
     const getBSDReport = async (bank,report_type,date_type,year1,year2)=>{
         setIsLoading(true)
         await axios.post(`${API_URL}/BankSupervisionReport`,{
-            webServiceUser: "bol_it",
-            webServicePassword: "123456",
-            bank_code: bank,
-            report_type: report_type,
-            date_type: date_type, // D=>ປະຈຳວັນ, M=>ປະຈຳເດືອນ, T=>ປະຈຳໄຕມາດ, Y=>ປະຈຳປີ
-            fromDate: year1,
-            toDate: year2,
+                bank_code: bank,
+                report_type: report_type,
+                date_type: date_type, // D=>ປະຈຳວັນ, M=>ປະຈຳເດືອນ, T=>ປະຈຳໄຕມາດ, Y=>ປະຈຳປີ
+                fromDate: year1,
+                toDate: year2,
+            },
+            {
+                headers : {Authorization: `Bearer ${token}`, Accept: "application/json"}
             }
         )
         .then(res=>{
