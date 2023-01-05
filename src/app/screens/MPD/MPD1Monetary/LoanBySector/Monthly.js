@@ -1,10 +1,11 @@
 import { View, Text } from 'react-native'
-import React,{useState,useEffect} from 'react'
+import React,{useState,useEffect,useContext} from 'react'
 import Toast from 'react-native-toast-message'
 import { useNavigation } from '@react-navigation/native'
 import Spinner from 'react-native-loading-spinner-overlay'
 import axios from "axios";
 import Config from "react-native-config";
+import { AuthContext } from '../../../../help/AuthContext'
 
 import { checkSelectDateValidation,monthYearFormat } from '../../../../help/Functions'
 import BackInHomeComponent from '../../../../components/BackInHomeComponent'
@@ -29,6 +30,7 @@ const Monthly = () => {
     const report_type = 'InReport';
     const date_type = 'M';
     const date_type_default = 'DEFAULT_M'
+    const {token} = useContext(AuthContext);
 
     useEffect(()=>{
         getLoanBySectorReport_M(report_type,date_type_default,my1,my2)
@@ -38,13 +40,16 @@ const Monthly = () => {
     const getLoanBySectorReport_M = async (report_type,date_type,my1,my2)=>{
       setIsLoading(true)
       await axios.post(`${API_URL}/MonetaryPolicyMSCreditSectorReport`,{
-            webServiceUser: "bol_it",
-            webServicePassword: "123456",
-            report_type: report_type,
-            date_type: date_type, // D=>ປະຈຳວັນ, M=>ປະຈຳເດືອນ, T=>ປະຈຳໄຕມາດ, Y=>ປະຈຳປີ
-            fromDate: monthYearFormat(my1),
-            toDate: my2status ? monthYearFormat(my2): monthYearFormat(my1),
-          }
+                webServiceUser: "bol_it",
+                webServicePassword: "123456",
+                report_type: report_type,
+                date_type: date_type, // D=>ປະຈຳວັນ, M=>ປະຈຳເດືອນ, T=>ປະຈຳໄຕມາດ, Y=>ປະຈຳປີ
+                fromDate: monthYearFormat(my1),
+                toDate: my2status ? monthYearFormat(my2): monthYearFormat(my1),
+            },
+            {
+                headers : {Authorization: `Bearer ${token}`, Accept: "application/json"}
+            }
       )
       .then(res=>{
           if(res.data.responseCode == '000'){
