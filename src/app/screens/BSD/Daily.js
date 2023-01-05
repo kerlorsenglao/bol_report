@@ -1,10 +1,11 @@
 import { StyleSheet, Text, View,TouchableOpacity, ToastAndroid  } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import Spinner from 'react-native-loading-spinner-overlay'
 import axios from "axios";
 import Config from "react-native-config";
 import Toast from 'react-native-toast-message'
+import { AuthContext } from '../../help/AuthContext'
 
 import { dateFormat, getDateBefore, dateShow,checkSelectDateValidation } from '../../help/Functions'
 import BackInHomeComponent from '../../components/BackInHomeComponent'
@@ -28,11 +29,14 @@ export default function Daily() {
     const report_type = 'InReport';
     const date_type = 'D';
     const date_type_default = 'DEFAULT_D'
+    const {token} = useContext(AuthContext);
 
     const navigation = useNavigation();
+    
     useEffect(()=>{
         getBSDReport(bank,report_type,date_type_default, fromDate,toDate);//? dateFormat(date) : dateFormat(getDateBefore(new Date()))
     },[])
+
 
     const getBSDReport = async (bank,report_type,date_type,toDate,fromDate) =>  {
         setIsLoading(true);
@@ -44,6 +48,9 @@ export default function Daily() {
                 date_type: date_type, // D=>ປະຈຳວັນ, M=>ປະຈຳເດືອນ, T=>ປະຈຳໄຕມາດ, Y=>ປະຈຳປີ
                 fromDate: dateFormat(fromDate),
                 toDate: dateFormat(toDate),
+            },
+            {
+                headers : {Authorization: `Bearer ${token}`, Accept: "application/json"}
             }
         )
         .then(res=>{
