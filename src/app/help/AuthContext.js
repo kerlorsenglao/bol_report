@@ -105,6 +105,10 @@ export const AuthProvider = ({children})=>{
     }
 
     useEffect(()=>{
+        // AsyncStorage.removeItem('userInfo')
+        // AsyncStorage.removeItem('token')
+        // AsyncStorage.removeItem('token_id')
+        // AsyncStorage.removeItem('menu')
         checkIsLogined()
     },[])
 
