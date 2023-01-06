@@ -1,10 +1,11 @@
 import { View, Text,TouchableOpacity } from 'react-native'
-import React,{ useEffect, useState } from 'react'
+import React,{ useEffect, useState,useContext } from 'react'
 import Toast from 'react-native-toast-message'
 import { useIsFocused, useNavigation } from '@react-navigation/native'
 import Spinner from 'react-native-loading-spinner-overlay'
 import axios from "axios";
 import Config from "react-native-config";
+import { AuthContext } from '../../../../help/AuthContext'
 
 import { getQuaterly, checkSelectDateValidation,monthYearFormat } from '../../../../help/Functions'
 import BackInHomeComponent from '../../../../components/BackInHomeComponent'
@@ -32,6 +33,7 @@ const Quaterly = () => {
     const report_type = 'InReport';
     const date_type= 'T';
     const date_type_default = 'DEFAULT_T'
+    const {token} = useContext(AuthContext);
 
     const [visited,setVisited] = useState(false)
     // useEffect
@@ -52,6 +54,9 @@ const Quaterly = () => {
                 date_type: date_type == date_type_default ? date_type_default : t1+'-'+t2 ,
                 fromDate: y1,
                 toDate: y2,
+            },
+            {
+                headers : {Authorization: `Bearer ${token}`, Accept: "application/json"}
             }
         )
         .then(res=>{

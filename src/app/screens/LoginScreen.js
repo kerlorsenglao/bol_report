@@ -8,8 +8,7 @@ import Spinner from 'react-native-loading-spinner-overlay/lib'
 import Toast from 'react-native-toast-message'
 
 export default function LoginScreen({navigation}) {
-    const { Login, LoginTouch, Logout} = useContext(AuthContext);
-    const [isLoading,setIsloading] = useState(false)
+    const { isLoading,Login, LoginTouch, Logout} = useContext(AuthContext);
     const [data,setData] = useState({
         username:'',
         password:'',
