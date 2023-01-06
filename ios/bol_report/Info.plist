@@ -20,6 +20,7 @@
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
 <<<<<<< HEAD
+<<<<<<< HEAD
 	<string>0.0.4</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
@@ -32,6 +33,13 @@
 	<key>CFBundleVersion</key>
 	<string>3</string>
 >>>>>>> 9df86989d691a1b11f49bdd6a4837a772fea4274
+=======
+	<string>0.0.5</string>
+	<key>CFBundleSignature</key>
+	<string>????</string>
+	<key>CFBundleVersion</key>
+	<string>4</string>
+>>>>>>> e966008a39b0bc7beb70745e3d394141d5e0ac79
 	<key>LSRequiresIPhoneOS</key>
 	<true />
 	<key>NSAppTransportSecurity</key>

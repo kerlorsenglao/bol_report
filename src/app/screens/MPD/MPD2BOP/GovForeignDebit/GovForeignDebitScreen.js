@@ -1,9 +1,10 @@
 import { View, Text } from 'react-native'
-import React,{ useEffect, useState } from 'react'
+import React,{ useEffect, useState, useContext } from 'react'
 import Toast from 'react-native-toast-message'
 import Spinner from 'react-native-loading-spinner-overlay'
 import axios from "axios";
 import Config from "react-native-config";
+import { AuthContext } from '../../../../help/AuthContext'
 
 import { checkSelectDateValidation,monthYearFormat } from '../../../../help/Functions'
 import BackInHomeComponent from '../../../../components/BackInHomeComponent';
@@ -31,6 +32,7 @@ const GovForeignDebitScreen = () => {
     const report_type = 'InReport';
     const date_type = 'Y';
     const date_type_default = 'DEFAULT_Y'
+    const {token} = useContext(AuthContext);
 
     // useEffect
     useEffect(()=>{
@@ -41,14 +43,17 @@ const GovForeignDebitScreen = () => {
     const getGovForeignDebitReport_Y = async (report_type,date_type,year1,year2)=>{
         // setIsLoading(true)
         // await axios.post(`${API_URL}/${API_NAME}`,
-        //     {
-        //         webServiceUser: "bol_it",
-        //         webServicePassword: "123456",
-        //         report_type: report_type,
-        //         date_type: date_type, // D=>ປະຈຳວັນ, M=>ປະຈຳເດືອນ, T=>ປະຈຳໄຕມາດ, Y=>ປະຈຳປີ
-        //         fromDate: year1,
-        //         toDate: year2,
-        //     }
+            // {
+            //     webServiceUser: "bol_it",
+            //     webServicePassword: "123456",
+            //     report_type: report_type,
+            //     date_type: date_type, // D=>ປະຈຳວັນ, M=>ປະຈຳເດືອນ, T=>ປະຈຳໄຕມາດ, Y=>ປະຈຳປີ
+            //     fromDate: year1,
+            //     toDate: year2,
+            // },
+            // {
+            //     headers : {Authorization: `Bearer ${token}`, Accept: "application/json"}
+            // }
         // )
         // .then(res=>{
         //     if(res.data.responseCode == '000'){

@@ -1,10 +1,11 @@
 import { View, Text,TouchableOpacity } from 'react-native'
-import React,{ useEffect, useState } from 'react'
+import React,{ useEffect, useState,useContext } from 'react'
 import Toast from 'react-native-toast-message'
 import { useIsFocused, useNavigation } from '@react-navigation/native'
 import Spinner from 'react-native-loading-spinner-overlay'
 import axios from "axios";
 import Config from "react-native-config";
+import { AuthContext } from '../../../../../help/AuthContext'
 
 import { checkSelectDateValidation,monthYearFormat } from '../../../../../help/Functions'
 import BackInHomeComponent from '../../../../../components/BackInHomeComponent'
@@ -31,6 +32,7 @@ const Yearly = () => {
     const report_type = 'InReport';
     const date_type = 'Y';
     const date_type_default = 'DEFAULT_Y'
+    const {token} = useContext(AuthContext);
 
     const [visited,setVisited] = useState(false)
     // useEffect
@@ -52,7 +54,10 @@ const Yearly = () => {
         //         date_type: date_type, // D=>ປະຈຳວັນ, M=>ປະຈຳເດືອນ, T=>ປະຈຳໄຕມາດ, Y=>ປະຈຳປີ
         //         fromDate: year1,
         //         toDate: year2,
-        //     }
+        //     },
+            // {
+            //     headers : {Authorization: `Bearer ${token}`, Accept: "application/json"}
+            // }
         // )
         // .then(res=>{
         //     if(res.data.responseCode == '000'){

@@ -114,7 +114,6 @@ export const AuthProvider = ({children})=>{
 
     // logout
     const Logout = () => {
-
         setIsloading(true)
         axios.post(`${API_URL}/logOut`,
             {id: token_id},
@@ -145,6 +144,10 @@ export const AuthProvider = ({children})=>{
         .catch(e=>{
             setIsloading(false)
             console.log(e)
+            Toast.show({
+                type: 'error',
+                text1: e
+            });
         })
         
     }
@@ -154,10 +157,9 @@ export const AuthProvider = ({children})=>{
         <AuthContext.Provider
             value={{
                 // 1. global variable
-                userInfo,token,menu,splashLoading,
+                userInfo,token,menu,splashLoading,isLoading,
                 // 2. Login , Logout ... function
                 Login,Logout,LoginTouch
-
             }}
         >
             {children}
