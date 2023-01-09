@@ -52,8 +52,6 @@ const Quaterly = () => {
         setIsLoading(true);
         await axios.post(`${API_URL}/${API_NAME}`,
             {
-                webServiceUser: "bol_it",
-                webServicePassword: "123456",
                 report_type: report_type,
                 date_type: date_type == date_type_default ? date_type_default : t1+'-'+t2 ,
                 fromDate: y1,
@@ -96,15 +94,6 @@ const Quaterly = () => {
               text1: 'ກະລຸນາກວດສອບອິນເຕີເນັດ',
             });
         })
-
-        // this is for test, delete it when we have API
-        // setIsLoading(true)
-        // Toast.show({
-        //   type: 'success',
-        //   text1: 'successfull!',
-        //   text2: 'ທົດລອງ, ບໍ່ມີຂໍ້ມູນ'
-        // });
-        // setIsLoading(false)
     }
 
     const SearchBOPExportImportReport_Q = () =>{
@@ -124,7 +113,7 @@ const Quaterly = () => {
 
   return (
     <View style={{flex:1}}>
-        <Spinner visible={isLoading}/>   
+        <Spinner visible={isLoading} cancelable={true}/>   
         <View style={{flexDirection:'row',justifyContent:'space-evenly',paddingVertical: 5}}>
             <View style={{flex:4}}>
                 <TPickerComponent

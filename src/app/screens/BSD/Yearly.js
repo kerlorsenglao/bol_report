@@ -106,7 +106,7 @@ const Yearly = () => {
         
     return (
         <View style={{flex:1}}>
-            <Spinner visible={isLoading} color='gray'/>   
+            <Spinner visible={isLoading} cancelable={true} color='gray'/>   
             <View style={{
                 flexDirection:'row',
                 justifyContent:'space-evenly',

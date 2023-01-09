@@ -41,8 +41,6 @@ const Monthly = () => {
 
       setIsLoading(true)
       await axios.post(`${API_URL}/MonetaryPolicyMSReport`,{
-                webServiceUser: "bol_it",
-                webServicePassword: "123456",
                 report_type: report_type,
                 date_type: date_type, // D=>ປະຈຳວັນ, M=>ປະຈຳເດືອນ, T=>ປະຈຳໄຕມາດ, Y=>ປະຈຳປີ
                 fromDate: monthYearFormat(my1),
@@ -104,7 +102,7 @@ const Monthly = () => {
 
   return (
     <View style={{flex:1}}>
-        <Spinner visible={isLoading}/>   
+        <Spinner visible={isLoading} cancelable={true}/>   
         <View style={{flexDirection:'row',justifyContent:'space-evenly',paddingVertical: 5}}>
             <View style={{flex:4}}>
                 <MonthYearPickerComponent
