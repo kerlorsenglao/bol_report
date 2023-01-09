@@ -48,8 +48,6 @@ const Yearly = () => {
         setIsLoading(true)
         await axios.post(`${API_URL}/${API_NAME}`,
             {
-                webServiceUser: "bol_it",
-                webServicePassword: "123456",
                 report_type: report_type,
                 date_type: date_type, // D=>ປະຈຳວັນ, M=>ປະຈຳເດືອນ, T=>ປະຈຳໄຕມາດ, Y=>ປະຈຳປີ
                 fromDate: year1,
@@ -89,16 +87,7 @@ const Yearly = () => {
                 type: 'error',
                 text1: 'ກະລຸນາກວດສອບອິນເຕີເນັດ',
             });
-        })  
-
-        // this is for test, delete it when we have API
-        // setIsLoading(true)
-        // Toast.show({
-        //     type: 'success',
-        //     text1: 'successfull!',
-        //     text2: 'ທົດລອງ, ບໍ່ມີຂໍ້ມູນ'
-        // });
-        // setIsLoading(false)
+        })
     }
 
     const SearchBOPExportImportReport_Y = () =>{
@@ -118,7 +107,7 @@ const Yearly = () => {
 
   return (
     <View style={{flex:1}}>
-        <Spinner visible={isLoading}/>   
+        <Spinner visible={isLoading} cancelable={true}/>   
         <View style={{flexDirection:'row',justifyContent:'space-evenly',paddingVertical: 5}}>
             <View style={{flex:4}}>
                     <YearPickerComponent

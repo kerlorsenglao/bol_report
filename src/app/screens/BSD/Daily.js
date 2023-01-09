@@ -41,8 +41,6 @@ export default function Daily() {
     const getBSDReport = async (bank,report_type,date_type,fromDate,toDate) =>  {
         setIsLoading(true);
         await axios.post(`${API_URL}/BankSupervisionReport`,{
-                webServiceUser: "bol_it",
-                webServicePassword: "123456",
                 bank_code: bank,
                 report_type: report_type,
                 date_type: date_type, // D=>ປະຈຳວັນ, M=>ປະຈຳເດືອນ, T=>ປະຈຳໄຕມາດ, Y=>ປະຈຳປີ

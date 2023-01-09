@@ -56,6 +56,7 @@ import BODExchangeRateFxSpotScreen from '../app/screens/BOD/BODExchangeRateFxSpo
 
 import { COLORS } from '../constant'
 import ToumTestScreen from '../app/screens/ToumTestScreen'
+import ToumTestTableScreen from '../app/screens/ToumTestTableScreen'
 
 const StackNavigation = createNativeStackNavigator();
 
@@ -101,6 +102,13 @@ export default function Navigation() {
                                 component={ToumTestScreen}
                                 options={{
                                     headerShown: false,
+                                }}
+                            /> */}
+                            {/* <StackNavigation.Screen 
+                                name="ToumTestTable"
+                                component={ToumTestTableScreen}
+                                options={{
+                                    headerShown:false
                                 }}
                             /> */}
                             <StackNavigation.Screen 

@@ -49,8 +49,6 @@ const Quaterly = () => {
     const getBSDReport = async (bank,report_type,date_type,t1,t2,y1,y2)=>{
         setIsLoading(true);
         await axios.post(`${API_URL}/BankSupervisionReport`,{
-                webServiceUser: "bol_it",
-                webServicePassword: "123456",
                 bank_code: bank,
                 report_type: report_type,
                 date_type: date_type == date_type_default ? date_type_default : t1+'-'+t2 ,
@@ -113,7 +111,7 @@ const Quaterly = () => {
     }
     return (
         <View style={{flex:1}}>
-            <Spinner visible={isLoading}/>   
+            <Spinner visible={isLoading} cancelable={true}/>   
             <View style={{
                 flexDirection:'row',
                 justifyContent:'space-evenly',
