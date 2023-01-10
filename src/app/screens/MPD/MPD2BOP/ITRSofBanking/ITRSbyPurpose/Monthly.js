@@ -15,7 +15,7 @@ import MonthYearPickerComponent from '../../../../../components/MonthYearPickerC
 import SearchButtonComponent from '../../../../../components/SearchButtonComponent'
 
 const API_URL = Config.API_URL;
-const API_NAME = "???"
+const API_NAME = "getITRSPurposeReport"
 
 // this function create by Toum at 19/12/2022
 const Monthly = () => {
@@ -45,61 +45,49 @@ const Monthly = () => {
 
     // function for MonthLy
     const getBOPExportImportReport_M = async (report_type,date_type,my1,my2)=>{
-        // setIsLoading(true)
-        // await axios.post(`${API_URL}/${API_NAME}`,{
-        //         webServiceUser: "bol_it",
-        //         webServicePassword: "123456",
-        //         report_type: report_type,
-        //         date_type: date_type, // D=>ປະຈຳວັນ, M=>ປະຈຳເດືອນ, T=>ປະຈຳໄຕມາດ, Y=>ປະຈຳປີ
-        //         fromDate: monthYearFormat(my1),
-        //         toDate: my2status ? monthYearFormat(my2): monthYearFormat(my1),
-        //     },
-            // {
-            //     headers : {Authorization: `Bearer ${token}`, Accept: "application/json"}
-            // }
-        // )
-        // .then(res=>{
-        //     if(res.data.responseCode == '000'){
-        //         if(res.data.data !=""){
-        //             let header = res.data.data[0].Header;
-        //             let content = res.data.data[1].Sub
-        //             setData({'header': header,'content': content})
-        //             setMY1(new Date(header[1]))
-        //             setMY2(new Date(header[header.length-1]))
-        //             setMY2status(true)
-        //         }else{
-        //             setData()
-        //         }
-        //     }
-        //     else{// error
-        //         console.log('Not OK')
-        //         let msg = res.data.msg
-        //         Toast.show({
-        //             type: 'error',
-        //             text1: 'ຄົ້ນຫາບໍ່ສຳເລັດ!',
-        //             text2: msg
-        //         });
-        //     }
-        //     setIsLoading(false)
-        // })
-        // .catch(e => {
-        //     console.log(e)
-        //     Toast.show({
-        //             type: 'error',
-        //             text1: 'ກະລຸນາກວດສອບອິນເຕີເນັດ!',
-        //     });
-        //     setIsLoading(false)
-        // })
-    
-        // this is for test, delete it when we have API
         setIsLoading(true)
-        Toast.show({
-            type: 'success',
-            text1: 'successfull!',
-            text2: 'ທົດລອງ, ບໍ່ມີຂໍ້ມູນ'
-        });
-        setIsLoading(false)
-
+        await axios.post(`${API_URL}/${API_NAME}`,{
+                report_type: report_type,
+                date_type: date_type, // D=>ປະຈຳວັນ, M=>ປະຈຳເດືອນ, T=>ປະຈຳໄຕມາດ, Y=>ປະຈຳປີ
+                fromDate: monthYearFormat(my1),
+                toDate: my2status ? monthYearFormat(my2): monthYearFormat(my1),
+            },
+            {
+                headers : {Authorization: `Bearer ${token}`, Accept: "application/json"}
+            }
+        )
+        .then(res=>{
+            if(res.data.responseCode == '000'){
+                if(res.data.data !=""){
+                    let header = res.data.data[0].Header;
+                    let content = res.data.data[1].Sub
+                    setData({'header': header,'content': content})
+                    setMY1(new Date(header[1]))
+                    setMY2(new Date(header[header.length-1]))
+                    setMY2status(true)
+                }else{
+                    setData()
+                }
+            }
+            else{// error
+                console.log('Not OK')
+                let msg = res.data.msg
+                Toast.show({
+                    type: 'error',
+                    text1: 'ຄົ້ນຫາບໍ່ສຳເລັດ!',
+                    text2: msg
+                });
+            }
+            setIsLoading(false)
+        })
+        .catch(e => {
+            console.log(e)
+            Toast.show({
+                    type: 'error',
+                    text1: 'ກະລຸນາກວດສອບອິນເຕີເນັດ!',
+            });
+            setIsLoading(false)
+        })
     }
 
   const SearchBOPExportImportReport_M = () =>{
@@ -119,7 +107,7 @@ const Monthly = () => {
 
   return (
     <View style={{flex:1}}>
-        <Spinner visible={isLoading}/>   
+        <Spinner visible={isLoading} cancelable={true}/>   
         <View style={{flexDirection:'row',justifyContent:'space-evenly',paddingVertical: 5}}>
             <View style={{flex:4}}>
                 <MonthYearPickerComponent

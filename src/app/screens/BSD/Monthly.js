@@ -45,8 +45,6 @@ export default function Monthly() {
     const getBSDReport = async (bank,report_type,date_type,my1,my2)=>{
         setIsLoading(true)
         await axios.post(`${API_URL}/BankSupervisionReport`,{
-                webServiceUser: "bol_it",
-                webServicePassword: "123456",
                 bank_code: bank,
                 report_type: report_type,
                 date_type: date_type, // D=>ປະຈຳວັນ, M=>ປະຈຳເດືອນ, T=>ປະຈຳໄຕມາດ, Y=>ປະຈຳປີ
@@ -117,7 +115,7 @@ export default function Monthly() {
     }
     return (
         <View style={{flex:1}}>
-            <Spinner visible={isLoading}/>   
+            <Spinner visible={isLoading} cancelable={true}/>   
             <View style={{
                 flexDirection:'row',
                 justifyContent:'space-evenly',

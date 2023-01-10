@@ -3,11 +3,12 @@ import React, { useState,useContext, useEffect } from 'react'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { AuthContext } from '../help/AuthContext'
 import { Avatar,Title,Caption,Text,Drawer } from 'react-native-paper'
+import Spinner from 'react-native-loading-spinner-overlay'
 
 import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
 
 const DrawerComponent = (props) => {
-    const { userInfo, menu,Logout } = useContext(AuthContext);
+    const { userInfo, menu,Logout, isLoading } = useContext(AuthContext);
     const [menus,setMenus] = useState([])
     const [sub,setSub] = useState(Array(menus.length).fill(false));
 
@@ -52,6 +53,7 @@ const DrawerComponent = (props) => {
   return (
     <View style={{flex:1}}>
       <DrawerContentScrollView>
+            <Spinner visible={isLoading} cancelable={true}/>
             <View style={styles.drawerContent}>
                 <View style={[styles.userInfoSection]}>
                     {/* picture and Name */}

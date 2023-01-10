@@ -45,8 +45,6 @@ const Yearly = () => {
     const getMonetaryStatisticIntraReport_Y = async (report_type,date_type,year1,year2)=>{
         setIsLoading(true)
         await axios.post(`${API_URL}/MonetaryPolicyMSReport`,{
-                webServiceUser: "bol_it",
-                webServicePassword: "123456",
                 report_type: report_type,
                 date_type: date_type, // D=>ປະຈຳວັນ, M=>ປະຈຳເດືອນ, T=>ປະຈຳໄຕມາດ, Y=>ປະຈຳປີ
                 fromDate: year1,
@@ -109,7 +107,7 @@ const Yearly = () => {
 
   return (
     <View style={{flex:1}}>
-        <Spinner visible={isLoading}/>  
+        <Spinner visible={isLoading} cancelable={true}/>  
 
         <View style={{flexDirection:'row',justifyContent:'space-evenly',paddingVertical: 5}}>
             <View style={{flex:4}}>
