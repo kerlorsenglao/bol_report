@@ -14,7 +14,6 @@ import Toast from 'react-native-toast-message'
 const  API_URL = Config.API_URL;
 
 
-
 const ToumTestTableScreen = () => {
 
     const [isLoading,setIsLoading] = useState(false)
@@ -40,6 +39,7 @@ const ToumTestTableScreen = () => {
         .then(res=>{
             if(res.data.responseCode == '000'){
                 if(res.data.data !=""){
+                    console.log(res.data.data[0])
                     let header = res.data.data[0].Header;
                     let content = res.data.data[1].Sub
                     setData({'header': header,'content': content})
@@ -94,13 +94,8 @@ const ToumTestTableScreen = () => {
         {
             data ?
                 (
-                    // ແບບເກົ່າ <TableComponent2 header={data.header} content={data.content}/>
-                    // ແບບໃໝ່: ໃຊ້ ScrollView ແລ້ວ loop
                     <ScrollView>
-                        <TableComponent2 date="ເດືອນທີ: 10/2022" header={data.header} content={data.content}/>
-                        <TableComponent2 date="ເດືອນທີ: 11/2022" header={data.header} content={data.content}/>
-                        <TableComponent2 date="ເດືອນທີ: 12/2022" header={data.header} content={data.content}/>
-                        <TableComponent2 date="ເດືອນທີ: 1/2023" header={data.header} content={data.content}/>
+                        {/* <TableComponent2 data={data}/> */}
                     </ScrollView>
                 )
             : 

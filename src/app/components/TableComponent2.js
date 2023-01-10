@@ -4,7 +4,7 @@ import { COLORS, SIZES } from '../../constant'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { reverseStringInDate } from '../help/Functions'
 
-export default function TableComponent2({date,header, content, date_type}) {
+export default function TableComponent2({data,date_type}) {
     const {width,height} = useWindowDimensions()
     const tableHeader =(data)=>{
         return (
@@ -93,16 +93,27 @@ export default function TableComponent2({date,header, content, date_type}) {
         </View>
         )
     }
+
+    const tableEntity = (t_date,t_header,t_content)=>{
+        return (
+            <View>
+                <Text style={{margin:10,marginBottom:5,fontSize:SIZES.large,color:COLORS.black,fontWeight:'bold'}}>
+                    {t_date}
+                </Text>
+                {tableHeader(t_header)}
+                {tableContent(t_content)}
+                <View style={{borderColor:"#000",borderWidth:1}}></View>
+            </View>
+        )
+    }
+
   return (
     
         <ScrollView horizontal>
             <ScrollView>
-                <Text style={{margin:10,marginBottom:5,fontSize:SIZES.large,color:COLORS.black,fontWeight:'bold'}}>
-                    {date}
-                </Text>
-                {tableHeader(header)}
-                {tableContent(content)}
-                <View style={{borderColor:"#000",borderWidth:1}}></View>
+                {tableEntity(data.date,data.header,data.content)}
+                {tableEntity(data.date,data.header,data.content)}
+                {tableEntity(data.date,data.header,data.content)}
             </ScrollView>
         </ScrollView>
   )

@@ -16,7 +16,7 @@ import SearchButtonComponent from '../../../../components/SearchButtonComponent'
 import { useNavigation } from '@react-navigation/native';
 
 const  API_URL = Config.API_URL;
-const API_NAME = "???"
+const API_NAME = "getMSLoanInterestRate"
 
 // this function create by Toum at 21/12/2022
 const LoanInterestScreen = () => {
@@ -42,60 +42,49 @@ const LoanInterestScreen = () => {
 
     // function for Yearly
     const getLoanInterestReport_M = async (report_type,date_type,my1,my2)=>{
-        // setIsLoading(true)
-        // await axios.post(`${API_URL}/${API_NAME}`,
-        //     {
-        //         webServiceUser: "bol_it",
-        //         webServicePassword: "123456",
-        //         report_type: report_type,
-        //         date_type: date_type, // D=>ປະຈຳວັນ, M=>ປະຈຳເດືອນ, T=>ປະຈຳໄຕມາດ, Y=>ປະຈຳປີ
-        //         fromDate: year1,
-        //         toDate: year2,
-        //     },
-            // {
-            //     headers : {Authorization: `Bearer ${token}`, Accept: "application/json"}
-            // }
-        // )
-        // .then(res=>{
-        //     if(res.data.responseCode == '000'){
-        //         if(res.data.data !=""){
-        //             let header = res.data.data[0].Header;
-        //             let content = res.data.data[1].Sub
-        //             setData({'header': header,'content': content})
-        //             setYear1(header[1])
-        //             setYear2(header[header.length-1])
-        //             setY2Status(true)
-        //         }else{
-        //             setData()
-        //         }
-        //     }else{// error
-        //         console.log('Not OK')
-        //         let msg = res.data.msg
-        //         Toast.show({
-        //             type: 'error',
-        //             text1: 'ຄົ້ນຫາບໍ່ສຳເລັດ!',
-        //             text2: msg
-        //         });
-        //     }
-        //     setIsLoading(false)
-        // })
-        // .catch(e =>{
-        //     console.log(e)
-        //     setIsLoading(false)
-        //     Toast.show({
-        //         type: 'error',
-        //         text1: 'ກະລຸນາກວດສອບອິນເຕີເນັດ',
-        //     });
-        // })  
-
-        // this is for test, delete it when we have API
         setIsLoading(true)
-        Toast.show({
-            type: 'success',
-            text1: 'successfull!',
-            text2: 'ທົດລອງ, ບໍ່ມີຂໍ້ມູນ'
-        });
-        setIsLoading(false)
+        await axios.post(`${API_URL}/${API_NAME}`,
+            {
+                report_type: report_type,
+                date_type: date_type, // D=>ປະຈຳວັນ, M=>ປະຈຳເດືອນ, T=>ປະຈຳໄຕມາດ, Y=>ປະຈຳປີ
+                fromDate: my1,
+                toDate: my2status? my2 : my1,
+            },
+            {
+                headers : {Authorization: `Bearer ${token}`, Accept: "application/json"}
+            }
+        )
+        .then(res=>{
+            if(res.data.responseCode == '000'){
+                if(res.data.data !=""){
+                    let header = res.data.data[0].Header;
+                    let content = res.data.data[1].Sub
+                    setData({'header': header,'content': content})
+                    setMY1(new Date(header[1]))
+                    setMY2(new Date(header[header.length-1]))
+                    setMY2status(true)
+                }else{
+                    setData()
+                }
+            }else{// error
+                console.log('Not OK')
+                let msg = res.data.msg
+                Toast.show({
+                    type: 'error',
+                    text1: 'ຄົ້ນຫາບໍ່ສຳເລັດ!',
+                    text2: msg
+                });
+            }
+            setIsLoading(false)
+        })
+        .catch(e =>{
+            console.log(e)
+            setIsLoading(false)
+            Toast.show({
+                type: 'error',
+                text1: 'ກະລຸນາກວດສອບອິນເຕີເນັດ',
+            });
+        })
     }
 
     const SearchLoanInterestReport_M = () =>{
@@ -115,7 +104,7 @@ const LoanInterestScreen = () => {
 
   return (
     <View style={{flex:1}}>
-        <Spinner visible={isLoading}/>   
+        <Spinner visible={isLoading} cancelable={true}/>   
         <View style={{flexDirection:'row',justifyContent:'space-evenly',paddingVertical: 5}}>
             <View style={{flex:4}}>
                 <MonthYearPickerComponent
