@@ -53,10 +53,6 @@ export default function SettingScreen() {
       // saveScanStatus('false') // ປ່ຽນສະຖານະການສະແກນໃສ RNSinfo ເປັນ false (ສະແດງວ່າປິດການນຳໃຊ້ການສະແກນລາຍມື)
     }else{// ຖ້າມີບໍ່ມີ ຫຼື ເປັນ false ສະແດງວ່າເປັນການຕັ້ງຄ່າໃຫ້ສາມາດສະແກນລາຍມືເພື່ອເຂົ້າລະບົບ(ລົງທະບຽນການເຂົ້າລະບົບດ້ວຍການສະແກນ)
         if(senSorAvailable){// ຖ້າເຄື່ອງສະໜອງການສະແກນລາຍມື
-          console.log('bol_p=>', BOL_P)
-          console.log('bol_v=>', BOL_V)
-          console.log('bol_k=>', BOL_K)
-          console.log('bol_user=>',BOL_USER)
           Decrypt({'cipher':BOL_P,'iv':BOL_V},BOL_K).then(decrypt_pass =>{
             setPasswordToSecureStore(decrypt_pass) // ບັນທຶກລະຫັດຜ່ານແບບຖາວອນໄປໃນ RNSinfo
           }).catch(err=>{

@@ -127,8 +127,6 @@ export const AuthProvider = ({children})=>{
             }
         })
         if(secure_password){
-            console.log('BOL_USER=>',BOL_USER)
-            console.log('BOL_USER=>',secure_password)
             Login(BOL_USER,secure_password)
             // ToastAndroid.show(secure_password,ToastAndroid.BOTTOM,ToastAndroid.SHORT)
         }else{
