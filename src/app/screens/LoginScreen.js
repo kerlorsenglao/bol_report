@@ -8,15 +8,13 @@ import Spinner from 'react-native-loading-spinner-overlay/lib'
 import Toast from 'react-native-toast-message'
 
 export default function LoginScreen({navigation}) {
-    const { isLoading,Login, LoginTouch, Logout} = useContext(AuthContext);
+    const { isLoading,Login, LoginTouch, Logout, scanStatus} = useContext(AuthContext);
     const [data,setData] = useState({
         username:'',
         password:'',
         checkTextInput: false,
         secureTextInput: true
     })
-
-    
 
     const onChangeUsername=(text)=>{
         if(text.length != 0){
@@ -131,20 +129,25 @@ export default function LoginScreen({navigation}) {
 
                 
                 {/* ສ່ວນປຸ່ມ ສະແກນລາຍມື */}
-                    <View
-                        style={styles.fingerScaner}
-                    >
-                        <TouchableOpacity
-                            onPress={LoginTouch}
+                    {
+                        scanStatus 
+                        ?
+                        <View
+                            style={styles.fingerScaner}
                         >
-                            <Ionicons
-                                name='finger-print-outline'
-                                color={COLORS.green}
-                                size={50}
-                            />
-                        </TouchableOpacity>
-                        <Text style={{color: COLORS.gray}}>ສະແກນລາຍມື</Text>
-                    </View>
+                            <TouchableOpacity
+                                onPress={LoginTouch}
+                            >
+                                <Ionicons
+                                    name='finger-print-outline'
+                                    color={COLORS.green}
+                                    size={50}
+                                />
+                            </TouchableOpacity>
+                            <Text style={{color: COLORS.gray}}>ສະແກນລາຍມື</Text>
+                        </View>
+                        :null
+                    }
                     
             </Animatable.View>
         </View>

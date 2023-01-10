@@ -12,8 +12,8 @@ const Encrypt = (text, key) => {
   });
 };
 
-const Decrypt = (encryptedData, key) => {
-    return Aes.decrypt(
+const Decrypt = async (encryptedData, key) => {
+    return await Aes.decrypt(
       encryptedData.cipher,
       key,
       encryptedData.iv,
