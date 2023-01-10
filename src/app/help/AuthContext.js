@@ -5,6 +5,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import Toast from 'react-native-toast-message'
 import TouchID from 'react-native-touch-id'
 import { COLORS } from '../constant'
+import { GenerateKey, Encrypt, Decrypt } from './EncryptAnDecrypt'
+import RNSinfo from 'react-native-sensitive-info'
 
 const API_URL = Config.API_URL;
 
@@ -18,6 +20,9 @@ export const AuthProvider = ({children})=>{
     const [menu,setMenu] = useState([]);
     const [splashLoading , setSplashLoading] = useState(false)
     const [isLoading, setIsloading] = useState(false)
+
+    const [senSorAvailable, setSensorAvailable] = useState(false);
+
 
     // login
     const Login = (username,password) => {
@@ -109,6 +114,7 @@ export const AuthProvider = ({children})=>{
         // AsyncStorage.removeItem('token')
         // AsyncStorage.removeItem('token_id')
         // AsyncStorage.removeItem('menu')
+        checkSensorAvailable()
         checkIsLogined()
     },[])
 
@@ -150,6 +156,65 @@ export const AuthProvider = ({children})=>{
             });
         })
         
+    }
+
+    //ກວດສອບວ່າເຄື່ອງມີເຊັນເຊີເພື່ອສະແກນລາຍນິ້ວມືບໍ (ຖ້າມີ = true ບໍ່ມີ = false)
+    const checkSensorAvailable = async() =>{
+        const result = await RNSinfo.isSensorAvailable();
+        if(result){
+            console.log('is sensor avialable=>',result)
+            setSensorAvailable(result)
+        }
+    }
+
+//+++++++++++++++++ 3 function ນີ້ໃຊ້ເພື່ອ ບັນທຶກ,ລຶບ,ດຶງເອົາ ລະຫັດຜ່ານທີ່ບັນທຶກໄວ້ຊົ່ວຄາວບົນ RNSinfo store ++++++++++++++
+    // function ບັນທຶກ PASSWORD ໄວ້ຊົ່າຄາວຫຼັງຈາກເຂົ້າລະບົບສຳເລັດ
+    //ທຸກຄັ້ງທີ login ສຳເລັດຈຳເປັນຕ້ອງເກັບລະຫັດໄວ້ໃນເຄື່ອງຊົ່ວຄາວ (ເມື່ອອອກຈາກລະບົບຈະລືບອອກ) ເພື່ອບໍ່ຕ້ອງcomfirmລະຫັດຜ່ານອິດເມື່ອຜູ້ໃຊ້ຕ້ອງການເປິດການນຳໃຊ້ສະແກນລາຍມື
+    const setInputPasswordToSecure = async (inputpassword)=>{// ຄວາມຕ້ອງ encrypt ກ່ອນ
+        await RNSinfo.setItem('INPUT_PASSWORD',inputpassword,{
+            sharedPreferencesName: 'mySharedPrefs',
+            keychainService: 'myKeychain',
+        })
+        // console.log('saved input password to secured');
+    }
+    // function ລືບ PASSWORD ທີ່ບັນທຶກໄວ້ຊົ່ວຄາວ
+    //ທຸກຄັ້ງອອກຈາກລະບົບຕ້ອງລົບລະຫັດຜ່ານທີ່ບັນທຶກຊົ່ວຄາວນີ້ຖິ້ມ
+    const deleteInputPassword = async ()=>{
+        const delete_result = await RNSinfo.deleteItem('INPUT_PASSWORD',{
+            sharedPreferencesName: 'mySharedPrefs',
+            keychainService: 'myKeychain',
+        })
+        console.log('Delete result=',delete_result)
+    }
+    // function getເອົາລະຫັດຜ່ານທີ່ບັນທຶກຊົ່ວຄາວ
+    //ເວລາທີ່ຜູ້ໃຊ້ເປິດການນຳໃຊ້ສະແກນລາຍນິ້ວມືແມ່ນຈະໄດ້ນຳເອົາລະຫັດຊົ່ວຄາວນີ້ໄປເກັບຖາວອນໃນ RNSinfo store
+    const getInputPasswordOnSecure = async ()=>{
+        const input_pw = await RNSinfo.getItem('INPUT_PASSWORD',{
+            sharedPreferencesName: 'mySharedPrefs',
+            keychainService: 'myKeychain',
+        })
+        if(input_pw){
+            setInputPassword(input_pw)
+        }
+    }
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+//+++++++++++++++ 2 function ລຸ່ມແມ່ນໃຊ້ບັນທຶກສະຖານະການສະແກນລາຍນິ້ວມື ວ່າເປີດນຳໃຊ້ແລ້ວບໍ
+    //function ບັນທຶກສະຖານະການເປິດສະແກນຂື້ນ RNSinfo store
+    const saveScanStatus = async(status) =>{
+        await RNSinfo.setItem('SCAN_STATUS',status,{
+            sharedPreferencesName: 'mySharedPrefs',
+            keychainService: 'myKeychain',
+        })
+    }
+    //function ດຶງເອົາສະຖານະການສະແກນລາຍມືບົນ RNSinfo store
+    const [scanStatus, setScanStatus] = useState(false);
+    const getScanStatus = async() =>{
+        const status =await RNSinfo.getItem('SCAN_STATUS',{
+            sharedPreferencesName: 'mySharedPrefs',
+            keychainService: 'myKeychain',
+        })
+        // console.log('get scan status',status);
+        setScanStatus(status==='true'? true : false);
     }
 
 

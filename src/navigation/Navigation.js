@@ -54,6 +54,8 @@ import BODAccountingServiceScreen from '../app/screens/BOD/BODAccountingService/
 import BODDepositBalanceScreen from '../app/screens/BOD/BODDepositBalance/BODDepositBalanceScreen'
 import BODExchangeRateFxSpotScreen from '../app/screens/BOD/BODExchangeRateFxSpot/BODExchangeRateFxSpotScreen'
 
+import SettingScreen from '../app/screens/SettingScreen'
+
 import { COLORS } from '../constant'
 import ToumTestScreen from '../app/screens/ToumTestScreen'
 
@@ -556,6 +558,21 @@ export default function Navigation() {
                                 component={BODExchangeRateFxSpotScreen}
                                 options={{
                                     title:'ອັດຕາແລກປ່ຽນສະເລ່ຍ FX Spot',
+                                    headerTitleAlign:'center',
+                                    headerTitleStyle:{
+                                        color: COLORS.white,
+                                    },
+                                    headerStyle:{
+                                        backgroundColor: COLORS.primary
+                                    }
+                                }}
+                            />
+                            {/* ໜ້າຕັ້ງຄ່າ */}
+                            <StackNavigation.Screen 
+                                name="Setting"
+                                component={SettingScreen}
+                                options={{
+                                    title:'ຕັ້ງຄ່າ',
                                     headerTitleAlign:'center',
                                     headerTitleStyle:{
                                         color: COLORS.white,

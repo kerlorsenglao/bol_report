@@ -16,6 +16,8 @@ export default function LoginScreen({navigation}) {
         secureTextInput: true
     })
 
+    
+
     const onChangeUsername=(text)=>{
         if(text.length != 0){
             setData({
