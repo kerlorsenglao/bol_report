@@ -122,6 +122,12 @@ const DrawerComponent = (props) => {
                     :
                     null
             }
+            <DrawerItem
+                    pressColor="#daf0f7"
+                    label={() => <Text style={{color: '#000'}}>ຕັ້ງຄ່າ</Text>} 
+                    onPress={()=>{props.navigation.navigate('Setting')}}
+
+            />
 
       </DrawerContentScrollView>
 
