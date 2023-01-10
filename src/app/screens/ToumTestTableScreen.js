@@ -1,4 +1,4 @@
-import { View, Text } from 'react-native'
+import { View, Text,ScrollView } from 'react-native'
 import React,{useState,useContext} from 'react'
 import { COLORS, SIZES } from '../../constant'
 import { AuthContext } from '../help/AuthContext'
@@ -13,6 +13,8 @@ import Toast from 'react-native-toast-message'
 
 const  API_URL = Config.API_URL;
 
+
+
 const ToumTestTableScreen = () => {
 
     const [isLoading,setIsLoading] = useState(false)
@@ -25,12 +27,11 @@ const ToumTestTableScreen = () => {
 
     const SearchLoanBySectorReport_Y = async ()=>{
         setIsLoading(true)
-        console.log('search')
-        await axios.post(`${API_URL}/getFDISectorReport`,{
+        await axios.post(`${API_URL}/getFXSpotInterbank`,{
                 report_type: 'InReport',
                 date_type: 'Y', // D=>ປະຈຳວັນ, M=>ປະຈຳເດືອນ, T=>ປະຈຳໄຕມາດ, Y=>ປະຈຳປີ
-                fromDate: 2022,
-                toDate: 2022,
+                fromDate: year1,
+                toDate: y2Status? year2 : year1,
             },
             {
                 headers : {Authorization: `Bearer ${token}`, Accept: "application/json"}
@@ -38,7 +39,16 @@ const ToumTestTableScreen = () => {
         )
         .then(res=>{
             if(res.data.responseCode == '000'){
-                console.log(res.data.data)
+                if(res.data.data !=""){
+                    let header = res.data.data[0].Header;
+                    let content = res.data.data[1].Sub
+                    setData({'header': header,'content': content})
+                    setYear1(header[1])
+                    setYear2(header[header.length-1])
+                    setY2Status(true)
+                }else{
+                    setData()
+                }
             }else{// error
                 console.log('Not OK')
                 let msg = res.data.msg
@@ -62,7 +72,7 @@ const ToumTestTableScreen = () => {
     }
 
   return (
-    <View style={{flex:1,backgroundColor:"#ffafff"}}>
+    <View style={{flex:1}}>
         <Spinner visible={isLoading}/>
         <HeaderComponent headerName={'Table Test'} />
         <View style={{flexDirection:'row',justifyContent:'space-evenly',paddingVertical: 5}}>
@@ -84,11 +94,18 @@ const ToumTestTableScreen = () => {
         {
             data ?
                 (
-                    <TableComponent2 header={data.header} content={data.content}/>
+                    // ແບບເກົ່າ <TableComponent2 header={data.header} content={data.content}/>
+                    // ແບບໃໝ່: ໃຊ້ ScrollView ແລ້ວ loop
+                    <ScrollView>
+                        <TableComponent2 date="ເດືອນທີ: 10/2022" header={data.header} content={data.content}/>
+                        <TableComponent2 date="ເດືອນທີ: 11/2022" header={data.header} content={data.content}/>
+                        <TableComponent2 date="ເດືອນທີ: 12/2022" header={data.header} content={data.content}/>
+                        <TableComponent2 date="ເດືອນທີ: 1/2023" header={data.header} content={data.content}/>
+                    </ScrollView>
                 )
             : 
                 (
-                    <View style={{flex: 1, justifyContent:'center',alignItems:'center',backgroundColor:"white"}}>
+                    <View style={{flex: 1, justifyContent:'center',alignItems:'center'}}>
                         <Text style={{color: COLORS.gray, fontSize: SIZES.large}}>ບໍ່ມີຂໍ້ມູນ</Text>
                     </View>
                 )
