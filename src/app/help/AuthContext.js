@@ -1,10 +1,13 @@
 import React, { createContext, useEffect, useState } from 'react'
+import { ToastAndroid} from 'react-native'
 import axios from 'axios'
 import Config from 'react-native-config' // import for reading variable from .env file
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import Toast from 'react-native-toast-message'
 import TouchID from 'react-native-touch-id'
 import { COLORS } from '../constant'
+import { GenerateKey, Encrypt, Decrypt } from './EncryptAnDecrypt'
+import RNSinfo from 'react-native-sensitive-info'
 
 const API_URL = Config.API_URL;
 
@@ -18,6 +21,15 @@ export const AuthProvider = ({children})=>{
     const [menu,setMenu] = useState([]);
     const [splashLoading , setSplashLoading] = useState(false)
     const [isLoading, setIsloading] = useState(false)
+
+    const [senSorAvailable, setSensorAvailable] = useState(false);
+    const [inputPassword, setInputPassword] = useState(null);
+    const [scanStatus, setScanStatus] = useState(false);
+
+    const [BOL_P, setBOL_P] = useState()
+    const [BOL_V, setBOL_V] = useState()
+    const [BOL_K, setBOL_K] = useState()
+    const [BOL_USER, setBOL_USER] = useState()
 
     // login
     const Login = (username,password) => {
@@ -59,6 +71,27 @@ export const AuthProvider = ({children})=>{
                 AsyncStorage.setItem('token',res_token[1])
                 AsyncStorage.setItem('token_id',res_token[0])
                 AsyncStorage.setItem('menu',res_menuList.toString())
+                // ecrypt password ແລ້ວເກັບໄວ້ຊົ່ວຄາວ ເມື່ອອອກຈາກລະບົບໃຫ້ clear BOL_P, BOL_V,BOL_K
+                GenerateKey('BOL', 'Secure',5000,256)
+                .then(key=>{
+                  Encrypt(password,key)
+                  .then(({cipher,iv})=>{
+                     AsyncStorage.setItem('BOL_P',cipher)// ລະຫັດຜ່ານທີ່ encrypt ແລ້ວ (ເມື່ອ logout ໃຫ້ clear)
+                     AsyncStorage.setItem('BOL_V',iv) // ລະຫັດຖອນ encrypt (ເມື່ອ logout ໃຫ້ clear)
+                     AsyncStorage.setItem('BOL_K',key) // ລະຫັດສ້າງ encrypt (ເມື່ອ logout ໃຫ້ clear)
+                     AsyncStorage.setItem('BOL_USER',username) // ຊື່ຜູ້ໃຊ້ລ່າສຸດທີ່ເຂົ້າລະບົບ (ເກັບໄວ້ຖາວອນ)
+                     setBOL_P(cipher)
+                     setBOL_V(iv)
+                     setBOL_K(key)
+                     setBOL_USER(username)
+                  })
+                  .catch(err=>{
+                    console.log(err)
+                  })
+                })
+                .catch(e=>{
+                  console.log(e)
+                })
             }else{// error
                 console.log("error")
                 console.log(res.data)
@@ -79,23 +112,57 @@ export const AuthProvider = ({children})=>{
     }
 
     // Login finger Touch
-    const LoginTouch = () => {
-        console.log('LoginTouch')
+    const LoginTouch = async() => {
+        try {
+            const secure_password = await RNSinfo.getItem('PASSWORD',{
+                sharedPreferencesName: 'mySharedPrefs',
+                keychainService: 'myKeychain',
+                touchID: true,
+                showModal: true,
+                strings:{
+                    header: 'ເຂົ້າລະບົບ',
+                    description: 'ກະລຸນາສະແກນລາຍມື',
+                    success: 'Fingerprint recognized',
+                    cancel: 'ຍົກເລີກ',
+                    cancelled: 'Authentication was cancelled',
+                }
+            })
+            if(secure_password){
+                Login(BOL_USER,secure_password)
+                // ToastAndroid.show(secure_password,ToastAndroid.BOTTOM,ToastAndroid.SHORT)
+            }else{
+                ToastAndroid.show('ບໍ່ສາມາດສະແກນລາຍມືເພື່ອເຂົ້າລະບົບ',ToastAndroid.BOTTOM,ToastAndroid.SHORT)
+            }
+        } catch (error) {
+            console.log(error)
+        }
+        
     }
 
     // get data from store and check token
     const checkIsLogined = async () => {
+        setSplashLoading(true)
         try {
-            setSplashLoading(true)
             let userInfo = await AsyncStorage.getItem('userInfo');
             let token = await AsyncStorage.getItem('token');
             let token_id = await AsyncStorage.getItem('token_id');
             let menu = await AsyncStorage.getItem('menu');
+
+            let BOL_P = await AsyncStorage.getItem('BOL_P');
+            let BOL_V = await AsyncStorage.getItem('BOL_V');
+            let BOL_K = await AsyncStorage.getItem('BOL_K');
+            let BOL_USER = await AsyncStorage.getItem('BOL_USER');
+            
+            setBOL_USER(BOL_USER)
             if(userInfo){
                 setUserInfo(JSON.parse(userInfo))
                 setToken(token)
                 setTokenID(token_id)
                 setMenu(menu.split(','))
+                //ຕ້ອງແມ່ນຍັງເຂົ້າລະບົບຢູ່ຈຶ່ງ set 3 ຄ່າລຸ່ນນີ້
+                setBOL_P(BOL_P)
+                setBOL_V(BOL_V)
+                setBOL_K(BOL_K)
             }
             setSplashLoading(false)
         } catch (error) {
@@ -103,10 +170,6 @@ export const AuthProvider = ({children})=>{
             console.log(`is logined error ${e}`)
         }
     }
-
-    useEffect(()=>{
-        checkIsLogined()
-    },[])
 
     // logout
     const Logout = () => {
@@ -120,6 +183,9 @@ export const AuthProvider = ({children})=>{
                 AsyncStorage.removeItem('token')
                 AsyncStorage.removeItem('token_id')
                 AsyncStorage.removeItem('menu')
+                AsyncStorage.removeItem('BOL_P')// ລະຫັດຜ່ານທີ່ encrypt ແລ້ວ (ເມື່ອ logout ໃຫ້ clear)
+                AsyncStorage.removeItem('BOL_V') // ລະຫັດຖອນ encrypt (ເມື່ອ logout ໃຫ້ clear)
+                AsyncStorage.removeItem('BOL_K') // ລະຫັດສ້າງ encrypt (ເມື່ອ logout ໃຫ້ clear)
                 setUserInfo({})
                 setToken(null)
                 setTokenID(null)
@@ -148,6 +214,116 @@ export const AuthProvider = ({children})=>{
         
     }
 
+    //ກວດສອບວ່າເຄື່ອງມີເຊັນເຊີເພື່ອສະແກນລາຍນິ້ວມືບໍ (ຖ້າມີ = true ບໍ່ມີ = false)
+    const checkSensorAvailable = async() =>{
+        const result = await RNSinfo.isSensorAvailable();
+        if(result){
+            // console.log('is sensor avialable=>',result)
+            setSensorAvailable(result)
+        }
+    }
+
+//+++++++++++++++++ 3 function ນີ້ໃຊ້ເພື່ອ ບັນທຶກ,ລຶບ,ດຶງເອົາ ລະຫັດຜ່ານທີ່ບັນທຶກໄວ້ຊົ່ວຄາວບົນ RNSinfo store ++++++++++++++
+    // function ບັນທຶກ PASSWORD ໄວ້ຊົ່າຄາວຫຼັງຈາກເຂົ້າລະບົບສຳເລັດ
+    //ທຸກຄັ້ງທີ login ສຳເລັດຈຳເປັນຕ້ອງເກັບລະຫັດໄວ້ໃນເຄື່ອງຊົ່ວຄາວ (ເມື່ອອອກຈາກລະບົບຈະລືບອອກ) ເພື່ອບໍ່ຕ້ອງcomfirmລະຫັດຜ່ານອິດເມື່ອຜູ້ໃຊ້ຕ້ອງການເປິດການນຳໃຊ້ສະແກນລາຍມື
+    // const setInputPasswordToSecure = async (inputpassword)=>{// ຄວາມຕ້ອງ encrypt ກ່ອນ
+    //     await RNSinfo.setItem('INPUT_PASSWORD',inputpassword,{
+    //         sharedPreferencesName: 'mySharedPrefs',
+    //         keychainService: 'myKeychain',
+    //     })
+    //     // console.log('saved input password to secured');
+    // }
+    // function ລືບ PASSWORD ທີ່ບັນທຶກໄວ້ຊົ່ວຄາວ
+    //ທຸກຄັ້ງອອກຈາກລະບົບຕ້ອງລົບລະຫັດຜ່ານທີ່ບັນທຶກຊົ່ວຄາວນີ້ຖິ້ມ
+    // const deleteInputPassword = async ()=>{
+    //     const delete_result = await RNSinfo.deleteItem('INPUT_PASSWORD',{
+    //         sharedPreferencesName: 'mySharedPrefs',
+    //         keychainService: 'myKeychain',
+    //     })
+    //     console.log('Delete result=',delete_result)
+    // }
+    // function getເອົາລະຫັດຜ່ານທີ່ບັນທຶກຊົ່ວຄາວ
+    //ເວລາທີ່ຜູ້ໃຊ້ເປິດການນຳໃຊ້ສະແກນລາຍນິ້ວມືແມ່ນຈະໄດ້ນຳເອົາລະຫັດຊົ່ວຄາວນີ້ໄປເກັບຖາວອນໃນ RNSinfo store
+    // const getInputPasswordOnSecure = async ()=>{
+    //     const input_pw = await RNSinfo.getItem('INPUT_PASSWORD',{
+    //         sharedPreferencesName: 'mySharedPrefs',
+    //         keychainService: 'myKeychain',
+    //     })
+    //     if(input_pw){
+    //         setInputPassword(input_pw)
+    //     }
+    // }
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+//+++++++++++++++ 2 function ລຸ່ມແມ່ນໃຊ້ບັນທຶກສະຖານະການສະແກນລາຍນິ້ວມື ວ່າເປີດນຳໃຊ້ແລ້ວບໍ
+    //function ບັນທຶກສະຖານະການເປິດສະແກນຂື້ນ RNSinfo store
+    const saveScanStatus = async(status) =>{
+        await RNSinfo.setItem('SCAN_STATUS',status,{
+            sharedPreferencesName: 'mySharedPrefs',
+            keychainService: 'myKeychain',
+        })
+    }
+    //function ດຶງເອົາສະຖານະການສະແກນລາຍມືບົນ RNSinfo store
+
+    const getScanStatus = async() =>{
+        const status =await RNSinfo.getItem('SCAN_STATUS',{
+            sharedPreferencesName: 'mySharedPrefs',
+            keychainService: 'myKeychain',
+        })
+        setScanStatus(status==='true'? true : false);
+    }
+
+//+++++++++2 function ລຸ່ມແມ່ນໃຊ້ເພື່ອບັນທຶກ ແລະ ລືບຂໍ້ມູນ username & password ໃນ RNSinfo
+    //function ບັນທຶກລະຫັດຜ່ານເຂົ້າໄປໃນ RNSinfo ແບບຖາວອນ ຕາບໃດທີ່ຜູ້ໃຊ້ປິດການສະແກນລາຍມືຈຶ່ງຈະລົບອອກ
+    //ຕ້ອງການຢືນຢັນລາຍມືກ່ອນຈະເກັບລະຫັດຖາວອນ
+    const setPasswordToSecureStore = async (password)=>{
+        try {
+            const result = await RNSinfo.setItem('PASSWORD', password, {
+                sharedPreferencesName: 'mySharedPrefs',
+                keychainService: 'myKeychain',
+                touchID: true, 
+                showModal: true,
+                strings: {
+                    header: 'ຢືນຢັັນລາຍມືເພື່ອເປິດໃຊ້ງານ',
+                    description: 'ກະລຸນາສະແກນລາຍມື',
+                    hint: 'Touch',
+                    cancel: 'ຍົກເລີກ',
+                    cancelled: 'Authentication was cancelled', // reject error message
+                },
+            })
+            if(result){// successfully
+                saveScanStatus("true")
+                setScanStatus(true)
+            }else{
+                saveScanStatus("false")
+                setScanStatus(false)
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    //===> delete scure password from scurestore when user close scaning fingerprint
+    const deletePasswordOnSecure = async ()=>{
+        await RNSinfo.deleteItem('PASSWORD', {
+            sharedPreferencesName: 'mySharedPrefs',
+            keychainService: 'myKeychain'
+        });
+        await RNSinfo.deleteItem('SCAN_STATUS',{
+            sharedPreferencesName: 'mySharedPrefs',
+            keychainService: 'myKeychain'
+        })
+        setScanStatus(false)
+    }
+
+    useEffect(()=>{
+        // AsyncStorage.removeItem('userInfo')
+        // AsyncStorage.removeItem('token')
+        // AsyncStorage.removeItem('token_id')
+        // AsyncStorage.removeItem('menu')
+
+        checkSensorAvailable()
+        getScanStatus()
+        checkIsLogined()
+    },[])
 
     return (
         <AuthContext.Provider
@@ -155,7 +331,12 @@ export const AuthProvider = ({children})=>{
                 // 1. global variable
                 userInfo,token,menu,splashLoading,isLoading,
                 // 2. Login , Logout ... function
-                Login,Logout,LoginTouch
+                Login,Logout,LoginTouch,
+                senSorAvailable,checkSensorAvailable,
+                scanStatus, getScanStatus,setScanStatus,
+                setPasswordToSecureStore,
+                deletePasswordOnSecure,
+                BOL_P,BOL_K,BOL_V,BOL_USER
             }}
         >
             {children}

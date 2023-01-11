@@ -18,6 +18,25 @@ const ToumTestTableScreen = () => {
 
     const [isLoading,setIsLoading] = useState(false)
     const [data,setData] = useState();
+    const dataTest = [
+        {
+            date: "10/2022",
+            header: [
+                "AAA","BBB"
+            ],
+            content: [
+                {
+                    'AAA':10000,
+                    'BBB':20000
+                },
+                {
+                    'AAA':10000,
+                    'BBB':20000
+                }
+                
+            ]
+        }
+    ]
 
     const [year1,setYear1] = useState(new Date().getFullYear())
     const [year2,setYear2] = useState(new Date().getFullYear())
